@@ -1,0 +1,15 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 동그라미 모양의 배경 -->
+    <item>
+        <shape
+            android:shape="oval">
+            <solid android:color="#AED4D2" />
+        </shape>
+    </item>
+
+    <!-- 실루엣 프로필 사진 -->
+    <item
+        android:drawable="@drawable/ic_peple"
+        android:gravity="center" />
+</layer-list>

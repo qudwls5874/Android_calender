@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="TextCol5">#1c90fb</color>
+    <color name="BgCol3">#1c90fb</color>
+    <color name="BgCol1">#e9f5ff</color>
+
+    <color name="TextCol2">#000000</color>
+
+    <color name="BackBaseColor">#FAFAFA</color>
+    <color name="BackBaseInputBoxColor">#EDEDED</color>
+
+    <!-- 텍스트 컬러 -->
+    <color name="textPlusColor">#5E8BAE</color>
+    <color name="textMinusColor">#AE5E36</color>
+    <color name="textNormalColor">#333333</color>
+    <color name="textBeNormalColor">#A9A9A9</color>
+
+
+    <!-- 배경색 -->
+    <color name="windowBackColor">#FAFAFA</color>
+
+</resources>

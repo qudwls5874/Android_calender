@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0">
+
+    <!-- 머리 -->
+    <!-- 동그라미 -->
+    <path
+        android:pathData="M12,5
+                           a 5,5 0 1,1 0,10
+                           a 5,5 0 1,1 0,-10"
+        android:fillColor="#FFFFFF"/>
+
+    <!-- 몸통 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,11l-2,10h4l-2,-10z"/>
+
+    <!-- 팔 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M8,15l-4,4v2h4z"/>
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M16,15l4,4v2h-4z"/>
+</vector>
