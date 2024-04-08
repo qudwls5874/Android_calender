@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.myapplication.Activity.user.money.UserMoney;
 import com.example.myapplication.Activity.user.money.UserMoneyAdapter;
 import com.example.myapplication.R;
+import com.example.myapplication.database.table.MoneyName;
 import com.example.myapplication.databinding.DialogMoneyNameBinding;
 import com.example.myapplication.databinding.DialogUserAddBinding;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 public class MoneyNameFragmentDialog extends DialogFragment implements View.OnClickListener {
 
     private DialogMoneyNameBinding binding;
-    public ArrayList<UserMoney> moneyList = new ArrayList<>();
+    public ArrayList<MoneyName> moneyList = new ArrayList<>();
     private UserMoneyAdapter moneyAdapter;
 
     @Nullable
