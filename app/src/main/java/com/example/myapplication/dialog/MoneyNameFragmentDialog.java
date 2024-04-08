@@ -1,4 +1,4 @@
-package com.example.myapplication.Activity.user;
+package com.example.myapplication.dialog;
 
 
 import android.content.res.Resources;
@@ -21,24 +21,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.myapplication.Activity.user.money.UserMoney;
 import com.example.myapplication.Activity.user.money.UserMoneyAdapter;
 import com.example.myapplication.R;
+import com.example.myapplication.databinding.DialogMoneyNameBinding;
 import com.example.myapplication.databinding.DialogUserAddBinding;
-import com.example.myapplication.dialog.MoneyNameFragmentDialog;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.SwipeDismissTouchListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class UserAddFragmentDialog extends DialogFragment implements View.OnClickListener, UserMoneyAdapter.CanselMoneyLisner {
+public class MoneyNameFragmentDialog extends DialogFragment implements View.OnClickListener {
 
-    private DialogUserAddBinding binding;
+    private DialogMoneyNameBinding binding;
     public ArrayList<UserMoney> moneyList = new ArrayList<>();
     private UserMoneyAdapter moneyAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DialogUserAddBinding.inflate(inflater, container, false);
+        binding = DialogMoneyNameBinding.inflate(inflater, container, false);
 
         initData();
 
@@ -53,14 +53,7 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
         SwipeDismissTouchListener swipeDismissTouchListener = new SwipeDismissTouchListener(getDialog().getWindow().getDecorView(), () -> dismiss());
         binding.userAddTopLayout.setOnTouchListener(swipeDismissTouchListener);
 
-        binding.userAddMoneyAddBtn.setOnClickListener(this);
-        binding.userAddCloseBtn.setOnClickListener(this);
-
-
-        binding.userAddMoneyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        moneyAdapter = new UserMoneyAdapter(moneyList, this);
-        binding.userAddMoneyRecyclerView.setAdapter(moneyAdapter);
-
+        binding.dialogMoneyCloseBtn.setOnClickListener(this);
 
     }
 
@@ -89,30 +82,9 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == binding.userAddMoneyAddBtn.getId()){
-            moneyList.add(moneyList.size(), new UserMoney(0,"정액제", LocalDate.now()));
-            moneyAdapter = new UserMoneyAdapter(moneyList, this);
-            binding.userAddMoneyRecyclerView.setAdapter(moneyAdapter);
-            moneyAdapter.notifyDataSetChanged();
-        } else if (v.getId() == binding.userAddCloseBtn.getId()) {
+        if (v.getId() == binding.dialogMoneyCloseBtn.getId()){
             dismiss();
         }
-    }
-
-    @Override
-    public void setCanselMoney(int index) {
-        moneyList.remove(index);
-        moneyAdapter = new UserMoneyAdapter(moneyList, this);
-        binding.userAddMoneyRecyclerView.setAdapter(moneyAdapter);
-        moneyAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showMoneyDialog() {
-        // FragmentManager 가져오기
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        MoneyNameFragmentDialog dialog = new MoneyNameFragmentDialog();
-        dialog.show(fragmentManager, "MoneyNameFragmentDialog");
     }
 
 

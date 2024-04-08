@@ -12,13 +12,13 @@ import com.example.myapplication.R;
 import com.example.myapplication.database.table.User;
 import com.example.myapplication.event.HideKeyboardHelperActivity;
 import com.example.myapplication.databinding.FragmentUserBinding;
-import com.example.myapplication.event.SearchTextWatcher;
+import com.example.myapplication.event.WatcherSearchText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserFragment extends Fragment implements View.OnClickListener, SearchTextWatcher.OnSearchChangeListener {
+public class UserFragment extends Fragment implements View.OnClickListener, WatcherSearchText.OnSearchChangeListener {
 
     // 뷰 바인딩
     private FragmentUserBinding binding;
@@ -50,7 +50,7 @@ public class UserFragment extends Fragment implements View.OnClickListener, Sear
         binding.userAddBtn.setOnClickListener(this);
 
         // 입력 리스너 이벤트
-        binding.userSearchText.addTextChangedListener(new SearchTextWatcher(this));
+        binding.userSearchText.addTextChangedListener(new WatcherSearchText(this));
 
         // 어댑터
         userAdapter = new UserAdapter(getActivity(), R.layout.view_user_item_row, filterList);
@@ -69,7 +69,7 @@ public class UserFragment extends Fragment implements View.OnClickListener, Sear
     private void updateUserProfileList(List<User> users) {
         userList.clear();
         userList.addAll(users);
-        onSearchTextChanged(String.valueOf(binding.userSearchText.getText()));
+        onSearchTextChanged(String.valueOf(binding.userSearchText.getText()), null);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class UserFragment extends Fragment implements View.OnClickListener, Sear
     }
 
     @Override
-    public void onSearchTextChanged(String newText) {
+    public void onSearchTextChanged(String newText, Integer index) {
 
         filterList.clear();
         if (newText.isEmpty()) {

@@ -3,12 +3,18 @@ package com.example.myapplication.event;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-public class SearchTextWatcher implements TextWatcher {
+public class WatcherSearchText implements TextWatcher {
 
     private OnSearchChangeListener mListener ;
+    private Integer index;
 
-    public SearchTextWatcher(OnSearchChangeListener listener){
+    public WatcherSearchText(OnSearchChangeListener listener){
         this.mListener = listener;
+    }
+
+    public WatcherSearchText(OnSearchChangeListener listener, int index){
+        this.mListener = listener;
+        this.index = index;
     }
 
 
@@ -21,7 +27,7 @@ public class SearchTextWatcher implements TextWatcher {
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         // 입력 중
         if (mListener != null){
-            mListener.onSearchTextChanged(s.toString());
+            mListener.onSearchTextChanged(s.toString(), index);
         }
     }
 
@@ -31,7 +37,7 @@ public class SearchTextWatcher implements TextWatcher {
     }
 
     public interface OnSearchChangeListener{
-        void onSearchTextChanged(String newText);
+        void onSearchTextChanged(String newText, Integer index);
     }
 
 }

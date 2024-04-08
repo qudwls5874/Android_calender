@@ -14,17 +14,24 @@
         android:background="@color/white"
         android:orientation="horizontal">
 
-        <ImageView
+        <LinearLayout
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:textColor="@color/textNormalColor"
-            android:src="@drawable/ic_user_delete"
-            />
+            android:gravity="center">
 
-        <EditText
-            android:id="@+id/view_money_editText1"
+            <ImageView
+                android:id="@+id/view_money_imageView"
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_user_delete"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/view_money_textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -34,38 +41,64 @@
             android:background="@android:color/transparent"
             android:text="정액제"/>
 
-        <View
-            android:layout_width="1dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/BackBaseInputBoxColor"/>
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/view_money_editText2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="13dp"
-            android:textColor="@color/textNormalColor"
-            android:background="@android:color/transparent"
-            android:text="20204.04.06"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/BackBaseInputBoxColor"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/view_money_editText3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:textSize="13dp"
-            android:textColor="@color/textNormalColor"
-            android:background="@android:color/transparent"
-            android:text="0"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/BackBaseInputBoxColor"/>
+
+                <EditText
+                    android:id="@+id/view_money_editText2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="13dp"
+                    android:textColor="@color/textNormalColor"
+                    android:background="@android:color/transparent"
+                    android:text="20204.04.06"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/BackBaseInputBoxColor"/>
+
+                <EditText
+                    android:id="@+id/view_money_editText3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="13dp"
+                    android:textColor="@color/textNormalColor"
+                    android:background="@android:color/transparent"
+                    android:inputType="number"
+                    android:text="0"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/BackBaseInputBoxColor"/>
+
+        </LinearLayout>
+
 
 
     </LinearLayout>

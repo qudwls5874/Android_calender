@@ -1,5 +1,6 @@
 package com.example.myapplication.Activity.user.money;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class UserMoney {
@@ -11,13 +12,13 @@ public class UserMoney {
      */
 
     private int money;
-    private int moneyFg;
-    private Date moneyDt;
+    private String moneyName;
+    private LocalDate moneyDt;
 
-    public UserMoney(int _money, int _moneyFg, Date moneyDt){
-        money = _money;
-        moneyFg = _moneyFg;
-        moneyDt =moneyDt;
+    public UserMoney(int _money, String _moneyName, LocalDate moneyDt){
+        this.money = _money;
+        this.moneyName = _moneyName;
+        this.moneyDt = moneyDt;
     }
 
     public int getMoney() {
@@ -28,19 +29,19 @@ public class UserMoney {
         this.money = money;
     }
 
-    public int getMoneyFg() {
-        return moneyFg;
+    public String getMoneyName() {
+        return moneyName;
     }
 
-    public void setMoneyFg(int moneyFg) {
-        this.moneyFg = moneyFg;
+    public void setMoneyName(String moneyFg) {
+        this.moneyName = moneyFg;
     }
 
-    public Date getMoneyDt() {
+    public LocalDate getMoneyDt() {
         return moneyDt;
     }
 
-    public void setMoneyDt(Date moneyDt) {
+    public void setMoneyDt(LocalDate moneyDt) {
         this.moneyDt = moneyDt;
     }
 }
