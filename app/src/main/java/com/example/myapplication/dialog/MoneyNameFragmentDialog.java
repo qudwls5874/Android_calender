@@ -16,12 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.Activity.user.money.UserMoney;
 import com.example.myapplication.Activity.user.money.UserMoneyAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.database.table.MoneyName;
+import com.example.myapplication.database.viewmodel.MoneyNameViewModel;
 import com.example.myapplication.databinding.DialogMoneyNameBinding;
 import com.example.myapplication.databinding.DialogUserAddBinding;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
@@ -29,12 +31,14 @@ import com.example.myapplication.event.SwipeDismissTouchListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
-public class MoneyNameFragmentDialog extends DialogFragment implements View.OnClickListener {
+public class MoneyNameFragmentDialog extends DialogFragment implements View.OnClickListener, MoneyNameAdapter.CanselMoneyLisner {
 
+    private MoneyNameViewModel moneyNameViewModel;
     private DialogMoneyNameBinding binding;
     public ArrayList<MoneyName> moneyList = new ArrayList<>();
-    private UserMoneyAdapter moneyAdapter;
+    private MoneyNameAdapter moneyNameAdapter;
 
     @Nullable
     @Override
@@ -56,6 +60,27 @@ public class MoneyNameFragmentDialog extends DialogFragment implements View.OnCl
 
         binding.dialogMoneyCloseBtn.setOnClickListener(this);
 
+        /*
+        * // 어댑터
+        userAdapter = new UserAdapter(getActivity(), R.layout.view_user_item_row, filterList);
+        binding.recyclerView.setAdapter(userAdapter);*/
+        moneyNameAdapter = new MoneyNameAdapter(moneyList, this);
+        binding.dialogMoneyNameRecyclerView.setAdapter(moneyNameAdapter);
+
+        // 뷰모델
+        moneyNameViewModel = new ViewModelProvider(this).get(MoneyNameViewModel.class);
+
+        // LiveData를 관찰하여 업데이트가 발생할 때마다 RecyclerView에 데이터를 설정
+        moneyNameViewModel.getAllMoneyList().observe(getViewLifecycleOwner(),moneyNames -> {
+            updateMoneyNameList(moneyNames);
+        });
+
+    }
+
+    private void updateMoneyNameList(List<MoneyName> moneyNames) {
+        moneyList.clear();
+        moneyList.addAll(moneyNames);
+        moneyNameAdapter.notifyDataSetChanged();
     }
 
 
@@ -89,4 +114,13 @@ public class MoneyNameFragmentDialog extends DialogFragment implements View.OnCl
     }
 
 
+    @Override
+    public void setCanselMoney(int index) {
+
+    }
+
+    @Override
+    public void showMoneyDialog() {
+
+    }
 }

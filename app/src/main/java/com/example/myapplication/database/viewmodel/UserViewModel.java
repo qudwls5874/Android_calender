@@ -1,4 +1,4 @@
-package com.example.myapplication.Activity.user;
+package com.example.myapplication.database.viewmodel;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -23,7 +23,10 @@ public class UserViewModel extends AndroidViewModel {
 
     public UserViewModel(@NonNull Application application) {
         super(application);
-        UserDatabase db = Room.databaseBuilder(application, UserDatabase.class, "user").build();
+        UserDatabase db = Room.databaseBuilder(application, UserDatabase.class, "user")
+                .fallbackToDestructiveMigration()
+                .build();
+
         userDao = db.getUserDao();
         select();
     }

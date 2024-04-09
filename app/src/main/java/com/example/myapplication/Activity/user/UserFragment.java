@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
 import com.example.myapplication.database.table.User;
+import com.example.myapplication.database.viewmodel.UserViewModel;
 import com.example.myapplication.event.HideKeyboardHelperActivity;
 import com.example.myapplication.databinding.FragmentUserBinding;
 import com.example.myapplication.event.WatcherSearchText;

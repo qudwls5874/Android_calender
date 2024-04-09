@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Activity.user.UserAddFragmentDialog;
 import com.example.myapplication.R;
+import com.example.myapplication.database.viewmodel.MoneyNameViewModel;
 import com.example.myapplication.dialog.MoneyNameFragmentDialog;
 import com.example.myapplication.event.WatcherMoneyText;
 import com.example.myapplication.event.WatcherSearchText;
@@ -69,6 +70,7 @@ public class UserMoneyAdapter extends RecyclerView.Adapter<UserMoneyAdapter.User
 
         // 새로운 TextWatcher 생성하여 등록
         holder.editText3.addTextChangedListener(new WatcherMoneyText(this, position, holder.editText3));
+
 
     }
 
