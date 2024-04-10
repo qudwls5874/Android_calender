@@ -25,4 +25,6 @@ public interface MoneyNameDao {
     @Query("SELECT * FROM moneynames")
     List<MoneyName> getAllMoney();
 
+
+
 }

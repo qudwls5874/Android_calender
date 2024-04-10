@@ -18,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Activity.user.money.UserMoney;
 import com.example.myapplication.Activity.user.money.UserMoneyAdapter;
@@ -60,18 +61,16 @@ public class MoneyNameFragmentDialog extends DialogFragment implements View.OnCl
 
         binding.dialogMoneyCloseBtn.setOnClickListener(this);
 
-        /*
-        * // 어댑터
-        userAdapter = new UserAdapter(getActivity(), R.layout.view_user_item_row, filterList);
-        binding.recyclerView.setAdapter(userAdapter);*/
+        // 어댑터
         moneyNameAdapter = new MoneyNameAdapter(moneyList, this);
+        binding.dialogMoneyNameRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.dialogMoneyNameRecyclerView.setAdapter(moneyNameAdapter);
 
         // 뷰모델
         moneyNameViewModel = new ViewModelProvider(this).get(MoneyNameViewModel.class);
 
         // LiveData를 관찰하여 업데이트가 발생할 때마다 RecyclerView에 데이터를 설정
-        moneyNameViewModel.getAllMoneyList().observe(getViewLifecycleOwner(),moneyNames -> {
+        moneyNameViewModel.getAllMoneyNames().observe(getViewLifecycleOwner(),moneyNames -> {
             updateMoneyNameList(moneyNames);
         });
 
