@@ -10,8 +10,8 @@ public class MenuCategory {
     int menuCategoryId;
     String menuCategoryName;
 
-    public MenuCategory(String _menuCategoryName){
-        this.menuCategoryName = _menuCategoryName;
+    public MenuCategory(String menuCategoryName){
+        this.menuCategoryName = menuCategoryName;
     }
 
     public int getMenuCategoryId() {
