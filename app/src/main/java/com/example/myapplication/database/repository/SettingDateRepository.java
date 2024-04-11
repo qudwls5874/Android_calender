@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.database.UserDatabase;
 import com.example.myapplication.database.dao.SettingDateDao;
@@ -14,7 +15,7 @@ import java.util.List;
 public class SettingDateRepository {
 
     private SettingDateDao settingDateDao;
-    public LiveData<List<SettingDate>> settingDateList = new LiveData<List<SettingDate>>() {};
+    public MutableLiveData<List<SettingDate>> settingDateList = new MutableLiveData<List<SettingDate>>() {};
 
     public SettingDateRepository(Application application){
         UserDatabase db = UserDatabase.getInstance(application);
@@ -33,12 +34,7 @@ public class SettingDateRepository {
         @Override
         protected void onPostExecute(List<SettingDate> settingDates) {
             super.onPostExecute(settingDates);
-            settingDateList = new LiveData<List<SettingDate>>() {
-                @Override
-                protected void setValue(List<SettingDate> value) {
-                    super.setValue(settingDates);
-                }
-            };
+            settingDateList.setValue(settingDates);
         }
     }
 
