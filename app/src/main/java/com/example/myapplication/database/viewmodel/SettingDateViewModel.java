@@ -25,4 +25,8 @@ public class SettingDateViewModel extends AndroidViewModel {
     public LiveData<List<SettingDate>> getList(){
         return list;
     }
+    public void insert(SettingDate settingDate){
+        //repository.update(settingDate);
+    }
+
 }

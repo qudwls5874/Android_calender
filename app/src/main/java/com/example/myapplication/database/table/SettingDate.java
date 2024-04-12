@@ -8,9 +8,9 @@ public class SettingDate {
 
     @PrimaryKey(autoGenerate = true)
     int settingId;      // 0: 오픈, 1: 마감, 2: 시간간격, 3: 휴무
-    int settingTime;    //        0~2:시간.              3: 1월,2화,3수,4목,5금,6토,7일
+    String settingTime;    //        0~2:시간.              3: 1월,2화,3수,4목,5금,6토,7일
 
-    public SettingDate(int settingTime){
+    public SettingDate(String settingTime){
         this.settingTime = settingTime;
     }
 
@@ -22,11 +22,11 @@ public class SettingDate {
         this.settingId = settingId;
     }
 
-    public int getSettingTime() {
+    public String getSettingTime() {
         return settingTime;
     }
 
-    public void setSettingTime(int settingTime) {
+    public void setSettingTime(String settingTime) {
         this.settingTime = settingTime;
     }
 }

@@ -73,10 +73,10 @@ public abstract class UserDatabase extends RoomDatabase {
         menuCategoryDao.insert(new MenuCategory("미용문신"));
 
         SettingDateDao settingDateDao = userDatabase.getSettingDao();
-        settingDateDao.insert(new SettingDate(1100));
-        settingDateDao.insert(new SettingDate(2100));
-        settingDateDao.insert(new SettingDate(30));
-        settingDateDao.insert(new SettingDate(0));
+        settingDateDao.insert(new SettingDate("1100"));
+        settingDateDao.insert(new SettingDate("2100"));
+        settingDateDao.insert(new SettingDate("30"));
+        settingDateDao.insert(new SettingDate("0"));
 /*
 * 네일
 헤어

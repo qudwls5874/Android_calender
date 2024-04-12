@@ -7,19 +7,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myapplication.database.table.SettingDate;
 import com.example.myapplication.database.viewmodel.SettingDateViewModel;
 import com.example.myapplication.databinding.DialogSettingSettingdateBinding;
+import com.example.myapplication.event.ConvertTimeFormat;
 
-public class SettingDateDialog extends DialogFragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SettingDateDialog extends DialogFragment implements View.OnClickListener {
 
     private DialogSettingSettingdateBinding binding;
     private SettingDateViewModel viewModel;
+    private List<SettingDate> settingDates = new ArrayList<>();
 
     @Nullable
     @Override
@@ -38,11 +47,24 @@ public class SettingDateDialog extends DialogFragment {
 
         // 옵져버
         viewModel.getList().observe(getViewLifecycleOwner(), list ->{
-            binding.settingOpenTextView.setText("" + list.get(0).getSettingTime());
-            binding.settingCloseTextView.setText(""+list.get(1).getSettingTime());
-            binding.settingIntervalTextView.setText(""+list.get(2).getSettingTime());
+            settingDates.clear();
+            settingDates = list;
+            updpateSettingList();
         });
 
+        binding.settingOpenTextView.setOnClickListener(this);
+        binding.settingCloseTextView.setOnClickListener(this);
+        binding.settingIntervalTextView.setOnClickListener(this);
+    }
+
+    private void updpateSettingList() {
+        binding.settingOpenTextView.setText(
+                new ConvertTimeFormat(String.valueOf(settingDates.get(0).getSettingTime())).convertTimeFormat()
+        );
+        binding.settingCloseTextView.setText(
+                new ConvertTimeFormat(String.valueOf(settingDates.get(1).getSettingTime())).convertTimeFormat()
+        );
+        binding.settingIntervalTextView.setText(""+settingDates.get(2).getSettingTime()+" 분");
     }
 
     @NonNull
@@ -58,4 +80,62 @@ public class SettingDateDialog extends DialogFragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == binding.settingOpenTextView.getId()){
+            // 오픈시간
+            TimePickerDialog dialog = new TimePickerDialog();
+            Bundle bundle = new Bundle();
+            bundle.putString("dateFg", "open");
+            bundle.putString("dateStartValue", binding.settingOpenTextView.getText().toString());
+            bundle.putString("dateEndValue", binding.settingCloseTextView.getText().toString());
+            bundle.putInt("dateIntervalValue", Integer.valueOf(binding.settingIntervalTextView.getText().toString().replaceAll("분","").trim()));
+            dialog.setArguments(bundle);
+            dialog.show(getParentFragmentManager(), "timePicker");
+
+            dialog.setOnTimeSetListener((timeData) -> {
+                settingDates.get(0).setSettingTime(timeData);
+                if ( Integer.valueOf(settingDates.get(0).getSettingTime()) >= Integer.valueOf(settingDates.get(1).getSettingTime()) ){
+                    settingDates.get(1).setSettingTime( settingDates.get(0).getSettingTime() );
+                }
+                updpateSettingList();
+                dialog.dismiss();
+            });
+
+        } else if (v.getId() == binding.settingCloseTextView.getId()) {
+            // 클로즈 시간
+            TimePickerDialog dialog = new TimePickerDialog();
+            Bundle bundle = new Bundle();
+            bundle.putString("dateFg", "close");
+            bundle.putString("dateStartValue", binding.settingOpenTextView.getText().toString());
+            bundle.putString("dateEndValue", binding.settingCloseTextView.getText().toString());
+            bundle.putInt("dateIntervalValue", Integer.valueOf(binding.settingIntervalTextView.getText().toString().replaceAll("분","").trim()));
+            dialog.setArguments(bundle);
+            dialog.show(getParentFragmentManager(), "timePicker");
+
+            dialog.setOnTimeSetListener((timeData) -> {
+                // 선택한 시간을 처리하는 코드
+                settingDates.get(1).setSettingTime(timeData);
+                updpateSettingList();
+                dialog.dismiss();
+            });
+        } else if (v.getId() == binding.settingIntervalTextView.getId()) {
+            // 시간 간격
+            TimePickerDialog dialog = new TimePickerDialog();
+            Bundle bundle = new Bundle();
+            bundle.putString("dateFg", "interval");
+            bundle.putString("dateStartValue", binding.settingOpenTextView.getText().toString());
+            bundle.putString("dateEndValue", binding.settingCloseTextView.getText().toString());
+            bundle.putInt("dateIntervalValue", Integer.valueOf(binding.settingIntervalTextView.getText().toString().replaceAll("분","").trim()));
+            dialog.setArguments(bundle);
+            dialog.show(getParentFragmentManager(), "timePicker");
+
+            dialog.setOnTimeSetListener((timeData) -> {
+                // 선택한 시간을 처리하는 코드
+                settingDates.get(1).setSettingTime(timeData);
+                updpateSettingList();
+                dialog.dismiss();
+            });
+        }
+    }
 }

@@ -16,6 +16,7 @@
             android:name=".Activity.user.UserAddFragmentDialog"
             android:exported="false"
             android:theme="@style/Theme.MyApplication" />
+
         <activity
             android:name=".ui.login.UserAddActivity"
             android:exported="false"
@@ -25,6 +26,7 @@
             android:exported="false"
             android:label="@string/title_activity_user_add_dialog"
             android:theme="@style/Theme.MyApplication" />
+
         <activity
             android:name=".Activity.MainActivity"
             android:exported="true">
