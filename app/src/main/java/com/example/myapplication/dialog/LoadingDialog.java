@@ -1,4 +1,4 @@
-package com.example.myapplication.astnctask;
+package com.example.myapplication.dialog;
 
 import android.app.ProgressDialog;
 import android.content.Context;

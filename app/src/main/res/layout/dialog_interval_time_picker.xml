@@ -19,25 +19,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <View
-                android:layout_width="15dp"
-                android:layout_height="match_parent"/>
 
             <NumberPicker
                 android:id="@+id/dialog_time_ampm_picker"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:descendantFocusability="blocksDescendants"/>
 
             <NumberPicker
                 android:id="@+id/dialog_time_hour_picker"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"/>
 
             <TextView
+                android:id="@+id/dialog_time_interval_textView"
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -46,11 +43,9 @@
             <NumberPicker
                 android:id="@+id/dialog_time_minute_picker"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"/>
 
-            <View
-                android:layout_width="15dp"
-                android:layout_height="match_parent"/>
 
         </LinearLayout>
 

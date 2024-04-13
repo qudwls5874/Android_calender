@@ -1,10 +1,8 @@
 package com.example.myapplication.astnctask;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
-import java.lang.reflect.Member;
-import java.util.List;
+import com.example.myapplication.dialog.LoadingDialog;
 
 public class LoadMembersTask {
 
