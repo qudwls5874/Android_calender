@@ -1,9 +1,10 @@
-package com.example.myapplication.dialog;
+package com.example.myapplication.Activity.setting;
 
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.myapplication.database.table.SettingDate;
 import com.example.myapplication.database.viewmodel.SettingDateViewModel;
 import com.example.myapplication.databinding.DialogSettingSettingdateBinding;
+import com.example.myapplication.dialog.LoadingDialog;
+import com.example.myapplication.dialog.TimePickerDialog;
 import com.example.myapplication.event.ConvertTimeFormat;
 
 import java.util.ArrayList;
@@ -54,12 +57,23 @@ public class SettingDateDialog extends DialogFragment implements View.OnClickLis
         viewModel.getList().observe(getViewLifecycleOwner(), list ->{
             settingDates.clear();
             settingDates = list;
+
+            binding.settingMondayCheckBox.setChecked(list.get(3).getSettingTime().charAt(0) == 'Y');
+            binding.settingTuesdayCheckBox.setChecked(list.get(3).getSettingTime().charAt(1) == 'Y');
+            binding.settingWednesdayCheckBox.setChecked(list.get(3).getSettingTime().charAt(2) == 'Y');
+            binding.settingThursdayCheckBox.setChecked(list.get(3).getSettingTime().charAt(3) == 'Y');
+            binding.settingFridayCheckBox.setChecked(list.get(3).getSettingTime().charAt(4) == 'Y');
+            binding.settingSaturdayCheckBox.setChecked(list.get(3).getSettingTime().charAt(5) == 'Y');
+            binding.settingSundayCheckBox.setChecked(list.get(3).getSettingTime().charAt(6) == 'Y');
+
             updpateSettingList();
         });
 
         binding.settingOpenTextView.setOnClickListener(this);
         binding.settingCloseTextView.setOnClickListener(this);
         binding.settingIntervalTextView.setOnClickListener(this);
+        binding.settingSettingdateCloseBtn.setOnClickListener(this);
+        binding.settingSettingdateAddBtn.setOnClickListener(this);
     }
 
     private void updpateSettingList() {
@@ -103,6 +117,9 @@ public class SettingDateDialog extends DialogFragment implements View.OnClickLis
 
             dialog.setOnTimeSetListener((timeData) -> {
                 settingDates.get(0).setSettingTime(timeData);
+                if (Integer.parseInt(settingDates.get(0).getSettingTime()) > Integer.parseInt(settingDates.get(1).getSettingTime())){
+                    settingDates.get(1).setSettingTime(timeData);
+                }
                 updpateSettingList();
                 dialog.dismiss();
             });
@@ -137,10 +154,30 @@ public class SettingDateDialog extends DialogFragment implements View.OnClickLis
 
             dialog.setOnTimeSetListener((timeData) -> {
                 // 선택한 시간을 처리하는 코드
-                settingDates.get(2).setSettingTime(timeData);
-                updpateSettingList();
+                if (!settingDates.get(2).getSettingTime().equals(timeData)){
+                    settingDates.get(0).setSettingTime("0000");
+                    settingDates.get(1).setSettingTime("0000");
+                    settingDates.get(2).setSettingTime(timeData);
+                    updpateSettingList();
+                }
                 dialog.dismiss();
             });
+        } else if (v.getId() == binding.settingSettingdateCloseBtn.getId()) {
+            // 닫기 버튼
+            dismiss();
+        } else if (v.getId() == binding.settingSettingdateAddBtn.getId()) {
+            // 저장 버튼
+            String aWeek = "";
+            aWeek += binding.settingMondayCheckBox.isChecked() ? "Y" : "N";
+            aWeek += binding.settingTuesdayCheckBox.isChecked() ? "Y" : "N";
+            aWeek += binding.settingWednesdayCheckBox.isChecked() ? "Y" : "N";
+            aWeek += binding.settingThursdayCheckBox.isChecked() ? "Y" : "N";
+            aWeek += binding.settingFridayCheckBox.isChecked() ? "Y" : "N";
+            aWeek += binding.settingSaturdayCheckBox.isChecked() ? "Y" : "N";
+            aWeek += binding.settingSundayCheckBox.isChecked() ? "Y" : "N";
+            settingDates.get(3).setSettingTime(aWeek);
+            viewModel.update(settingDates);
+            dismiss();
         }
 
         loadingDialog.dismiss();

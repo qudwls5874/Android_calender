@@ -18,6 +18,9 @@ public interface SettingDateDao {
     @Update
     void update(SettingDate settingDate);
 
+    @Update
+    void updateAll(List<SettingDate> settingDateList);
+
     @Query("SELECT * FROM settingdates")
     List<SettingDate> getAllSelect();
 

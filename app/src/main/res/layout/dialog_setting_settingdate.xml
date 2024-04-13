@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="400dp"
         android:orientation="vertical"
         android:background="@drawable/rounded_rectangular_shape2">
@@ -25,7 +25,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="3dp"
                 android:textColor="@color/textPlusColor"
-                android:textSize="12dp"
+                android:textSize="14dp"
                 android:text="취소"/>
 
             <View
@@ -34,13 +34,14 @@
                 android:layout_weight="1"/>
 
             <TextView
+                android:id="@+id/setting_settingdate_add_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="3dp"
                 android:textColor="@color/textPlusColor"
-                android:textSize="12dp"
+                android:textSize="14dp"
                 android:text="완료"/>
 
         </LinearLayout>
@@ -69,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="11dp"
+                android:textSize="13dp"
                 android:textColor="@color/textNormalColor"
                 android:text="오픈 시간"/>
 
@@ -89,7 +90,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="11dp"
+                android:textSize="13dp"
                 android:textColor="@color/textNormalColor"
                 android:text="오전 00:00"/>
 
@@ -119,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="11dp"
+                android:textSize="13dp"
                 android:textColor="@color/textNormalColor"
                 android:text="마감 시간"/>
 
@@ -139,7 +140,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="11dp"
+                android:textSize="13dp"
                 android:textColor="@color/textNormalColor"
                 android:text="오후 00:00"/>
 
@@ -169,7 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="11dp"
+                android:textSize="13dp"
                 android:textColor="@color/textNormalColor"
                 android:text="시간 간격"/>
 
@@ -189,7 +190,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="11dp"
+                android:textSize="13dp"
                 android:textColor="@color/textNormalColor"
                 android:text="00분"/>
 
@@ -218,7 +219,8 @@
         <!--  휴무일  -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
             android:background="#FFFF"
             android:orientation="vertical">
 
@@ -226,8 +228,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:textSize="11dp"
+                android:layout_margin="7dp"
+                android:textSize="13dp"
                 android:textColor="@color/textNormalColor"
                 android:text="정기 휴무일"/>
 
@@ -237,21 +239,22 @@
 
                 <!-- 체크박스 -->
                 <LinearLayout
-                    android:layout_width="55dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:id="@+id/setting_monday_checkBox"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:scaleY="0.5"
-                        android:scaleX="0.5"/>
+                        android:scaleY="0.8"
+                        android:scaleX="0.8"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:layout_gravity="center"
                         android:text="월요일"/>
 
@@ -259,21 +262,22 @@
 
                 <!-- 체크박스 -->
                 <LinearLayout
-                    android:layout_width="55dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:id="@+id/setting_tuesday_checkBox"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:scaleY="0.5"
-                        android:scaleX="0.5"/>
+                        android:scaleY="0.8"
+                        android:scaleX="0.8"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:layout_gravity="center"
                         android:text="화요일"/>
 
@@ -281,21 +285,22 @@
 
                 <!-- 체크박스 -->
                 <LinearLayout
-                    android:layout_width="55dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:id="@+id/setting_wednesday_checkBox"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:scaleY="0.5"
-                        android:scaleX="0.5"/>
+                        android:scaleY="0.8"
+                        android:scaleX="0.8"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:layout_gravity="center"
                         android:text="수요일"/>
 
@@ -303,21 +308,22 @@
 
                 <!-- 체크박스 -->
                 <LinearLayout
-                    android:layout_width="55dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:id="@+id/setting_thursday_checkBox"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:scaleY="0.5"
-                        android:scaleX="0.5"/>
+                        android:scaleY="0.8"
+                        android:scaleX="0.8"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:layout_gravity="center"
                         android:text="목요일"/>
 
@@ -325,27 +331,32 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <!-- 체크박스 -->
                 <LinearLayout
-                    android:layout_width="55dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:id="@+id/setting_friday_checkBox"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:scaleY="0.5"
-                        android:scaleX="0.5"/>
+                        android:scaleY="0.8"
+                        android:scaleX="0.8"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:layout_gravity="center"
                         android:text="금요일"/>
 
@@ -353,21 +364,22 @@
 
                 <!-- 체크박스 -->
                 <LinearLayout
-                    android:layout_width="55dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:id="@+id/setting_saturday_checkBox"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:scaleY="0.5"
-                        android:scaleX="0.5"/>
+                        android:scaleY="0.8"
+                        android:scaleX="0.8"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:layout_gravity="center"
                         android:text="토요일"/>
 
@@ -375,21 +387,22 @@
 
                 <!-- 체크박스 -->
                 <LinearLayout
-                    android:layout_width="55dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:id="@+id/setting_sunday_checkBox"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:scaleY="0.5"
-                        android:scaleX="0.5"/>
+                        android:scaleY="0.8"
+                        android:scaleX="0.8"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
+                        android:textSize="14dp"
                         android:layout_gravity="center"
                         android:text="일요일"/>
 

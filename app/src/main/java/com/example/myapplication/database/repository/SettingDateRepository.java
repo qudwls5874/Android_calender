@@ -8,14 +8,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.database.UserDatabase;
 import com.example.myapplication.database.dao.SettingDateDao;
+import com.example.myapplication.database.table.MoneyName;
 import com.example.myapplication.database.table.SettingDate;
 
 import java.util.List;
 
 public class SettingDateRepository {
 
-    private SettingDateDao settingDateDao;
     public MutableLiveData<List<SettingDate>> settingDateList = new MutableLiveData<List<SettingDate>>() {};
+    private SettingDateDao settingDateDao;
 
     public SettingDateRepository(Application application){
         UserDatabase db = UserDatabase.getInstance(application);
@@ -35,6 +36,18 @@ public class SettingDateRepository {
         protected void onPostExecute(List<SettingDate> settingDates) {
             super.onPostExecute(settingDates);
             settingDateList.setValue(settingDates);
+        }
+    }
+
+    // UdateAsyncTask
+    public void update(List<SettingDate> settingDate){ new settingUpdateAsyncTask().execute(settingDate);}
+
+    private class settingUpdateAsyncTask extends AsyncTask<List<SettingDate>, Void, Void>{
+
+        @Override
+        protected Void doInBackground(List<SettingDate>... settingDates) {
+            settingDateDao.updateAll(settingDates[0]);
+            return null;
         }
     }
 

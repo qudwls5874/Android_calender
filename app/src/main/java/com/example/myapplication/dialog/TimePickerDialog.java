@@ -83,13 +83,9 @@ public class TimePickerDialog extends DialogFragment implements View.OnClickList
         binding.dialogTimeAmpmPicker.setValue(Integer.parseInt(startDate) < 1200 ? 0 : 1);
 
         // dialog_time_hour_picker (시) 0 ~ 24
-        // 0  1  2  3  4  5  6  7  8  9  10 11
-        // 12 13 14 15 16 17 18 19 20 21 22 23
         String[] hourValues = new String[25];
         for (int i = 0; i < hourValues.length; i++) {
             hourValues[i] = i < 13 ? String.valueOf(i)+" ("+i+")" : String.valueOf(i-12)+" ("+i+")";
-
-            //hourValues[i] = !String.valueOf(i < 12 ? i : i-12).equals("0") ? String.valueOf(i < 12 ? i : i-12) : "12";
         }
         binding.dialogTimeHourPicker.setMinValue(0);
         binding.dialogTimeHourPicker.setMaxValue(hourValues.length-1);
@@ -253,13 +249,25 @@ public class TimePickerDialog extends DialogFragment implements View.OnClickList
             dismiss();
         } else if (v.getId() == binding.dialogTimeOkBtn.getId()) {
 
-            if (!dateFg.equals("interval")){
-                listener.onTimeSet(
-                        binding.dialogTimeHourPicker.getDisplayedValues()[binding.dialogTimeHourPicker.getValue()]
-                                .split("\\(")[1].replace(")", "")
-                                + binding.dialogTimeMinutePicker.getDisplayedValues()[binding.dialogTimeMinutePicker.getValue()]
-                );
-            } else {
+            if (dateFg.equals("open") || dateFg.equals("close")){
+
+//                listener.onTimeSet(
+//                        new ConvertTimeFormat(
+//                                binding.dialogTimeAmpmPicker.getDisplayedValues()[binding.dialogTimeAmpmPicker.getValue()] + " " +
+//                                        binding.dialogTimeHourPicker.getDisplayedValues()[binding.dialogTimeHourPicker.getValue()].split(" ")[0] + ":" +
+//                                        binding.dialogTimeMinutePicker.getDisplayedValues()[binding.dialogTimeMinutePicker.getValue()]
+//                        ).convertTimeFormat2()
+//                );
+
+                String resultVal = binding.dialogTimeHourPicker.getDisplayedValues()[binding.dialogTimeHourPicker.getValue()]
+                        .split("\\(")[1].replace(")", "")
+                        + binding.dialogTimeMinutePicker.getDisplayedValues()[binding.dialogTimeMinutePicker.getValue()];
+
+                resultVal = resultVal.length() < 4 ? "000"+resultVal : resultVal;
+
+                listener.onTimeSet(resultVal.substring(resultVal.length()-4));
+
+            } else if (dateFg.equals("interval")){
                 listener.onTimeSet(binding.dialogTimeMinutePicker.getDisplayedValues()[binding.dialogTimeMinutePicker.getValue()]);
             }
         }
