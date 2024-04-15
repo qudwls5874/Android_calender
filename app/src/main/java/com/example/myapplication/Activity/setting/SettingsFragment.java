@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.myapplication.Activity.setting.service.SettingServiceDialog;
 import com.example.myapplication.databinding.FragmentSettingBinding;
 
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.OnItem
                 break;
             case 1:
                 // 서비스분야 설정
+                SettingServiceDialog serviceDialog = new SettingServiceDialog();
+                serviceDialog.show(getParentFragmentManager(), "setting_service_dialog");
                 break;
             case 2:
                 // 연락처 가져오기

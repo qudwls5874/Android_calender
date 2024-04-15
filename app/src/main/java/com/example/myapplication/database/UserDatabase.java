@@ -76,7 +76,7 @@ public abstract class UserDatabase extends RoomDatabase {
         settingDateDao.insert(new SettingDate("1100"));
         settingDateDao.insert(new SettingDate("2100"));
         settingDateDao.insert(new SettingDate("30"));
-        settingDateDao.insert(new SettingDate("0"));
+        settingDateDao.insert(new SettingDate("NNNNNNN"));
 /*
 * 네일
 헤어

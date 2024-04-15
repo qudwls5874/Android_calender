@@ -6,10 +6,123 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="400dp"
+        android:layout_width="280dp"
+        android:layout_height="180dp"
         android:orientation="vertical"
         android:background="@drawable/rounded_rectangular_shape2">
+
+        <!--  최상단  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/setting_service_close_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/textPlusColor"
+                android:textSize="14dp"
+                android:text="취소"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/setting_service_add_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/textPlusColor"
+                android:textSize="14dp"
+                android:text="완료"/>
+
+        </LinearLayout>
+
+
+        <!-- 구분 선 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/BackBaseInputBoxColor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/setting_service_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/setting_service_add_textView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="항목 추가"/>
+
+            <!-- 구분 선 -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="@color/BackBaseInputBoxColor"/>
+
+            <TextView
+                android:id="@+id/setting_service_change_textView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="기본 설정"/>
+
+        </LinearLayout>
+
+        <!-- 구분 선 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/BackBaseInputBoxColor"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
 
 
 

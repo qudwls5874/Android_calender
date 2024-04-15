@@ -1,9 +1,10 @@
-package com.example.myapplication.Activity.setting;
+package com.example.myapplication.Activity.setting.service;
 
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,21 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.example.myapplication.database.table.SettingDate;
-import com.example.myapplication.database.viewmodel.SettingDateViewModel;
+import com.example.myapplication.database.table.MenuCategory;
+import com.example.myapplication.database.viewmodel.MenuCategoryViewModel;
 import com.example.myapplication.databinding.DialogSettingServiceBinding;
-import com.example.myapplication.databinding.DialogSettingSettingdateBinding;
-import com.example.myapplication.dialog.LoadingDialog;
-import com.example.myapplication.dialog.TimePickerDialog;
-import com.example.myapplication.event.ConvertTimeFormat;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SettingServiceDialog extends DialogFragment implements View.OnClickListener {
 
-    DialogSettingServiceBinding binding;
+    private DialogSettingServiceBinding binding;
+    private SettingServiceChangeAdapter settingServiceChangeAdapter;
+    private MenuCategoryViewModel viewModel;
+    private List<MenuCategory> list = new ArrayList<>();
 
 
     @Nullable
@@ -41,6 +42,17 @@ public class SettingServiceDialog extends DialogFragment implements View.OnClick
 
     private void initData() {
 
+        viewModel = new ViewModelProvider(this).get(MenuCategoryViewModel.class);
+
+        viewModel.getList().observe(getViewLifecycleOwner(), list ->{
+            this.list = list;
+
+            settingServiceChangeAdapter.notifyDataSetChanged();
+        });
+
+        binding.settingServiceRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        settingServiceChangeAdapter = new SettingServiceChangeAdapter(list);
+        binding.settingServiceRecyclerView.setAdapter(settingServiceChangeAdapter);
 
     }
 
