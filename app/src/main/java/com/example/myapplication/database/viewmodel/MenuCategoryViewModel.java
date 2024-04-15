@@ -15,18 +15,18 @@ import java.util.List;
 public class MenuCategoryViewModel extends AndroidViewModel {
 
     private MenuCategoryRepository repository;
-    private LiveData<List<MenuCategory>> list;
+    private LiveData<List<MenuCategory>> resultList;
 
     public MenuCategoryViewModel(@NonNull Application application) {
         super(application);
         repository = new MenuCategoryRepository(application);
-        list = repository.list;
+        resultList = repository.list;
 //        for (int i = 0; i < list.getValue().size(); i++){
 //            Log.i("카테고리 데이터", list.getValue().get(i).getMenuCategoryName());
 //        }
     }
 
     public LiveData<List<MenuCategory>> getList() {
-        return list;
+        return resultList;
     }
 }

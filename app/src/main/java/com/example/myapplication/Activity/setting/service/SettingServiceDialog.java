@@ -44,15 +44,26 @@ public class SettingServiceDialog extends DialogFragment implements View.OnClick
 
         viewModel = new ViewModelProvider(this).get(MenuCategoryViewModel.class);
 
-        viewModel.getList().observe(getViewLifecycleOwner(), list ->{
-            this.list = list;
+        viewModel.getList().observe(getViewLifecycleOwner(), resultList ->{
+            this.list = resultList;
+//            for (MenuCategory data : this.list){
+//                Log.i("리스트 값", data.getMenuCategoryName());
+//            }
+            //Log.i("리스트 값", ""+settingServiceChangeAdapter.getItemCount());
 
             settingServiceChangeAdapter.notifyDataSetChanged();
+
+            Log.i("어댑터 값", ""+settingServiceChangeAdapter.getItemCount());
+            Log.i("리스트 값", ""+list.size());
+
+
         });
 
         binding.settingServiceRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         settingServiceChangeAdapter = new SettingServiceChangeAdapter(list);
         binding.settingServiceRecyclerView.setAdapter(settingServiceChangeAdapter);
+
+
 
     }
 
