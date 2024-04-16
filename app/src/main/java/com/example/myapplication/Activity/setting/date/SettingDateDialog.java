@@ -1,4 +1,4 @@
-package com.example.myapplication.Activity.setting;
+package com.example.myapplication.Activity.setting.date;
 
 import android.app.Dialog;
 import android.graphics.Color;

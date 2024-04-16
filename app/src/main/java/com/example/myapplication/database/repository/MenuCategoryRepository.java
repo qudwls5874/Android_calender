@@ -38,4 +38,19 @@ public class MenuCategoryRepository {
     }
 
 
+    public void updateList(List<MenuCategory> list){new UpdateAsyncTask().execute(list);}
+    private class UpdateAsyncTask extends AsyncTask<List<MenuCategory>, Void, Void>{
+        @Override
+        protected Void doInBackground(List<MenuCategory>... lists) {
+            dao.updateAll(lists[0]);
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+
+        }
+    }
+
+
 }

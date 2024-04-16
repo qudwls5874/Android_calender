@@ -1,7 +1,6 @@
 package com.example.myapplication.database.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,12 +20,11 @@ public class MenuCategoryViewModel extends AndroidViewModel {
         super(application);
         repository = new MenuCategoryRepository(application);
         resultList = repository.list;
-//        for (int i = 0; i < list.getValue().size(); i++){
-//            Log.i("카테고리 데이터", list.getValue().get(i).getMenuCategoryName());
-//        }
     }
 
     public LiveData<List<MenuCategory>> getList() {
         return resultList;
     }
+
+    public void setList(List<MenuCategory> list){repository.updateList(list);}
 }

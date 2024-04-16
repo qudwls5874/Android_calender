@@ -9,9 +9,11 @@ public class MenuCategory {
     @PrimaryKey(autoGenerate = true)
     int menuCategoryId;
     String menuCategoryName;
+    String menuCategoryYn;
 
-    public MenuCategory(String menuCategoryName){
+    public MenuCategory(String menuCategoryName, String menuCategoryYn){
         this.menuCategoryName = menuCategoryName;
+        this.menuCategoryYn = menuCategoryYn;
     }
 
     public int getMenuCategoryId() {
@@ -28,5 +30,13 @@ public class MenuCategory {
 
     public void setMenuCategoryName(String menuCategoryName) {
         this.menuCategoryName = menuCategoryName;
+    }
+
+    public String getMenuCategoryYn() {
+        return menuCategoryYn;
+    }
+
+    public void setMenuCategoryYn(String menuCategoryYn) {
+        this.menuCategoryYn = menuCategoryYn;
     }
 }

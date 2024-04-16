@@ -17,7 +17,7 @@ public interface MenuCategoryDao {
     void insert(MenuCategory menuCategory);
 
     @Update
-    void update(MenuCategory menuCategory);
+    void updateAll(List<MenuCategory> menuCategory);
 
     @Delete
     void delete(MenuCategory menuCategory);
