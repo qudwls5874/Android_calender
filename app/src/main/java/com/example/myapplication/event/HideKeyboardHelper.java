@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-public class HideKeyboardHelperActivity {
+public class HideKeyboardHelper {
 
     // 뷰를 터치했을 때 키보드를 숨기는 기능을 설정하는 메서드
     public static void setupUI(View view, final Activity activity) {

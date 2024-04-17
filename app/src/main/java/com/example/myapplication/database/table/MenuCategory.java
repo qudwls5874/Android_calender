@@ -16,6 +16,12 @@ public class MenuCategory {
         this.menuCategoryYn = menuCategoryYn;
     }
 
+    public MenuCategory(MenuCategory menuCategory){
+        this.menuCategoryId = menuCategory.getMenuCategoryId();
+        this.menuCategoryName = menuCategory.getMenuCategoryName();
+        this.menuCategoryYn = menuCategory.getMenuCategoryYn();
+    }
+
     public int getMenuCategoryId() {
         return menuCategoryId;
     }

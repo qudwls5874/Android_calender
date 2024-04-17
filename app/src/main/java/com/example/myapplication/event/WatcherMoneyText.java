@@ -21,6 +21,16 @@ public class WatcherMoneyText implements TextWatcher {
         this.decimalFormat = new DecimalFormat("#,###");
     }
 
+    // 텍스트뷰 생성자 & 콤마찍기
+    public WatcherMoneyText(){}
+    public String moneyTextChanged(String text){
+        if (!text.isEmpty()) {
+            long number = Long.parseLong(text.replaceAll(",", ""));
+            text = new DecimalFormat("#,###").format(number);
+        }
+        return text;
+    }
+
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -54,6 +64,7 @@ public class WatcherMoneyText implements TextWatcher {
 
     public interface OnSearchChangeListener{
         void onSearchTextChanged(String newText, Integer index);
+
     }
 
 }

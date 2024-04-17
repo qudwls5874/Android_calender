@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.myapplication.R;
 import com.example.myapplication.database.table.User;
 import com.example.myapplication.database.viewmodel.UserViewModel;
-import com.example.myapplication.event.HideKeyboardHelperActivity;
+import com.example.myapplication.event.HideKeyboardHelper;
 import com.example.myapplication.databinding.FragmentUserBinding;
 import com.example.myapplication.event.WatcherSearchText;
 
@@ -45,7 +45,7 @@ public class UserFragment extends Fragment implements View.OnClickListener, Watc
     private void initData() {
 
         // 키보드 숨기기
-        HideKeyboardHelperActivity.setupUI(binding.getRoot(), getActivity());
+        HideKeyboardHelper.setupUI(binding.getRoot(), getActivity());
 
         // 클릭 리스너 이벤트
         binding.userAddBtn.setOnClickListener(this);

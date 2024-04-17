@@ -10,9 +10,13 @@ public class MenuList {
     int menuListId;
     int menuCategoryId;
     String menuName;
-    String menuMoney;
+    int menuMoney;
 
-    public MenuList(int menuCategoryId, String menuName, String menuMoney){
+    public MenuList(){
+
+    }
+
+    public MenuList(int menuCategoryId, String menuName, int menuMoney){
         this.menuCategoryId = menuCategoryId;
         this.menuName = menuName;
         this.menuMoney = menuMoney;
@@ -42,11 +46,11 @@ public class MenuList {
         this.menuName = menuName;
     }
 
-    public String getMenuMoney() {
+    public int getMenuMoney() {
         return menuMoney;
     }
 
-    public void setMenuMoney(String menuMoney) {
+    public void setMenuMoney(int menuMoney) {
         this.menuMoney = menuMoney;
     }
 }

@@ -17,7 +17,7 @@ public interface MenuListDao {
 
     @Query("SELECT * FROM menulists")
     List<MenuList> selectAll();
-
+/*
     @Query("SELECT  * " +
             "FROM   menulists as A " +
             "LEFT JOIN menucategorys as B " +
@@ -25,6 +25,9 @@ public interface MenuListDao {
             "WHERE B.menuCategoryYn = \"Y\" " +
             "ORDER BY B.menuCategoryId, A.menuListId ")
     List<MenuJoin> getMenuJoinList();
+*/
 
+    @Query("SELECT * FROM menucategorys WHERE menuCategoryYn = 'Y'")
+    List<MenuJoin> getMenuJoinList();
 
 }

@@ -79,10 +79,6 @@ public class UserMoneyAdapter extends RecyclerView.Adapter<UserMoneyAdapter.User
         return moneyList.size();
     }
 
-    @Override
-    public void onSearchTextChanged(String newText, Integer index) {
-        moneyList.get(index).setMoney((newText.equals("")) ? 0 : Integer.valueOf(newText.replaceAll(",", "")));
-    }
 
     public class UserMoneyHolder extends RecyclerView.ViewHolder {
 
@@ -99,6 +95,11 @@ public class UserMoneyAdapter extends RecyclerView.Adapter<UserMoneyAdapter.User
             editText3 = itemView.findViewById(R.id.view_money_editText3);
         }
 
+    }
+
+    @Override
+    public void onSearchTextChanged(String newText, Integer index) {
+        moneyList.get(index).setMoney((newText.equals("")) ? 0 : Integer.valueOf(newText.replaceAll(",", "")));
     }
 
     public interface CanselMoneyLisner{

@@ -83,6 +83,7 @@ public class SettingServiceMainDialog extends DialogFragment implements View.OnC
         if (v.getId() == binding.settingServiceMainCloseBtn.getId()){
             // 닫기
             if (binding.settingServiceMainAddBtn.getVisibility() == View.VISIBLE){
+                binding.settingServiceMainCloseBtn.setText("닫기");
                 binding.settingServiceMainAddBtn.setVisibility(View.GONE);
                 binding.settingServiceMainLinearLayout.setVisibility(View.VISIBLE);
                 binding.settingServiceChangeLinearLayout.setVisibility(View.GONE);
@@ -95,10 +96,11 @@ public class SettingServiceMainDialog extends DialogFragment implements View.OnC
             Toast.makeText(getContext(), "저장 되었습니다.", Toast.LENGTH_SHORT).show();
         } else if (v.getId() == binding.settingServiceMainAddTextView.getId()){
             // 항목 추가
-            SettingServiceListDialog listDialog = new SettingServiceListDialog();
+            SettingServiceListHDialog listDialog = new SettingServiceListHDialog();
             listDialog.show(getParentFragmentManager(), "setting_list_dialog");
         } else if (v.getId() == binding.settingServiceMainChangeTextView.getId()) {
             // 항목 선택(바꾸기)
+            binding.settingServiceMainCloseBtn.setText("＜");
             binding.settingServiceMainAddBtn.setVisibility(View.VISIBLE);
             binding.settingServiceMainLinearLayout.setVisibility(View.GONE);
             binding.settingServiceChangeLinearLayout.setVisibility(View.VISIBLE);

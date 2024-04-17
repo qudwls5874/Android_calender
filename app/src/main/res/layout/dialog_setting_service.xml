@@ -25,7 +25,7 @@
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/textPlusColor"
                 android:textSize="14dp"
-                android:text="취소"/>
+                android:text="닫기"/>
 
             <View
                 android:layout_width="0dp"
