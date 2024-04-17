@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.database.UserDatabase;
 import com.example.myapplication.database.dao.MenuListDao;
+import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.table.User;
 import com.example.myapplication.database.view.MenuJoin;
 
@@ -39,6 +40,20 @@ public class MenuListRepository {
             if (menuJoins != null) {
                 joinList.setValue(menuJoins);
             }
+        }
+    }
+
+    public void insertList(MenuList menuList){new InsertAsyncTask().execute(menuList);}
+    public class InsertAsyncTask extends AsyncTask<MenuList, Void, List<MenuJoin>>{
+        @Override
+        protected List<MenuJoin> doInBackground(MenuList... menuLists) {
+            dao.insert(menuLists[0]);
+            return dao.getMenuJoinList();
+        }
+        @Override
+        protected void onPostExecute(List<MenuJoin> menuJoins) {
+            super.onPostExecute(menuJoins);
+            joinList.setValue(menuJoins);
         }
     }
 

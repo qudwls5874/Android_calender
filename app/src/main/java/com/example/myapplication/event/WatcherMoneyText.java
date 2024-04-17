@@ -13,7 +13,7 @@ public class WatcherMoneyText implements TextWatcher {
     EditText editText;
     private DecimalFormat decimalFormat;
 
-
+    // 어댑터 인덱스 필요할때
     public WatcherMoneyText(OnSearchChangeListener listener, int index, EditText editText){
         this.mListener = listener;
         this.index = index;
@@ -21,7 +21,13 @@ public class WatcherMoneyText implements TextWatcher {
         this.decimalFormat = new DecimalFormat("#,###");
     }
 
-    // 텍스트뷰 생성자 & 콤마찍기
+    // 어댑터 인덱스 필요할때
+    public WatcherMoneyText(EditText editText){
+        this.editText = editText;
+        this.decimalFormat = new DecimalFormat("#,###");
+    }
+
+    // 텍스트뷰 생성자 & 콤마찍기 . TextView
     public WatcherMoneyText(){}
     public String moneyTextChanged(String text){
         if (!text.isEmpty()) {

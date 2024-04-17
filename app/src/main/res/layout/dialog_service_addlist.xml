@@ -98,10 +98,18 @@
 
         <EditText
             android:id="@+id/setting_service_list_search_editText"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:hint="검색"
             android:background="@android:color/transparent"/>
+
+        <ImageView
+            android:id="@+id/setting_service_list_cansel_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_cansel_btn"/>
 
     </LinearLayout>
 
@@ -110,8 +118,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        tools:listitem="@layout/view_service_item_list_row"
-        tools:itemCount="2"/>
+        tools:itemCount="2"
+        tools:listitem="@layout/view_service_item_list_row" />
 
 
 </LinearLayout>

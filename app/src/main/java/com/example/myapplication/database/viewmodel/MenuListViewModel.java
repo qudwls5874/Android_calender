@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.database.repository.MenuListRepository;
+import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public class MenuListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<MenuJoin>> getList(){return list;}
+    public void setList(MenuList menuList){
+        repository.insertList(menuList);
+    }
 
 
 

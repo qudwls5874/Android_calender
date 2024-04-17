@@ -38,7 +38,6 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
     public static boolean layoutCheck = false;
 
     private DialogServiceAddlistBinding binding;
-    private MenuListViewModel viewModel;
 
     private SettingServiceListHAdapter adapter;
     private ArrayList<MenuJoin> list = new ArrayList<>();
@@ -70,7 +69,7 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
         binding.settingServiceListRecyclerView.setAdapter(adapter);
         binding.settingServiceListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        viewModel = new ViewModelProvider(this).get(MenuListViewModel.class);
+        MenuListViewModel viewModel = new ViewModelProvider(this).get(MenuListViewModel.class);
 
         viewModel.getList().observe(getViewLifecycleOwner(), menuJoins -> {
             setDataList(menuJoins);
@@ -79,6 +78,7 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
 
         binding.settingServiceListaddCloseBtn.setOnClickListener(this);
         binding.settingServiceListaddSaveBtn.setOnClickListener(this);
+        binding.settingServiceListCanselBtn.setOnClickListener(this);
 
 
     }
@@ -118,6 +118,7 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
 
     @Override
     public void onClick(View v) {
+
         if (v.getId() == binding.settingServiceListaddCloseBtn.getId()){
 
             if (layoutCheck){
@@ -128,6 +129,8 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
 
         } else if (v.getId() == binding.settingServiceListaddSaveBtn.getId()) {
             setLayoutChanged();
+        } else if (v.getId() == binding.settingServiceListCanselBtn.getId()) {
+            binding.settingServiceListSearchEditText.setText("");
         }
     }
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.databinding.ViewServiceItemListRowBinding;
+import com.example.myapplication.dialog.ServiceAddDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,15 +56,16 @@ public class SettingServiceListHAdapter extends RecyclerView.Adapter<SettingServ
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ViewServiceItemListRowBinding binding;
-
 
         public ViewHolder(@NonNull ViewServiceItemListRowBinding binding) {
             super(binding.getRoot());
 
             this.binding = binding;
+
+            binding.itemServiceAddBtn.setOnClickListener(this);
         }
 
         public void setMenuListAdapter(ArrayList<MenuList> menuLists){
@@ -72,7 +74,17 @@ public class SettingServiceListHAdapter extends RecyclerView.Adapter<SettingServ
             binding.itemServiceRecyclerView.setLayoutManager(new LinearLayoutManager(binding.itemServiceRecyclerView.getContext()));
         }
 
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == binding.itemServiceAddBtn.getId()){
+                ServiceAddDialog addDialog = new ServiceAddDialog(binding.getRoot().getContext(), list.get(getAdapterPosition()).menuCategory);
+                addDialog.show();
+            }
+        }
+
     }
+
+
 
 
 }
