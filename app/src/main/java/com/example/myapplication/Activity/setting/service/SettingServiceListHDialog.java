@@ -25,35 +25,46 @@ import com.example.myapplication.database.table.User;
 import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.database.viewmodel.MenuListViewModel;
 import com.example.myapplication.databinding.DialogServiceAddlistBinding;
+import com.example.myapplication.dialog.ServiceAddDialog;
+import com.example.myapplication.dialog.ServiceUpdateDialog;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.SwipeDismissTouchListener;
 import com.example.myapplication.event.WatcherSearchText;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class SettingServiceListHDialog extends DialogFragment implements View.OnClickListener, WatcherSearchText.OnSearchChangeListener {
+public class SettingServiceListHDialog extends DialogFragment implements    View.OnClickListener,
+                                                                            WatcherSearchText.OnSearchChangeListener,
+                                                                            ServiceAddDialog.SetMenuListLisner,
+                                                                            ServiceUpdateDialog.SetMenuUpdateLisner,
+                                                                            SettingServiceListDAdapter.setOnclickColorChangedLisner {
 
     public static boolean layoutCheck = false;
 
     private DialogServiceAddlistBinding binding;
+    private MenuListViewModel viewModel;
 
     private SettingServiceListHAdapter adapter;
     private ArrayList<MenuJoin> list = new ArrayList<>();
     private ArrayList<MenuJoin> filterList = new ArrayList<>();
+    private ArrayList<MenuList> delList = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DialogServiceAddlistBinding.inflate(inflater, container, false);
 
+        initUI();
         initData();
 
         return binding.getRoot();
     }
 
-    private void initData() {
+    private void initUI() {
 
         // 키보드
         HideKeyboardHelperDialog.setupUI(binding.getRoot(), super.getDialog());
@@ -61,33 +72,30 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
         // 입력 리스너
         binding.settingServiceListSearchEditText.addTextChangedListener(new WatcherSearchText(this::onSearchTextChanged));
 
-        // 닫기
+        // 스와이프 닫기
         SwipeDismissTouchListener swipeDismissTouchListener = new SwipeDismissTouchListener(getDialog().getWindow().getDecorView(), () -> dismiss());
         binding.userAddTopLayout.setOnTouchListener(swipeDismissTouchListener);
 
-        adapter = new SettingServiceListHAdapter(filterList);
-        binding.settingServiceListRecyclerView.setAdapter(adapter);
-        binding.settingServiceListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        MenuListViewModel viewModel = new ViewModelProvider(this).get(MenuListViewModel.class);
-
-        viewModel.getList().observe(getViewLifecycleOwner(), menuJoins -> {
-            setDataList(menuJoins);
-        });
-
-
+        // 클릭 리스너
         binding.settingServiceListaddCloseBtn.setOnClickListener(this);
         binding.settingServiceListaddSaveBtn.setOnClickListener(this);
         binding.settingServiceListCanselBtn.setOnClickListener(this);
 
+        // 어댑터
+        adapter = new SettingServiceListHAdapter(filterList, this, this, this);
+        binding.settingServiceListRecyclerView.setAdapter(adapter);
+        binding.settingServiceListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 
-    private void setDataList(List<MenuJoin> result){
-        if (list == null)
-            list = new ArrayList<>();
+    private void initData() {
+        viewModel = new ViewModelProvider(this).get(MenuListViewModel.class);
+        viewModel.getList().observe(getViewLifecycleOwner(), this::setDataList);
+    }
 
+    private void setDataList(List<MenuJoin> result){
         list.clear();
+        delList.clear();
         list.addAll(result);
         onSearchTextChanged(String.valueOf(binding.settingServiceListSearchEditText.getText()), null);
     }
@@ -96,7 +104,6 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
     @Override
     public void onStart() {
         super.onStart();
-
         Window window = getDialog().getWindow();
         if (window != null) {
             // 백그라운드 투명
@@ -108,10 +115,8 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
             params.width = WindowManager.LayoutParams.MATCH_PARENT;
             params.height = (int) (Resources.getSystem().getDisplayMetrics().heightPixels * 0.95);
             window.setAttributes(params);
-
             // UI 하단 정렬
             window.setGravity(Gravity.BOTTOM);
-
         }
     }
 
@@ -120,7 +125,7 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
     public void onClick(View v) {
 
         if (v.getId() == binding.settingServiceListaddCloseBtn.getId()){
-
+            // 닫기, 취소 버튼
             if (layoutCheck){
                 setLayoutChanged();
             } else {
@@ -128,14 +133,18 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
             }
 
         } else if (v.getId() == binding.settingServiceListaddSaveBtn.getId()) {
+            // 편집, 저장 버튼
+            if (layoutCheck){
+                viewModel.setDeleteList(delList);
+            }
             setLayoutChanged();
         } else if (v.getId() == binding.settingServiceListCanselBtn.getId()) {
+            // 검색 지우기 버튼
             binding.settingServiceListSearchEditText.setText("");
         }
     }
 
     private void setLayoutChanged(){
-
         // layoutCheck = false > 기본상태, layoutCheck = true > 편집상태
         if (!layoutCheck){
             binding.settingServiceListaddCloseBtn.setText("취소");
@@ -146,7 +155,6 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
             binding.settingServiceListaddSaveBtn.setText("편집");
             layoutCheck = false;
         }
-
         adapter.notifyDataSetChanged();
     }
 
@@ -160,12 +168,28 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
     @Override
     public void onSearchTextChanged(String newText, Integer index) {
         filterList.clear();
-
+        delList.clear();
         if (newText.isEmpty()) {
-            filterList.addAll(list); // 검색 쿼리가 비어 있으면 전체 목록을 보여줍니다.
+            // 검색 쿼리가 비어 있으면 전체 목록을 보여줍니다.
+            filterList.addAll(list);
         } else {
-//            List<MenuJoin> menuLists = new ArrayList<>();
+            // 검색어가 있을 때는 각 항목을 검색하여 필터링합니다.
+            for (MenuJoin menuJoin : list) {
+                // 메뉴 리스트를 순회하면서 검색어를 포함하는 항목을 찾습니다.
+                List<MenuList> filteredMenuLists = menuJoin.menuLists.stream()
+                        .filter(data -> data.getMenuName().toLowerCase().contains(newText.toLowerCase()))
+                        .collect(Collectors.toList());
 
+                // 필터링된 결과가 비어있지 않다면 새로운 필터링된 메뉴 조인을 생성하여 필터링된 목록에 추가합니다.
+                if (!filteredMenuLists.isEmpty()) {
+                    MenuJoin filteredMenuJoin = new MenuJoin();
+                    filteredMenuJoin.menuCategory = menuJoin.menuCategory;
+                    filteredMenuJoin.menuLists = filteredMenuLists;
+                    filterList.add(filteredMenuJoin);
+                }
+            }
+
+            /*
             for (int i = 0; i < list.size(); i++){
                 MenuCategory category = new MenuCategory(list.get(i).menuCategory);
                 List<MenuList> menuLists = new ArrayList<>();
@@ -179,8 +203,34 @@ public class SettingServiceListHDialog extends DialogFragment implements View.On
                 menuJoin.menuLists = menuLists;
                 filterList.add(menuJoin);
             }
+            */
         }
-        adapter.notifyDataSetChanged(); // 변경된 목록을 RecyclerView에 반영합니다.
+        // 변경된 목록을 RecyclerView에 반영합니다.
+        adapter.notifyDataSetChanged();
     }
+
+    // 저장값 리스너
+    @Override
+    public void setMenuListLisner(MenuList menuList) {
+        viewModel.setList(menuList);
+    }
+
+    // 수정값 리스너
+    @Override
+    public void setUdateLisner(MenuList menuList) {
+
+    }
+
+    // 삭제값 등록 리스너
+    @Override
+    public void setOnclickColorChangedLisner(MenuList menuList) {
+        if (delList.contains(menuList)){
+            delList.remove(menuList);
+        } else {
+            delList.add(menuList);
+        }
+    }
+
+
 
 }

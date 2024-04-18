@@ -16,4 +16,5 @@ public class MenuJoin {
 
     @Relation(parentColumn = "menuCategoryId", entityColumn = "menuCategoryId")
     public List<MenuList> menuLists;
+
 }

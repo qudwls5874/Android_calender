@@ -67,7 +67,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
         @Override
         public void onClick(View v) {
             if (listener != null){
-                listener.OnItemClickListener(getAdapterPosition());
+                listener.OnItemClickListener(getBindingAdapterPosition());
             }
         }
     }

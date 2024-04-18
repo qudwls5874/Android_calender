@@ -8,29 +8,38 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.database.table.MenuCategory;
 import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
-import com.example.myapplication.databinding.ViewServiceItemListRowBinding;
+import com.example.myapplication.databinding.ViewServiceItemListHRowBinding;
 import com.example.myapplication.dialog.ServiceAddDialog;
+import com.example.myapplication.dialog.ServiceUpdateDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SettingServiceListHAdapter extends RecyclerView.Adapter<SettingServiceListHAdapter.ViewHolder> {
 
     private ArrayList<MenuJoin> list;
-    private ViewServiceItemListRowBinding binding;
+    private ViewServiceItemListHRowBinding binding;
+    private ServiceAddDialog.SetMenuListLisner addLisner;
+    private ServiceUpdateDialog.SetMenuUpdateLisner updateLisner;
+    private SettingServiceListDAdapter.setOnclickColorChangedLisner colorLisner;
 
-    public SettingServiceListHAdapter(ArrayList<MenuJoin> list){
+    public SettingServiceListHAdapter(ArrayList<MenuJoin> list, ServiceAddDialog.SetMenuListLisner addLisner,
+                                                                ServiceUpdateDialog.SetMenuUpdateLisner updateLisner,
+                                                                SettingServiceListDAdapter.setOnclickColorChangedLisner colorLisner){
         this.list = list;
+        this.addLisner = addLisner;
+        this.updateLisner = updateLisner;
+        this.colorLisner = colorLisner;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = ViewServiceItemListRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        binding = ViewServiceItemListHRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        return new ViewHolder(binding);
+        return new ViewHolder(binding, addLisner);
     }
 
     @Override
@@ -39,7 +48,7 @@ public class SettingServiceListHAdapter extends RecyclerView.Adapter<SettingServ
         MenuJoin data = list.get(position);
 
         holder.binding.itemServiceTextView.setText(data.menuCategory.getMenuCategoryName());
-        holder.setMenuListAdapter((ArrayList<MenuList>) data.menuLists);
+        holder.setMenuListAdapter((ArrayList<MenuList>) data.menuLists, data.menuCategory);
 
         if (SettingServiceListHDialog.layoutCheck)
             holder.binding.itemServiceAddBtn.setVisibility(View.VISIBLE);
@@ -55,21 +64,23 @@ public class SettingServiceListHAdapter extends RecyclerView.Adapter<SettingServ
     }
 
 
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ViewServiceItemListRowBinding binding;
+        private ViewServiceItemListHRowBinding binding;
+        private ServiceAddDialog.SetMenuListLisner addLisner;
 
-        public ViewHolder(@NonNull ViewServiceItemListRowBinding binding) {
+        public ViewHolder(@NonNull ViewServiceItemListHRowBinding binding, ServiceAddDialog.SetMenuListLisner addLisner) {
             super(binding.getRoot());
 
             this.binding = binding;
+            this.addLisner = addLisner;
 
             binding.itemServiceAddBtn.setOnClickListener(this);
         }
 
-        public void setMenuListAdapter(ArrayList<MenuList> menuLists){
-            SettingServiceListDAdapter apSettingServiceListDAdapter = new SettingServiceListDAdapter(menuLists);
+        // 상세 어댑터 설정
+        public void setMenuListAdapter(ArrayList<MenuList> menuLists, MenuCategory menuCategory){
+            SettingServiceListDAdapter apSettingServiceListDAdapter = new SettingServiceListDAdapter(menuLists, updateLisner, colorLisner, menuCategory);
             binding.itemServiceRecyclerView.setAdapter(apSettingServiceListDAdapter);
             binding.itemServiceRecyclerView.setLayoutManager(new LinearLayoutManager(binding.itemServiceRecyclerView.getContext()));
         }
@@ -77,14 +88,11 @@ public class SettingServiceListHAdapter extends RecyclerView.Adapter<SettingServ
         @Override
         public void onClick(View v) {
             if (v.getId() == binding.itemServiceAddBtn.getId()){
-                ServiceAddDialog addDialog = new ServiceAddDialog(binding.getRoot().getContext(), list.get(getAdapterPosition()).menuCategory);
+                // 추가 다이얼로그 버튼 (저장)
+                ServiceAddDialog addDialog = new ServiceAddDialog(binding.getRoot().getContext(), list.get(getBindingAdapterPosition()).menuCategory, addLisner);
                 addDialog.show();
             }
         }
-
     }
-
-
-
 
 }

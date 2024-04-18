@@ -1,6 +1,7 @@
 package com.example.myapplication.database.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -14,6 +15,9 @@ public interface MenuListDao {
 
     @Insert
     void insert(MenuList menuList);
+
+    @Delete
+    void deleteChoice(List<MenuList> menuList);
 
     @Query("SELECT * FROM menulists")
     List<MenuList> selectAll();

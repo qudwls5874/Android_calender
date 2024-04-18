@@ -119,7 +119,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         tools:itemCount="2"
-        tools:listitem="@layout/view_service_item_list_row" />
+        tools:listitem="@layout/view_service_item_list_h_row" />
 
 
 </LinearLayout>

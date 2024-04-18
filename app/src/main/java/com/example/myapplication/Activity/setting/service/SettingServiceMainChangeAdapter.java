@@ -57,7 +57,7 @@ class SettingServiceMainChangeAdapter extends RecyclerView.Adapter<SettingServic
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            lisner.OnitemCheckedChangeLisner(getAdapterPosition(), isChecked);
+            lisner.OnitemCheckedChangeLisner(getBindingAdapterPosition(), isChecked);
         }
     }
 

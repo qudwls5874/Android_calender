@@ -28,6 +28,7 @@ public class MenuListViewModel extends AndroidViewModel {
     public void setList(MenuList menuList){
         repository.insertList(menuList);
     }
+    public void setDeleteList(List<MenuList> menuLists){repository.delete(menuLists);}
 
 
 

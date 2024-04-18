@@ -17,7 +17,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/setting_service_add_close_btn"
+                android:id="@+id/setting_service_update_close_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|bottom"
@@ -27,7 +27,7 @@
                 android:text="취소"/>
 
             <TextView
-                android:id="@+id/setting_service_add_title_textView"
+                android:id="@+id/setting_service_update_title_textView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -36,7 +36,7 @@
                 android:text="네일"/>
 
             <TextView
-                android:id="@+id/setting_service_add_save_btn"
+                android:id="@+id/setting_service_update_save_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|bottom"
@@ -53,14 +53,14 @@
 
 
         <EditText
-            android:id="@+id/setting_service_add_menulistname_editText"
+            android:id="@+id/setting_service_update_menulistname_editText"
             android:layout_width="200dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:background="@drawable/rounded_border_input_text"
             android:gravity="center"
             android:singleLine="true"
-            android:nextFocusDown="@id/setting_service_add_menulistmoney_editText"
+            android:nextFocusDown="@id/setting_service_update_menulistmoney_editText"
             android:textSize="13dp"
             android:hint="서비스명" />
 
@@ -69,7 +69,7 @@
             android:layout_height="10dp"/>
 
         <EditText
-            android:id="@+id/setting_service_add_menulistmoney_editText"
+            android:id="@+id/setting_service_update_menulistmoney_editText"
             android:layout_width="200dp"
             android:layout_height="30dp"
             android:layout_gravity="center"

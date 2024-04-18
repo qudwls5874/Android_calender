@@ -245,17 +245,10 @@
 
                     <CheckBox
                         android:id="@+id/setting_monday_checkBox"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:scaleY="0.8"
-                        android:scaleX="0.8"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:layout_gravity="center"
+                        android:layout_height="30dp"
+                        android:paddingStart="-4dp"
+                        android:textSize="13dp"
                         android:text="월요일"/>
 
                 </LinearLayout>
@@ -268,17 +261,10 @@
 
                     <CheckBox
                         android:id="@+id/setting_tuesday_checkBox"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:scaleY="0.8"
-                        android:scaleX="0.8"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:layout_gravity="center"
+                        android:layout_height="30dp"
+                        android:paddingStart="-4dp"
+                        android:textSize="13dp"
                         android:text="화요일"/>
 
                 </LinearLayout>
@@ -291,18 +277,12 @@
 
                     <CheckBox
                         android:id="@+id/setting_wednesday_checkBox"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:scaleY="0.8"
-                        android:scaleX="0.8"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:layout_gravity="center"
+                        android:layout_height="30dp"
+                        android:paddingStart="-4dp"
+                        android:textSize="13dp"
                         android:text="수요일"/>
+
 
                 </LinearLayout>
 
@@ -314,17 +294,10 @@
 
                     <CheckBox
                         android:id="@+id/setting_thursday_checkBox"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:scaleY="0.8"
-                        android:scaleX="0.8"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:layout_gravity="center"
+                        android:layout_height="30dp"
+                        android:paddingStart="-4dp"
+                        android:textSize="13dp"
                         android:text="목요일"/>
 
                 </LinearLayout>
@@ -347,17 +320,10 @@
 
                     <CheckBox
                         android:id="@+id/setting_friday_checkBox"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:scaleY="0.8"
-                        android:scaleX="0.8"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:layout_gravity="center"
+                        android:layout_height="30dp"
+                        android:paddingStart="-4dp"
+                        android:textSize="13dp"
                         android:text="금요일"/>
 
                 </LinearLayout>
@@ -370,18 +336,12 @@
 
                     <CheckBox
                         android:id="@+id/setting_saturday_checkBox"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:scaleY="0.8"
-                        android:scaleX="0.8"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:layout_gravity="center"
+                        android:layout_height="30dp"
+                        android:paddingStart="-4dp"
+                        android:textSize="13dp"
                         android:text="토요일"/>
+
 
                 </LinearLayout>
 
@@ -393,25 +353,15 @@
 
                     <CheckBox
                         android:id="@+id/setting_sunday_checkBox"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:scaleY="0.8"
-                        android:scaleX="0.8"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:layout_gravity="center"
+                        android:layout_height="30dp"
+                        android:paddingStart="-4dp"
+                        android:textSize="13dp"
                         android:text="일요일"/>
 
                 </LinearLayout>
 
-
             </LinearLayout>
-
-
 
 
         </LinearLayout>

@@ -57,5 +57,25 @@ public class MenuListRepository {
         }
     }
 
+    public void delete(List<MenuList> menuList){
+        for (MenuList data : menuList){
+            Log.i("List 데이터2", data.getMenuName());
+            Log.i("List 데이터2", ""+data.getMenuListId());
+        }
+        new DeleteAsyncTask().execute(menuList);
+    }
+    public class DeleteAsyncTask extends AsyncTask<List<MenuList>, Void, List<MenuJoin>>{
+        @Override
+        protected List<MenuJoin> doInBackground(List<MenuList>... lists) {
+            dao.deleteChoice(lists[0]);
+            return dao.getMenuJoinList();
+        }
+        @Override
+        protected void onPostExecute(List<MenuJoin> menuJoins) {
+            super.onPostExecute(menuJoins);
+            joinList.setValue(menuJoins);
+        }
+    }
+
 
 }

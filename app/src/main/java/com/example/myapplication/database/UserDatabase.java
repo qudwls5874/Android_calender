@@ -59,6 +59,7 @@ public abstract class UserDatabase extends RoomDatabase {
         return instance;
     }
 
+    // 초기 데이터 설정
     private static void insertInitialData(UserDatabase  userDatabase) {
         MoneyNameDao moneyNameDao = userDatabase.getMoneyNameDao();
         moneyNameDao.insert(new MoneyName("정액제"));
@@ -183,30 +184,12 @@ public abstract class UserDatabase extends RoomDatabase {
         menuListDao.insert(new MenuList(8, "타투 제거", 200000));
 
 
-
         SettingDateDao settingDateDao = userDatabase.getSettingDao();
         settingDateDao.insert(new SettingDate("1100"));
         settingDateDao.insert(new SettingDate("2100"));
         settingDateDao.insert(new SettingDate("30"));
         settingDateDao.insert(new SettingDate("NNNNNNN"));
-/*
-* 네일
-헤어
-애견미용
-속눈썹
-피부
-메이크업
-왁싱
-아트타투, 헤나타투
-미용문신(반영구)
 
-바버
-마사지
-드라이
-태닝
-눈썹
-실제모
-*/
     }
 
 

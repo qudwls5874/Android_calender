@@ -13,6 +13,8 @@ public class WatcherMoneyText implements TextWatcher {
     EditText editText;
     private DecimalFormat decimalFormat;
 
+    public WatcherMoneyText(){}
+
     // 어댑터 인덱스 필요할때
     public WatcherMoneyText(OnSearchChangeListener listener, int index, EditText editText){
         this.mListener = listener;
@@ -27,17 +29,17 @@ public class WatcherMoneyText implements TextWatcher {
         this.decimalFormat = new DecimalFormat("#,###");
     }
 
-    // 텍스트뷰 생성자 & 콤마찍기 . TextView
-    public WatcherMoneyText(){}
-    public String moneyTextChanged(String text){
+    // 텍스트뷰 생성자 & 콤마찍기 . 입력된 텍스트에서 콤마를 제거하고, 숫자를 콤마가 포함된 형식으로 다시 포맷팅합니다
+    public String beforeMoneyTextChanged(String text){
         if (!text.isEmpty()) {
             long number = Long.parseLong(text.replaceAll(",", ""));
             text = new DecimalFormat("#,###").format(number);
         }
         return text;
     }
-
-
+    /////////////////////////////////////////////////////////////////////////////
+    //////////////////////// 입력 이벤트 start ////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         // 입력 전
@@ -67,6 +69,10 @@ public class WatcherMoneyText implements TextWatcher {
 
         editText.addTextChangedListener(this);
     }
+
+    /////////////////////////////////////////////////////////////////////////////
+    //////////////////////// 입력 이벤트 end ////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
 
     public interface OnSearchChangeListener{
         void onSearchTextChanged(String newText, Integer index);
