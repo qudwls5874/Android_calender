@@ -1,5 +1,6 @@
 package com.example.myapplication.Activity.setting.service;
 
+import android.app.Dialog;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -217,8 +219,10 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
 
     // 수정값 리스너
     @Override
-    public void setUdateLisner(MenuList menuList) {
-
+    public void setUdateLisner(MenuList menuList, Dialog dialog) {
+        viewModel.setUpdate(menuList);
+        Toast.makeText(getContext(), "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+        dialog.dismiss();
     }
 
     // 삭제값 등록 리스너

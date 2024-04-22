@@ -2,25 +2,17 @@ package com.example.myapplication.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.myapplication.R;
 import com.example.myapplication.database.table.MenuCategory;
 import com.example.myapplication.database.table.MenuList;
-import com.example.myapplication.database.viewmodel.MenuListViewModel;
 import com.example.myapplication.databinding.DialogServiceAddBinding;
-import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.WatcherMoneyText;
 
 public class ServiceAddDialog extends Dialog implements View.OnClickListener {
@@ -50,11 +42,11 @@ public class ServiceAddDialog extends Dialog implements View.OnClickListener {
         // 타이틀
         binding.settingServiceAddTitleTextView.setText(menuCategory.getMenuCategoryName());
         // 금액
-        watcherMoneyText = new WatcherMoneyText(binding.settingServiceAddMenulistmoneyEditText);
-        binding.settingServiceAddMenulistmoneyEditText.addTextChangedListener(watcherMoneyText);
+        binding.settingServiceAddMenulistmoneyTextView.setText("");
 
         binding.settingServiceAddCloseBtn.setOnClickListener(this);
         binding.settingServiceAddSaveBtn.setOnClickListener(this);
+        binding.settingServiceAddMenulistmoneyTextView.setOnClickListener(this);
     }
 
     @Override
@@ -67,11 +59,16 @@ public class ServiceAddDialog extends Dialog implements View.OnClickListener {
             MenuList data = new MenuList(
                     menuCategory.getMenuCategoryId(),
                     binding.settingServiceAddMenulistnameEditText.getText().toString(),
-                    Integer.parseInt(binding.settingServiceAddMenulistmoneyEditText.getText().toString().replaceAll(",", ""))
+                    Integer.parseInt(binding.settingServiceAddMenulistmoneyTextView.getText().toString().replaceAll(",", ""))
             );
             lisner.setMenuListLisner(data);
             Toast.makeText(getContext(), "저장 되었습니다.", Toast.LENGTH_SHORT).show();
             dismiss();
+        } else if (v.getId() == binding.settingServiceAddMenulistmoneyTextView.getId()) {
+            // 금액 버튼
+
+            ServiceAddMoneyDialog moneyDialog = new ServiceAddMoneyDialog(getContext(), String.valueOf(binding.settingServiceAddMenulistmoneyTextView.getText()));
+            moneyDialog.show();
         }
     }
 
@@ -88,7 +85,7 @@ public class ServiceAddDialog extends Dialog implements View.OnClickListener {
     public void dismiss() {
         super.dismiss();
         if (watcherMoneyText != null){
-            binding.settingServiceAddMenulistmoneyEditText.removeTextChangedListener(watcherMoneyText);
+            binding.settingServiceAddMenulistmoneyTextView.removeTextChangedListener(watcherMoneyText);
             watcherMoneyText = null;
         }
     }

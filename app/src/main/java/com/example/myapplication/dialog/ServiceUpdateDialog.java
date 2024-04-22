@@ -62,13 +62,12 @@ public class ServiceUpdateDialog extends Dialog implements View.OnClickListener 
         } else if (v.getId() == binding.settingServiceUpdateSaveBtn.getId()) {
             // 저장 버튼
             MenuList data = new MenuList(
+                    menuList.getMenuListId(),
                     menuCategory.getMenuCategoryId(),
                     binding.settingServiceUpdateMenulistnameEditText.getText().toString(),
                     Integer.parseInt(binding.settingServiceUpdateMenulistmoneyEditText.getText().toString().replaceAll(",", ""))
             );
-            updateLisner.setUdateLisner(data);
-            Toast.makeText(getContext(), "저장 되었습니다.", Toast.LENGTH_SHORT).show();
-            dismiss();
+            updateLisner.setUdateLisner(data, this);
         }
     }
 
@@ -91,7 +90,7 @@ public class ServiceUpdateDialog extends Dialog implements View.OnClickListener 
     }
 
     public interface SetMenuUpdateLisner {
-        void setUdateLisner(MenuList menuList);
+        void setUdateLisner(MenuList menuList, Dialog dialog);
     }
 
 

@@ -1,7 +1,5 @@
 package com.example.myapplication.Activity.setting.service;
 
-import android.app.Application;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +12,9 @@ import com.example.myapplication.R;
 import com.example.myapplication.database.table.MenuCategory;
 import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.databinding.ViewServiceItemListDRowBinding;
-import com.example.myapplication.dialog.ServiceAddDialog;
 import com.example.myapplication.dialog.ServiceUpdateDialog;
 import com.example.myapplication.event.WatcherMoneyText;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,9 +66,18 @@ public class SettingServiceListDAdapter extends RecyclerView.Adapter<SettingServ
 
         // 리스트 항목 색상 변경
         if (layoutColorChangeList.get(position)){
+            // 선택됨.
             holder.binding.itemServiceDLinearLayout.setBackgroundColor(ContextCompat.getColor(holder.binding.getRoot().getContext(), R.color.BackBaseInputBoxColor));
+            /*
+            holder.binding.itemServiceDDelBtn.setImageResource(imageList.get(position));
+            RotationBtn rotationBtn = new RotationBtn(holder.binding.itemServiceDDelBtn);
+            holder.binding.itemServiceDDelBtn.setImageResource(R.drawable.ic_cansel_btn);
+            rotationBtn.startAnimation();
+            */
         } else {
+            // 취소됨.
             holder.binding.itemServiceDLinearLayout.setBackgroundColor(ContextCompat.getColor(holder.binding.getRoot().getContext(), R.color.white));
+            holder.binding.itemServiceDDelBtn.setImageResource(R.drawable.ic_btn_minus);
         }
     }
 

@@ -60,7 +60,6 @@
             android:background="@drawable/rounded_border_input_text"
             android:gravity="center"
             android:singleLine="true"
-            android:nextFocusDown="@id/setting_service_add_menulistmoney_editText"
             android:textSize="13dp"
             android:hint="서비스명" />
 
@@ -68,8 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"/>
 
-        <EditText
-            android:id="@+id/setting_service_add_menulistmoney_editText"
+        <TextView
+            android:id="@+id/setting_service_add_menulistmoney_textView"
             android:layout_width="200dp"
             android:layout_height="30dp"
             android:layout_gravity="center"

@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
@@ -15,6 +16,9 @@ public interface MenuListDao {
 
     @Insert
     void insert(MenuList menuList);
+
+    @Update
+    void update(MenuList menuList);
 
     @Delete
     void deleteChoice(List<MenuList> menuList);

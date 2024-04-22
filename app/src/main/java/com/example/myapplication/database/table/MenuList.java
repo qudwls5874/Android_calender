@@ -12,11 +12,18 @@ public class MenuList {
     String menuName;
     int menuMoney;
 
-    public MenuList(){
+    public MenuList(){}
 
+    // 기본.
+    public MenuList(int menuCategoryId, String menuName, int menuMoney){
+        this.menuCategoryId = menuCategoryId;
+        this.menuName = menuName;
+        this.menuMoney = menuMoney;
     }
 
-    public MenuList(int menuCategoryId, String menuName, int menuMoney){
+    // 업데이트시 menuListId 값 필요
+    public MenuList(int menuListId, int menuCategoryId, String menuName, int menuMoney){
+        this.menuListId = menuListId;
         this.menuCategoryId = menuCategoryId;
         this.menuName = menuName;
         this.menuMoney = menuMoney;
