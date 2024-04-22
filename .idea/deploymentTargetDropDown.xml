@@ -10,12 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\bj.H\.android\avd\Galaxy_Tab_S5e_API_30.avd" />
+                  <value value="D:\Android Studio 2\avd\Galaxy_Tab_S5e_API_30.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-17T12:43:26.199340600Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-04-22T00:49:54.692719Z" />
         </State>
       </entry>
     </value>
