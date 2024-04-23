@@ -16,17 +16,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
-import com.example.myapplication.database.table.MenuCategory;
 import com.example.myapplication.database.table.MenuList;
-import com.example.myapplication.database.table.User;
 import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.database.viewmodel.MenuListViewModel;
 import com.example.myapplication.databinding.DialogServiceAddlistBinding;
+import com.example.myapplication.dialog.LoadingDialog2;
 import com.example.myapplication.dialog.ServiceAddDialog;
 import com.example.myapplication.dialog.ServiceUpdateDialog;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
@@ -34,8 +34,6 @@ import com.example.myapplication.event.SwipeDismissTouchListener;
 import com.example.myapplication.event.WatcherSearchText;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,12 +41,13 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
                                                                             WatcherSearchText.OnSearchChangeListener,
                                                                             ServiceAddDialog.SetMenuListLisner,
                                                                             ServiceUpdateDialog.SetMenuUpdateLisner,
-                                                                            SettingServiceListDAdapter.setOnclickColorChangedLisner {
+                                                                            SettingServiceListDAdapter.setOnclickColorChangedLisner{
 
     public static boolean layoutCheck = false;
 
     private DialogServiceAddlistBinding binding;
     private MenuListViewModel viewModel;
+    private LoadingDialog2 loading;
 
     private SettingServiceListHAdapter adapter;
     private ArrayList<MenuJoin> list = new ArrayList<>();
@@ -68,6 +67,9 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
 
     private void initUI() {
 
+        // 로딩
+        loading = new LoadingDialog2(getContext());
+
         // 키보드
         HideKeyboardHelperDialog.setupUI(binding.getRoot(), super.getDialog());
 
@@ -79,9 +81,11 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
         binding.userAddTopLayout.setOnTouchListener(swipeDismissTouchListener);
 
         // 클릭 리스너
-        binding.settingServiceListaddCloseBtn.setOnClickListener(this);
-        binding.settingServiceListaddSaveBtn.setOnClickListener(this);
-        binding.settingServiceListCanselBtn.setOnClickListener(this);
+        binding.settingServiceListaddCloseBtn.setOnClickListener(this::onClick);     // 닫기 버튼
+        binding.settingServiceListaddCancelBtn.setOnClickListener(this::onClick);    // 취소 버튼
+        binding.settingServiceListaddChangeBtn.setOnClickListener(this::onClick);    // 편집 버튼
+        binding.settingServiceListaddDeleteBtn.setOnClickListener(this::onClick);    // 삭제 버튼
+        binding.settingServiceListEraseBtn.setOnClickListener(this::onClick);        // 지우기 버튼
 
         // 어댑터
         adapter = new SettingServiceListHAdapter(filterList, this, this, this);
@@ -97,9 +101,9 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
 
     private void setDataList(List<MenuJoin> result){
         list.clear();
-        delList.clear();
         list.addAll(result);
         onSearchTextChanged(String.valueOf(binding.settingServiceListSearchEditText.getText()), null);
+        loading.dismiss();
     }
 
 
@@ -127,20 +131,23 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
     public void onClick(View v) {
 
         if (v.getId() == binding.settingServiceListaddCloseBtn.getId()){
-            // 닫기, 취소 버튼
-            if (layoutCheck){
-                setLayoutChanged();
-            } else {
-                dismiss();
-            }
+            dismiss();  // 닫기버튼
+        } else if (v.getId() == binding.settingServiceListaddCancelBtn.getId()) {
+            loading.show();
+            setLayoutChanged(); // 취소 버튼
+        } else if (v.getId() == binding.settingServiceListaddChangeBtn.getId()) {
+            setLayoutChanged(); // 편집 버튼
+        } else if (v.getId() == binding.settingServiceListaddDeleteBtn.getId()) {
+            // 삭제 버튼
+            if (binding.settingServiceListaddDeleteBtn.getCurrentTextColor() == ContextCompat.getColor(getContext(), R.color.textBeNormalColor))
+                return;
 
-        } else if (v.getId() == binding.settingServiceListaddSaveBtn.getId()) {
-            // 편집, 저장 버튼
-            if (layoutCheck){
-                viewModel.setDeleteList(delList);
-            }
+            loading.show();
+            viewModel.setDeleteList(delList);
+
             setLayoutChanged();
-        } else if (v.getId() == binding.settingServiceListCanselBtn.getId()) {
+
+        } else if (v.getId() == binding.settingServiceListEraseBtn.getId()) {
             // 검색 지우기 버튼
             binding.settingServiceListSearchEditText.setText("");
         }
@@ -149,12 +156,20 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
     private void setLayoutChanged(){
         // layoutCheck = false > 기본상태, layoutCheck = true > 편집상태
         if (!layoutCheck){
-            binding.settingServiceListaddCloseBtn.setText("취소");
-            binding.settingServiceListaddSaveBtn.setText("저장");
+            // 편집상태로
+            binding.settingServiceListaddCancelBtn.setVisibility(View.VISIBLE); // 취소
+            binding.settingServiceListaddDeleteBtn.setVisibility(View.VISIBLE); // 삭제
+            binding.settingServiceListaddCloseBtn.setVisibility(View.GONE);     // 닫기
+            binding.settingServiceListaddChangeBtn.setVisibility(View.GONE);    // 편집
+            binding.settingServiceListaddDeleteBtn.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.textBeNormalColor));
+            delList.clear();
             layoutCheck = true;
         } else {
-            binding.settingServiceListaddCloseBtn.setText("닫기");
-            binding.settingServiceListaddSaveBtn.setText("편집");
+            // 기본상태로
+            binding.settingServiceListaddCancelBtn.setVisibility(View.GONE);
+            binding.settingServiceListaddDeleteBtn.setVisibility(View.GONE);
+            binding.settingServiceListaddCloseBtn.setVisibility(View.VISIBLE);
+            binding.settingServiceListaddChangeBtn.setVisibility(View.VISIBLE);
             layoutCheck = false;
         }
         adapter.notifyDataSetChanged();
@@ -170,7 +185,9 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
     @Override
     public void onSearchTextChanged(String newText, Integer index) {
         filterList.clear();
+        binding.settingServiceListaddDeleteBtn.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.textBeNormalColor));
         delList.clear();
+
         if (newText.isEmpty()) {
             // 검색 쿼리가 비어 있으면 전체 목록을 보여줍니다.
             filterList.addAll(list);
@@ -233,8 +250,14 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
         } else {
             delList.add(menuList);
         }
-    }
 
+        binding.settingServiceListaddDeleteBtn.setTextColor(
+                delList.size() > 0 ?
+                        ContextCompat.getColor(binding.getRoot().getContext(), R.color.textPlusColor)
+                        : ContextCompat.getColor(binding.getRoot().getContext(), R.color.textBeNormalColor)
+        );
+
+    }
 
 
 }

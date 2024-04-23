@@ -73,14 +73,26 @@ public class MenuListRepository {
 
     public void delete(List<MenuList> menuList){
         for (MenuList data : menuList){
-            Log.i("List 데이터2", data.getMenuName());
-            Log.i("List 데이터2", ""+data.getMenuListId());
+            Log.i("List 데이터2", "listID : "  + data.getMenuListId() +
+                                            ", categoryID : " + data.getMenuCategoryId() +
+                                            ", menuName : " + data.getMenuName() +
+                                            ", menuMoney : " + data.getMenuMoney()
+            );
         }
         new DeleteAsyncTask().execute(menuList);
     }
     public class DeleteAsyncTask extends AsyncTask<List<MenuList>, Void, List<MenuJoin>>{
         @Override
         protected List<MenuJoin> doInBackground(List<MenuList>... lists) {
+            List<MenuList> menuList = lists[0];
+
+            for (MenuList data : menuList) {
+                Log.i("MenuListData", "listID : "  + data.getMenuListId() +
+                        ", categoryID : " + data.getMenuCategoryId() +
+                        ", menuName : " + data.getMenuName() +
+                        ", menuMoney : " + data.getMenuMoney());
+            }
+            Log.i("??",""+lists[0].size());
             dao.deleteChoice(lists[0]);
             return dao.getMenuJoinList();
         }

@@ -24,13 +24,25 @@
             android:textSize="18dp"
             android:text="닫기"/>
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/setting_service_listadd_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/textPlusColor"
+            android:textSize="18dp"
+            android:text="취소"/>
+
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
         <TextView
-            android:id="@+id/setting_service_listadd_save_btn"
+            android:id="@+id/setting_service_listadd_change_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
@@ -39,6 +51,18 @@
             android:textColor="@color/textPlusColor"
             android:textSize="18dp"
             android:text="편집"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/setting_service_listadd_delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/textPlusColor"
+            android:textSize="18dp"
+            android:text="삭제"/>
 
     </LinearLayout>
 
@@ -105,7 +129,7 @@
             android:background="@android:color/transparent"/>
 
         <ImageView
-            android:id="@+id/setting_service_list_cansel_btn"
+            android:id="@+id/setting_service_list_erase_btn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="12dp"

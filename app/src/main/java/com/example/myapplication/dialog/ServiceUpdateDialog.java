@@ -16,13 +16,12 @@ import com.example.myapplication.databinding.DialogServiceAddBinding;
 import com.example.myapplication.databinding.DialogServiceUpdateBinding;
 import com.example.myapplication.event.WatcherMoneyText;
 
-public class ServiceUpdateDialog extends Dialog implements View.OnClickListener {
+public class ServiceUpdateDialog extends Dialog implements View.OnClickListener, ServiceAddMoneyDialog.OnGetMoney {
 
     private DialogServiceUpdateBinding binding;
     private Context context;
     private MenuList menuList;
     private MenuCategory menuCategory;
-    private WatcherMoneyText watcherMoneyText;
     private SetMenuUpdateLisner updateLisner;
 
     public ServiceUpdateDialog(@NonNull Context context, MenuList menuList, MenuCategory menuCategory, SetMenuUpdateLisner updateLisner) {
@@ -45,13 +44,13 @@ public class ServiceUpdateDialog extends Dialog implements View.OnClickListener 
         binding.settingServiceUpdateMenulistnameEditText.setText(menuList.getMenuName());
         binding.settingServiceUpdateMenulistnameEditText.requestFocus();
         binding.settingServiceUpdateMenulistnameEditText.setSelection(menuList.getMenuName().length()); // 커서를 끝으로 이동
-        // 금액
-        watcherMoneyText = new WatcherMoneyText(binding.settingServiceUpdateMenulistmoneyEditText);
-        binding.settingServiceUpdateMenulistmoneyEditText.addTextChangedListener(watcherMoneyText);
-        binding.settingServiceUpdateMenulistmoneyEditText.setText(String.valueOf(menuList.getMenuMoney()));
 
-        binding.settingServiceUpdateCloseBtn.setOnClickListener(this);
-        binding.settingServiceUpdateSaveBtn.setOnClickListener(this);
+        // 금액
+        binding.settingServiceUpdateMenulistmoneyTextView.setText(new WatcherMoneyText().beforeMoneyTextChanged(""+menuList.getMenuMoney()));
+
+        binding.settingServiceUpdateCloseBtn.setOnClickListener(this::onClick);
+        binding.settingServiceUpdateSaveBtn.setOnClickListener(this::onClick);
+        binding.settingServiceUpdateMenulistmoneyTextView.setOnClickListener(this::onClick);
     }
 
     @Override
@@ -65,9 +64,13 @@ public class ServiceUpdateDialog extends Dialog implements View.OnClickListener 
                     menuList.getMenuListId(),
                     menuCategory.getMenuCategoryId(),
                     binding.settingServiceUpdateMenulistnameEditText.getText().toString(),
-                    Integer.parseInt(binding.settingServiceUpdateMenulistmoneyEditText.getText().toString().replaceAll(",", ""))
+                    Integer.parseInt(binding.settingServiceUpdateMenulistmoneyTextView.getText().toString().replaceAll(",", ""))
             );
             updateLisner.setUdateLisner(data, this);
+        } else if (v.getId() == binding.settingServiceUpdateMenulistmoneyTextView.getId()) {
+            // 금액 버튼
+            ServiceAddMoneyDialog moneyDialog = new ServiceAddMoneyDialog(getContext(), String.valueOf(binding.settingServiceUpdateMenulistmoneyTextView.getText()), this::getMoney);
+            moneyDialog.show();
         }
     }
 
@@ -81,12 +84,8 @@ public class ServiceUpdateDialog extends Dialog implements View.OnClickListener 
     }
 
     @Override
-    public void dismiss() {
-        super.dismiss();
-        if (watcherMoneyText != null){
-            binding.settingServiceUpdateMenulistmoneyEditText.removeTextChangedListener(watcherMoneyText);
-            watcherMoneyText = null;
-        }
+    public void getMoney(String money) {
+        binding.settingServiceUpdateMenulistmoneyTextView.setText(money);
     }
 
     public interface SetMenuUpdateLisner {

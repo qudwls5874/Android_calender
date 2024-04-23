@@ -16,15 +16,19 @@ import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.DialogServiceAddMeneyBinding;
+import com.example.myapplication.event.WatcherMoneyText;
 
 public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListener {
 
     private DialogServiceAddMeneyBinding binding;
     private String money;
+    private WatcherMoneyText moneyText = new WatcherMoneyText();
+    private OnGetMoney getMoneyLisner;
 
-    public ServiceAddMoneyDialog(@NonNull Context context, String money) {
+    public ServiceAddMoneyDialog(@NonNull Context context, String money, OnGetMoney getMoneyLisner) {
         super(context);
         this.money = !money.equals("") ? money : "0";
+        this.getMoneyLisner = getMoneyLisner;
     }
 
     @Override
@@ -39,13 +43,17 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
 
     private void initUI() {
 
-        pickerSetting("");
+        binding.dialogMoneyAllMoneyTextView.setText(money);
+        pickerSetting();
+        pickerChanged("");
 
         binding.dialogMoneyTextView1.setOnClickListener(this::onClick);
         binding.dialogMoneyTextView2.setOnClickListener(this::onClick);
         binding.dialogMoneyTextView3.setOnClickListener(this::onClick);
         binding.dialogMoneyTextView4.setOnClickListener(this::onClick);
         binding.dialogMoneyTextView5.setOnClickListener(this::onClick);
+        binding.dialogMoneyCloseBtn.setOnClickListener(this::onClick);
+        binding.dialogMoneyAddBtn.setOnClickListener(this::onClick);
 
         // 회전 막기
         binding.dialogMoneyPicker1.setWrapSelectorWheel(false);
@@ -61,8 +69,6 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
             setAllMoney();
         });
 
-
-
         // 키패드
         binding.dialogMoneyKeypad1.setOnClickListener(v -> { pickerChanged("1"); });
         binding.dialogMoneyKeypad2.setOnClickListener(v -> { pickerChanged("2"); });
@@ -74,11 +80,16 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
         binding.dialogMoneyKeypad8.setOnClickListener(v -> { pickerChanged("8"); });
         binding.dialogMoneyKeypad9.setOnClickListener(v -> { pickerChanged("9"); });
         binding.dialogMoneyKeypad0.setOnClickListener(v -> { pickerChanged("0"); });
-        binding.dialogMoneyKeypadBack.setOnClickListener(v -> { pickerChanged("back"); });
+        binding.dialogMoneyKeypadBack.setOnClickListener(v -> {
+            binding.dialogMoneyAllMoneyTextView.setText(
+                    binding.dialogMoneyAllMoneyTextView.getText().toString().substring(0, binding.dialogMoneyAllMoneyTextView.getText().toString().length()-1)
+            );
+            pickerChanged("");
+        });
         binding.dialogMoneyKeypadBack.setOnLongClickListener(v -> {
             binding.dialogMoneyPicker1.setValue(0);
             binding.dialogMoneyPicker2.setValue(0);
-            binding.dialogMoneyPicker3.setValue(0);
+            binding.dialogMoneyPicker3.setDisplayedValues(new String[]{"000"});
             setAllMoney();
             return false;
         });
@@ -88,26 +99,41 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
     public void onClick(View v) {
 
         if (v.getId() == binding.dialogMoneyTextView1.getId()){
+            if (Integer.valueOf(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 1000 > 999999)
+                return;
             binding.dialogMoneyPicker2.setValue(binding.dialogMoneyPicker2.getValue() + 1);
             if (binding.dialogMoneyPicker2.getValue() < 1){
                 binding.dialogMoneyPicker1.setValue(binding.dialogMoneyPicker1.getValue() + 1);
             }
             setAllMoney();
         } else if (v.getId() == binding.dialogMoneyTextView2.getId()) {
+            if (Integer.valueOf(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 5000 > 999999)
+                return;
             binding.dialogMoneyPicker2.setValue(binding.dialogMoneyPicker2.getValue() + 5);
             if (binding.dialogMoneyPicker2.getValue() < 5){
                 binding.dialogMoneyPicker1.setValue(binding.dialogMoneyPicker1.getValue() + 1);
             }
             setAllMoney();
         } else if (v.getId() == binding.dialogMoneyTextView3.getId()) {
+            if (Integer.valueOf(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 10000 > 999999)
+                return;
             binding.dialogMoneyPicker1.setValue(binding.dialogMoneyPicker1.getValue() + 1);
             setAllMoney();
         } else if (v.getId() == binding.dialogMoneyTextView4.getId()) {
+            if (Integer.valueOf(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 50000 > 999999)
+                return;
             binding.dialogMoneyPicker1.setValue(binding.dialogMoneyPicker1.getValue() + 5);
             setAllMoney();
         } else if (v.getId() == binding.dialogMoneyTextView5.getId()) {
+            if (Integer.valueOf(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 100000 > 999999)
+                return;
             binding.dialogMoneyPicker1.setValue(binding.dialogMoneyPicker1.getValue() + 10);
             setAllMoney();
+        } else if (v.getId() == binding.dialogMoneyCloseBtn.getId()) {
+            dismiss();
+        } else if (v.getId() == binding.dialogMoneyAddBtn.getId()) {
+            getMoneyLisner.getMoney(binding.dialogMoneyAllMoneyTextView.getText().toString());
+            dismiss();
         }
 
 
@@ -116,10 +142,12 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
     private void setAllMoney(){
 
         binding.dialogMoneyAllMoneyTextView.setText(
-                String.valueOf(
-                        Integer.parseInt(binding.dialogMoneyPicker1.getDisplayedValues()[binding.dialogMoneyPicker1.getValue()]
-                                + binding.dialogMoneyPicker2.getDisplayedValues()[binding.dialogMoneyPicker2.getValue()]
-                                + binding.dialogMoneyPicker3.getDisplayedValues()[binding.dialogMoneyPicker3.getValue()]
+                moneyText.beforeMoneyTextChanged(
+                        String.valueOf(
+                                Integer.parseInt(binding.dialogMoneyPicker1.getDisplayedValues()[binding.dialogMoneyPicker1.getValue()]
+                                        + binding.dialogMoneyPicker2.getDisplayedValues()[binding.dialogMoneyPicker2.getValue()]
+                                        + binding.dialogMoneyPicker3.getDisplayedValues()[0]
+                                )
                         )
                 )
         );
@@ -127,7 +155,7 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
     }
 
     // 초기값 세팅
-    private void pickerSetting(String value){
+    private void pickerSetting(){
 
         String[] dataIndex1 = new String[100];
         for (int i = 0; i < dataIndex1.length; i++) {
@@ -153,20 +181,25 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
 
     private void pickerChanged(String value){
 
-        String allMoneyText = String.valueOf(binding.dialogMoneyAllMoneyTextView.getText());
+        String allMoneyText = String.valueOf(binding.dialogMoneyAllMoneyTextView.getText()).replaceAll(",", "")
+                + (!value.equals("") ? value:"");
 
-        switch (value){
-            case "back":
-                if (allMoneyText.length() == 1){
-                    binding.dialogMoneyAllMoneyTextView.setText("0");
-                } else {
-                    binding.dialogMoneyAllMoneyTextView.setText(allMoneyText.substring(0, allMoneyText.length()-1));
+        if (allMoneyText.length() > 6)
+            return;
+
+        binding.dialogMoneyPicker1.setValue(
+                (allMoneyText.length() < 5) ? 0 : Integer.valueOf(allMoneyText.substring(0, allMoneyText.length() -4))
+        );
+        binding.dialogMoneyPicker2.setValue(
+                (allMoneyText.length() < 4) ? 0 : Integer.valueOf(allMoneyText.substring(allMoneyText.length() - 4, allMoneyText.length() - 3))
+        );
+        binding.dialogMoneyPicker3.setDisplayedValues(
+                new String[]{
+                        ("000" + allMoneyText).substring(("000" + allMoneyText).length()-3)
                 }
-                break;
-        }
+        );
 
-
-
+        setAllMoney();
     }
 
     // 이동 애니메이션
@@ -182,6 +215,11 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // 다이얼로그를 백그라운드 클릭 시 닫히지 않도록 설정합니다.
         setCanceledOnTouchOutside(false);
+    }
+
+
+    public interface OnGetMoney{
+        void getMoney(String money);
     }
 
 

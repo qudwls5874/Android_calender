@@ -15,7 +15,7 @@ import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.databinding.DialogServiceAddBinding;
 import com.example.myapplication.event.WatcherMoneyText;
 
-public class ServiceAddDialog extends Dialog implements View.OnClickListener {
+public class ServiceAddDialog extends Dialog implements View.OnClickListener, ServiceAddMoneyDialog.OnGetMoney {
 
     private DialogServiceAddBinding binding;
     private Context context;
@@ -42,11 +42,11 @@ public class ServiceAddDialog extends Dialog implements View.OnClickListener {
         // 타이틀
         binding.settingServiceAddTitleTextView.setText(menuCategory.getMenuCategoryName());
         // 금액
-        binding.settingServiceAddMenulistmoneyTextView.setText("");
+        binding.settingServiceAddMenulistmoneyTextView.setText("0");
 
-        binding.settingServiceAddCloseBtn.setOnClickListener(this);
-        binding.settingServiceAddSaveBtn.setOnClickListener(this);
-        binding.settingServiceAddMenulistmoneyTextView.setOnClickListener(this);
+        binding.settingServiceAddCloseBtn.setOnClickListener(this::onClick);
+        binding.settingServiceAddSaveBtn.setOnClickListener(this::onClick);
+        binding.settingServiceAddMenulistmoneyTextView.setOnClickListener(this::onClick);
     }
 
     @Override
@@ -66,8 +66,7 @@ public class ServiceAddDialog extends Dialog implements View.OnClickListener {
             dismiss();
         } else if (v.getId() == binding.settingServiceAddMenulistmoneyTextView.getId()) {
             // 금액 버튼
-
-            ServiceAddMoneyDialog moneyDialog = new ServiceAddMoneyDialog(getContext(), String.valueOf(binding.settingServiceAddMenulistmoneyTextView.getText()));
+            ServiceAddMoneyDialog moneyDialog = new ServiceAddMoneyDialog(getContext(), String.valueOf(binding.settingServiceAddMenulistmoneyTextView.getText()), this::getMoney);
             moneyDialog.show();
         }
     }
@@ -88,6 +87,11 @@ public class ServiceAddDialog extends Dialog implements View.OnClickListener {
             binding.settingServiceAddMenulistmoneyTextView.removeTextChangedListener(watcherMoneyText);
             watcherMoneyText = null;
         }
+    }
+
+    @Override
+    public void getMoney(String money) {
+        binding.settingServiceAddMenulistmoneyTextView.setText(money);
     }
 
     public interface SetMenuListLisner {
