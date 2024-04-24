@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:layout_marginBottom="5dp"
     android:background="@android:color/transparent">
 
     <View
@@ -65,5 +66,10 @@
         android:layout_height="wrap_content"
         tools:listitem="@layout/view_service_item_list_d_row"
         tools:itemCount="2"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/BackBaseInputBoxColor"/>
 
 </LinearLayout>

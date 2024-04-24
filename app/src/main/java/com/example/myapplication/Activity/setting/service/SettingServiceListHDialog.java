@@ -133,7 +133,6 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
         if (v.getId() == binding.settingServiceListaddCloseBtn.getId()){
             dismiss();  // 닫기버튼
         } else if (v.getId() == binding.settingServiceListaddCancelBtn.getId()) {
-            loading.show();
             setLayoutChanged(); // 취소 버튼
         } else if (v.getId() == binding.settingServiceListaddChangeBtn.getId()) {
             setLayoutChanged(); // 편집 버튼
