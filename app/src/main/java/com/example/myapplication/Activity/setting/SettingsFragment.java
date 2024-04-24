@@ -24,6 +24,7 @@ import com.example.myapplication.Activity.setting.date.SettingDateDialog;
 import com.example.myapplication.Activity.setting.service.SettingServiceMainDialog;
 import com.example.myapplication.Activity.setting.tel.SettingTelMainDialog;
 import com.example.myapplication.databinding.FragmentSettingBinding;
+import com.example.myapplication.dialog.LoadingDialog2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +34,8 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.OnItem
     private FragmentSettingBinding binding;
     private SettingsAdapter settingsAdapter;
     private ArrayList<String> list = new ArrayList<>(Arrays.asList("시간 설정", "서비스분야 설정", "연락처 가져오기"));
+
+    private LoadingDialog2 loadingDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,59 +66,84 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.OnItem
         switch (position){
             case 0:
                 // 시간 설정
-                SettingDateDialog dialog = new SettingDateDialog();
-                dialog.show(getParentFragmentManager(), "setting_date_dialog");
+                showSettingDateDialog();
                 break;
             case 1:
                 // 서비스분야 설정
-                SettingServiceMainDialog serviceDialog = new SettingServiceMainDialog();
-                serviceDialog.show(getParentFragmentManager(), "setting_service_dialog");
+                showSettingServiceDialog();
                 break;
             case 2:
-                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-//                    Log.i("권한없슴","권한없슴");
-                    // 권한이 없는 경우 권한 요청
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_CONTACTS)){
-//                        Log.i("최초실행","최초실행");
-                        requestPStringActivityResultLauncher.launch(Manifest.permission.READ_CONTACTS);
-                    } else {
-//                        Log.i("이전에 승인거절","이전에 승인거절");
-                        AlertDialog.Builder perBuilder = new AlertDialog.Builder(getContext());
-                        perBuilder.setTitle("권한 설정")
-                                .setMessage("권한 거절로 인해 일부기능이 제한됩니다.")
-                                .setPositiveButton("권한 설정하러 가기", (dialog1, which) -> {
-                                    // 앱의 설정 화면으로 이동
-                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                    Uri uri = Uri.fromParts("package", getContext().getPackageName(), null);
-                                    intent.setData(uri);
-                                    startActivity(intent);
-                                })
-                                .setNegativeButton("취소", (dialog1, which) -> {
-                                    // 권한 거절을 유지하려는 경우
-                                    dialog1.dismiss();
-                                })
-                                .show();
-                    }
-
-                } else {
-                    SettingTelMainDialog telDialog = new SettingTelMainDialog();
-                    telDialog.show(getParentFragmentManager(), "setting_tel_dialog");
-                    break;
-                }
-
+                // 연락처 설정
+                requestContactsPermission();
+                break;
         }
 
     }
 
+    // 시간 설정
+    private void showSettingDateDialog() {
+        SettingDateDialog dialog = new SettingDateDialog();
+        dialog.show(getParentFragmentManager(), "setting_date_dialog");
+    }
+
+    // 서비스분야 설정
+    private void showSettingServiceDialog() {
+        SettingServiceMainDialog serviceDialog = new SettingServiceMainDialog();
+        serviceDialog.show(getParentFragmentManager(), "setting_service_dialog");
+    }
+
+    // 연락처 가져오기
+    private void showLoadingAndFetchContacts() {
+        loadingDialog = new LoadingDialog2(getContext());
+        loadingDialog.show();
+        SettingTelMainDialog telDialog = new SettingTelMainDialog(loadingDialog);
+        telDialog.show(getParentFragmentManager(), "setting_tel_dialog");
+
+    }
+
+    // 연락처 권한 설정
+    private void requestContactsPermission() {
+        // 권한이 없는 경우 권한 요청
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_CONTACTS)) {
+                // 최초실행
+                requestPStringActivityResultLauncher.launch(Manifest.permission.READ_CONTACTS);
+            } else {
+                // 이전에 승인거절
+                showPermissionDeniedDialog();
+            }
+        } else {
+            showLoadingAndFetchContacts();
+        }
+    }
+
+    // 이전에 승인거절
+    private void showPermissionDeniedDialog() {
+        AlertDialog.Builder perBuilder = new AlertDialog.Builder(getContext());
+        perBuilder.setTitle("권한 설정")
+                .setMessage("권한 거절로 인해 일부기능이 제한됩니다.")
+                .setPositiveButton("권한 설정하러 가기", (dialog1, which) -> {
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", getContext().getPackageName(), null);
+                    intent.setData(uri);
+                    startActivity(intent);
+                })
+                .setNegativeButton("취소", (dialog1, which) -> {
+                    dialog1.dismiss();
+                })
+                .show();
+    }
+
+    // 최초 권한설정에서 버튼 눌렀을시
     private ActivityResultLauncher<String> requestPStringActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
             result -> {
-                if (result){
-                    SettingTelMainDialog telDialog = new SettingTelMainDialog();
-                    telDialog.show(getParentFragmentManager(), "setting_tel_dialog");
+                if (result) {
+                    showLoadingAndFetchContacts();
                 } else {
-                    Log.i("result2",result.toString());
+                    Log.i("result2", result.toString());
                 }
             }
     );
+
 }

@@ -10,12 +10,14 @@ public class TelData {
     private String name;
     private List<String> tel;
     private Bitmap profile;
+    private boolean choiceTel;
 
-    public TelData(int id, String name, List<String> tel, Bitmap profile){
+    public TelData(int id, String name, List<String> tel, Bitmap profile, boolean choiceTel){
         this.id = id;
         this.name = name;
         this.tel = tel;
         this.profile = profile;
+        this.choiceTel = choiceTel;
     }
 
     public int getId() {
@@ -48,5 +50,13 @@ public class TelData {
 
     public void setProfile(Bitmap profile) {
         this.profile = profile;
+    }
+
+    public boolean isChoiceTel() {
+        return choiceTel;
+    }
+
+    public void setChoiceTel(boolean choiceTel) {
+        this.choiceTel = choiceTel;
     }
 }

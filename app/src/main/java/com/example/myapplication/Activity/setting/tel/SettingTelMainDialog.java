@@ -15,29 +15,42 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.example.myapplication.R;
+import com.example.myapplication.database.table.MenuList;
+import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.databinding.DialogSettingTelBinding;
 import com.example.myapplication.dialog.LoadingDialog2;
+import com.example.myapplication.event.HideKeyboardHelperDialog;
+import com.example.myapplication.event.WatcherSearchText;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class SettingTelMainDialog extends DialogFragment {
+public class SettingTelMainDialog extends DialogFragment implements View.OnClickListener, WatcherSearchText.OnSearchChangeListener {
 
     private static final String TAG = "MainActivity";
 
     private DialogSettingTelBinding binding;
+    private LoadingDialog2 loadingDialog;
 
     private SettingTelListAdapter adapter;
     private List<TelData> telDataList;
+    private ArrayList<TelData> filterList;
 
+    public SettingTelMainDialog(LoadingDialog2 loadingDialog) {
+        this.loadingDialog = loadingDialog;
+    }
 
     @Nullable
     @Override
@@ -45,31 +58,39 @@ public class SettingTelMainDialog extends DialogFragment {
         binding = DialogSettingTelBinding.inflate(inflater, container, false);
 
         initUI();
-        initData();
+        initDate();
 
         return binding.getRoot();
     }
 
     private void initUI() {
 
+        // 키보드 숨기기
+        HideKeyboardHelperDialog.setupUI(binding.getRoot(), super.getDialog());
+
         telDataList = new ArrayList<>();
-        adapter = new SettingTelListAdapter(telDataList);
+        filterList = new ArrayList<>();
+        adapter = new SettingTelListAdapter(filterList);
         binding.settingTelRecyclerView.setAdapter(adapter);
         binding.settingTelRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+
+        binding.settingTelCloseBtn.setOnClickListener(this);
+        binding.settingTelAddBtn.setOnClickListener(this);
+
+        binding.settingTelSearchEditText.addTextChangedListener(new WatcherSearchText(this));
 
 
     }
 
-    private void initData() {
 
+    private void initDate() {
         getContacts();
-
+        loadingDialog.dismiss();
     }
 
 
     private void getContacts() {
-        LoadingDialog2 dialog2 = new LoadingDialog2(getContext());
-        dialog2.show();
+
         // 연락처 URI
         String[] projection = new String[]{
                 ContactsContract.Contacts._ID,
@@ -136,14 +157,16 @@ public class SettingTelMainDialog extends DialogFragment {
                     phoneCursor.close();
                 }
 
-                telDataList.add(new TelData(Integer.parseInt(id),displayName, tel, photo));
+                telDataList.add(new TelData(Integer.parseInt(id),displayName, tel, photo, false));
+                filterList.add(new TelData(Integer.parseInt(id),displayName, tel, photo, false));
 
             }
             cursor.close();
         }
 
+        binding.settingTelAllPersonTextView.setText("총 " + telDataList.size() + "명");
         adapter.notifyDataSetChanged();
-        dialog2.dismiss();
+
     }
 
     private String getTypeLabel(int type) {
@@ -162,6 +185,19 @@ public class SettingTelMainDialog extends DialogFragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+
+        if (v.getId() == binding.settingTelCloseBtn.getId()){
+            // 닫기버튼
+            dismiss();
+        } else if (v.getId() == binding.settingTelAddBtn.getId()) {
+            // 저장버튼
+        }
+
+    }
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -171,7 +207,33 @@ public class SettingTelMainDialog extends DialogFragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // 다이얼로그를 백그라운드 클릭 시 닫히지 않도록 설정합니다.
         dialog.setCanceledOnTouchOutside(false);
+        // 키보드가 활정화될 때 다이얼로그의 위치를 조정합니다.
+//        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         return dialog;
     }
+
+    @Override
+    public void onSearchTextChanged(String newText, Integer index) {
+        filterList.clear();
+
+        if (newText.isEmpty()) {
+            // 검색 쿼리가 비어 있으면 전체 목록을 보여줍니다.
+            filterList.addAll(telDataList);
+        } else {
+
+            // 리스트를 순회하면서 검색어를 포함하는 항목을 찾습니다.
+            List<TelData> filteredTelDatas = telDataList.stream()
+                    .filter(data -> data.getName().toLowerCase().contains(newText.toLowerCase()))
+                    .collect(Collectors.toList());
+
+            filterList.addAll(filteredTelDatas);
+
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+
+
+
 
 }

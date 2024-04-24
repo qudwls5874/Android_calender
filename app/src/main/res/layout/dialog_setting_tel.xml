@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
+
     <LinearLayout
+        android:id="@+id/setting_tel_main_layout"
         android:layout_width="300dp"
-        android:layout_height="450dp"
+        android:layout_height="500dp"
         android:orientation="vertical"
         android:background="@drawable/rounded_rectangular_shape2">
 
@@ -19,7 +21,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/setting_settingdate_close_btn"
+                android:id="@+id/setting_tel_close_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center"
@@ -27,7 +29,7 @@
                 android:layout_marginTop="3dp"
                 android:textColor="@color/textPlusColor"
                 android:textSize="14dp"
-                android:text="취소"/>
+                android:text="닫기"/>
 
             <View
                 android:layout_width="0dp"
@@ -35,15 +37,44 @@
                 android:layout_weight="1"/>
 
             <TextView
-                android:id="@+id/setting_settingdate_add_btn"
+                android:id="@+id/setting_tel_add_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="3dp"
-                android:textColor="@color/textPlusColor"
+                android:textColor="@color/textBeNormalColor"
                 android:textSize="14dp"
-                android:text="저장"/>
+                android:text="추가"/>
+
+        </LinearLayout>
+
+        <!-- 구분 선 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/BackBaseInputBoxColor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:background="@color/white">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="7dp"
+                android:paddingTop="3dp"
+                android:src="@drawable/ic_search"/>
+
+            <EditText
+                android:id="@+id/setting_tel_search_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="13dp"
+                android:hint="검색"
+                android:background="@android:color/transparent"/>
 
         </LinearLayout>
 
@@ -64,10 +95,10 @@
                 android:layout_height="match_parent"/>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/setting_tel_recyclerView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/setting_tel_recyclerView"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/view_service_tel_item"
                 tools:itemCount="10"/>
@@ -90,18 +121,19 @@
             android:layout_height="20dp">
 
             <TextView
+                android:id="@+id/setting_tel_allPerson_textView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:layout_marginEnd="5dp"
                 android:textSize="10dp"
-                android:text="총 : 00 명"/>
+                android:text="총 : 00 명"
+                android:background="@color/white"/>
 
         </LinearLayout>
 
-
-
     </LinearLayout>
 
-</LinearLayout>
+
+</RelativeLayout>

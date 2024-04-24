@@ -48,8 +48,14 @@ public class SettingTelListAdapter extends RecyclerView.Adapter<SettingTelListAd
 
         public ViewHolder(@NonNull ViewServiceTelItemBinding binding) {
             super(binding.getRoot());
-
             this.binding = binding;
+
+            initUI();
+        }
+
+        private void initUI() {
+
         }
     }
+
 }
