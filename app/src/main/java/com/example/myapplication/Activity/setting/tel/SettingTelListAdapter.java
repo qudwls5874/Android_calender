@@ -1,7 +1,6 @@
 package com.example.myapplication.Activity.setting.tel;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
