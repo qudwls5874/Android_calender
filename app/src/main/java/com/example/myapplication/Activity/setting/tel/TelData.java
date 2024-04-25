@@ -20,6 +20,14 @@ public class TelData {
         this.choiceTel = choiceTel;
     }
 
+    public TelData(TelData telData){
+        this.id = telData.getId();
+        this.name = telData.getName();
+        this.tel = telData.getTel();
+        this.profile = telData.getProfile();
+        this.choiceTel = telData.isChoiceTel();
+    }
+
     public int getId() {
         return id;
     }

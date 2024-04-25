@@ -13,6 +13,9 @@
     <color name="BackBaseColor">#FAFAFA</color>
     <color name="BackBaseInputBoxColor">#EDEDED</color>
 
+    <!-- 기본칼라 -->
+    <color name="personBackColor">#AED4D2</color>
+
     <!-- 버튼 컬러 -->
     <color name="btnOrangeColor">#FF5733</color>
     <color name="customRedColor">#FF0064</color>

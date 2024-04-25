@@ -1,0 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 실루엣 프로필 사진 -->
+    <item
+        android:drawable="@drawable/ic_peple"
+        android:gravity="center" />
+
+</layer-list>
