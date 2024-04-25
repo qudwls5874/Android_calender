@@ -11,6 +11,6 @@
     <!-- 실루엣 프로필 사진 -->
     <item
         android:id="@+id/ic_person_image_Item"
-        android:drawable="@drawable/ic_peple"
+        android:drawable="@drawable/ic_person"
         android:gravity="center" />
 </layer-list>

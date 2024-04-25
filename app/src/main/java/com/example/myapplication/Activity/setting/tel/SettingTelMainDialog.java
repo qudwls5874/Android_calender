@@ -161,15 +161,15 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
     private String getTypeLabel(int type) {
         switch (type) {
             case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                return "Home";
+                return "집"; //  Home
             case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                return "Mobile";
+                return "휴대전화"; // Mobile
             case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-                return "Work";
+                return "직장"; // Work
             case ContactsContract.CommonDataKinds.Phone.TYPE_OTHER:
-                return "Other";
+                return "기타"; // Other
             default:
-                return "Custom";
+                return "맞춤설정"; // Custom
         }
     }
 
@@ -291,7 +291,8 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
 
     @Override
     public void onTelItemLongClick(TelData telData) {
-        SettingTelListDDialog telListDDialog = new SettingTelListDDialog();
+        // 주소 상세정보
+        SettingTelListDDialog telListDDialog = new SettingTelListDDialog(telData);
         telListDDialog.show(getParentFragmentManager(), "tel_d_dialog");
     }
 

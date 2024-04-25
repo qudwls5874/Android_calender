@@ -50,12 +50,31 @@
             android:layout_height="1dp"
             android:background="@color/BackBaseInputBoxColor"/>
 
-        <ImageView
-            android:id="@+id/setting_tel_d_imageView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/personBackColor"
-            android:src="@drawable/ic_person_image2"/>
+            android:layout_height="150dp">
+
+            <ImageView
+                android:id="@+id/setting_tel_d_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/BackBaseInputBoxColor"
+                android:src="@drawable/ic_person"/>
+
+            <TextView
+                android:id="@+id/setting_tel_d_name_textView"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:background="@drawable/rounded_rectangular_shape2"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:textSize="10dp"
+                android:textStyle="bold"
+                android:text="홍길동"/>
+
+        </RelativeLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
