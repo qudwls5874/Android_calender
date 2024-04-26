@@ -2,13 +2,11 @@ package com.example.myapplication.database;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.myapplication.database.dao.MenuCategoryDao;
@@ -21,19 +19,23 @@ import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.table.MoneyName;
 import com.example.myapplication.database.table.SettingDate;
 import com.example.myapplication.database.table.User;
+import com.example.myapplication.database.table.user.UserAddress;
+import com.example.myapplication.database.table.user.UserEvent;
+import com.example.myapplication.database.table.user.UserTel;
 
 import java.util.concurrent.Executors;
 
 
 @Database(entities =
         {
-                User.class, MoneyName.class, MenuCategory.class, MenuList.class,
+                User.class, UserTel.class, UserAddress.class, UserEvent.class, MoneyName.class, MenuCategory.class, MenuList.class,
                 SettingDate.class
         }, version = 1, exportSchema = false )
 
 public abstract class UserDatabase extends RoomDatabase {
 
     public abstract UserDao getUserDao();
+
     public abstract MoneyNameDao getMoneyNameDao();
     public abstract MenuCategoryDao getMenuCategoryDao();
     public abstract MenuListDao getMenuListDao();

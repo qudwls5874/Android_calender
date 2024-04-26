@@ -1,31 +1,32 @@
-package com.example.myapplication.Activity.setting.tel;
+package com.example.myapplication.Activity.setting.tel.details;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.compose.animation.core.Spring;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.databinding.ViewSettingTelItemDBinding;
+import com.example.myapplication.databinding.ViewTelItemListDRowBinding;
 import com.example.myapplication.event.WatcherPhoneNumberText;
 
 import java.util.List;
 
 public class SettingTelListDAdapter extends RecyclerView.Adapter<SettingTelListDAdapter.ViewHolder> {
 
-    private ViewSettingTelItemDBinding binding;
+    private ViewTelItemListDRowBinding binding;
+
+    private String haedName;
     private List<String> list;
 
-    public SettingTelListDAdapter(List<String> list){
-        this.list = list;
+    public SettingTelListDAdapter(TelDataDList list) {
+        this.haedName = list.getName();
+        this.list = list.getList();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = ViewSettingTelItemDBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        binding = ViewTelItemListDRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
 
@@ -34,11 +35,11 @@ public class SettingTelListDAdapter extends RecyclerView.Adapter<SettingTelListD
 
         String[] data = list.get(position).split(":");
 
-        holder.binding.itemTelDTypeTextView.setText(data[0]);
-        holder.binding.itemTelDTextView.setText(new WatcherPhoneNumberText().formatPhoneNumber(data[1]));
+        if (haedName.equals("전화번호"))
+            data[1] = new WatcherPhoneNumberText().formatPhoneNumber(data[1]);
 
-
-
+        holder.binding.itemTelDTextView.setText(data[0]);
+        holder.binding.itemTelDTextView2.setText(data[1]);
 
     }
 
@@ -49,15 +50,11 @@ public class SettingTelListDAdapter extends RecyclerView.Adapter<SettingTelListD
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private ViewSettingTelItemDBinding binding;
+        private ViewTelItemListDRowBinding binding;
 
-        public ViewHolder(@NonNull ViewSettingTelItemDBinding binding) {
+        public ViewHolder(@NonNull ViewTelItemListDRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
-
     }
-
-
-
 }

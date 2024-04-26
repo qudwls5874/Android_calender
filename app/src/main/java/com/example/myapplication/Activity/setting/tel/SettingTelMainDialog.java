@@ -18,9 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.example.myapplication.Activity.setting.tel.details.SettingTelListHDialog;
 import com.example.myapplication.R;
+import com.example.myapplication.database.view.UserJoin;
+import com.example.myapplication.database.viewmodel.UserViewModel;
 import com.example.myapplication.databinding.DialogSettingTelBinding;
 import com.example.myapplication.dialog.LoadingDialog2;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
@@ -38,7 +42,10 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
     private DialogSettingTelBinding binding;
     private LoadingDialog2 loadingDialog;
 
+    private UserViewModel viewModel;
+
     private SettingTelMainAdapter adapter;
+    private List<UserJoin> userJoins;
     private List<TelData> telDataList;
     private List<TelData> filterList;
     private int checkCount = 0;
@@ -75,12 +82,22 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
 
         binding.settingTelSearchEditText.addTextChangedListener(new WatcherSearchText(this));
 
+        // 뷰모델 초기화
+        viewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
     }
 
 
     private void initData() {
+
+        viewModel.getUserList().observe(getViewLifecycleOwner(), list ->{
+
+        });
+
+        // 연락처 가져오기
         getContacts();
+
+        // 로딩 끄기
         loadingDialog.dismiss();
     }
 
@@ -94,14 +111,14 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
                 ContactsContract.Contacts.PHOTO_URI
         };
 
-        // 연락처 쿼리
+        // ContentResolver를 통해 주소록에 접근
         ContentResolver contentResolver = getContext().getContentResolver();
         Cursor cursor = contentResolver.query(
                 ContactsContract.Contacts.CONTENT_URI,
                 projection,
                 null,
                 null,
-                null
+                ContactsContract.Contacts.DISPLAY_NAME + " ASC"
         );
 
         if (cursor != null && cursor.getCount() > 0) {
@@ -139,7 +156,6 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
                     while (phoneCursor.moveToNext()) {
                         int phoneNumberIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
                         String phoneNumber = phoneCursor.getString(phoneNumberIndex);
-
                         int phoneTypeIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
                         int phoneType = phoneCursor.getInt(phoneTypeIndex);
 
@@ -147,8 +163,56 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
                     }
                     phoneCursor.close();
                 }
-                telDataList.add(new TelData(Integer.parseInt(id),displayName, tel, photo, false));
-                filterList.add(new TelData(Integer.parseInt(id),displayName, tel, photo, false));
+
+                // 주소 가져오기
+                Cursor addressCursor = contentResolver.query(
+                        ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID + " = ?",
+                        new String[]{id},
+                        null
+                );
+
+                List<String> addressList = new ArrayList<>();
+                if (addressCursor != null) {
+                    int typeIndex = addressCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.TYPE);
+                    int addressIndex = addressCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS);
+                    while (addressCursor.moveToNext()){
+                        int type = addressCursor.getInt(typeIndex);
+                        String typeLabel = ContactsContract.CommonDataKinds.StructuredPostal.getTypeLabel(getResources(), type, "").toString();
+                        String address = addressCursor.getString(addressIndex);
+                        addressList.add(typeLabel+":"+address);
+                        // Log.d("Contact", "mane: " + displayName +", type: "+typeLabel+", Address: " + address);
+                    }
+                    addressCursor.close();
+                }
+
+                // 기념일 정보 가져오기
+                Cursor eventCursor = contentResolver.query(
+                        ContactsContract.Data.CONTENT_URI,
+                        null,
+                        ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?",
+                        new String[]{id, ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE},
+                        null
+                );
+
+                List<String> eventList = new ArrayList<>();
+                if (eventCursor != null) {
+                    int eventTypeIndex = eventCursor.getColumnIndex(ContactsContract.CommonDataKinds.Event.TYPE);
+                    int eventDateIndex = eventCursor.getColumnIndex(ContactsContract.CommonDataKinds.Event.START_DATE);
+                    while (eventCursor.moveToNext()) {
+                        int eventType = eventCursor.getInt(eventTypeIndex);
+                        String eventLabel = ContactsContract.CommonDataKinds.Event.getTypeLabel(getResources(), eventType, "").toString();
+                        String eventDate = eventCursor.getString(eventDateIndex);
+                        eventList.add(eventLabel+":"+eventDate);
+                        // Log.d("Contact", "Name: " + displayName + ", Event Type: " + eventLabel + ", Event Date: " + eventDate);
+                    }
+                    eventCursor.close();
+                }
+
+                // userJoins.add(new UserJoin())
+                telDataList.add(new TelData(Integer.parseInt(id),displayName, tel, addressList, eventList, photo, false));
+                filterList.add(new TelData(Integer.parseInt(id),displayName, tel, addressList, eventList, photo, false));
             }
             cursor.close();
         }
@@ -182,6 +246,14 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
             dismiss();
         } else if (v.getId() == binding.settingTelAddBtn.getId()) {
             // 저장버튼
+            // TelData telDataList
+
+            ArrayList<TelData> requestList = new ArrayList<>();
+            for (TelData saveData : telDataList){
+                if (saveData.isChoiceTel()){
+                    requestList.add(saveData);
+                }
+            }
 
         } else if (v.getId() == binding.settingTelCheckPersonTextView.getId()) {
             // 선택 텍스트
@@ -219,12 +291,12 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
             if (binding.settingTelCheckPersonTextView.getCurrentTextColor() == ContextCompat.getColor(getContext(), R.color.textPlusColor)){
                 for (TelData data : telDataList){
                     if (data.isChoiceTel()){
-                        filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getProfile(), data.isChoiceTel()));
+                        filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getAddress(), data.getEventDate(), data.getProfile(), data.isChoiceTel()));
                     }
                 }
             } else {
                 for (TelData data : telDataList){
-                    filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getProfile(), data.isChoiceTel()));
+                    filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getAddress(), data.getEventDate(), data.getProfile(), data.isChoiceTel()));
                 }
             }
         } else {
@@ -232,13 +304,13 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
             if (binding.settingTelCheckPersonTextView.getCurrentTextColor() == ContextCompat.getColor(getContext(), R.color.textPlusColor)){
                 for (TelData data : telDataList){
                     if (data.getName().toLowerCase().contains(newText.toLowerCase()) && data.isChoiceTel()){
-                        filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getProfile(), data.isChoiceTel()));
+                        filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getAddress(), data.getEventDate(), data.getProfile(), data.isChoiceTel()));
                     }
                 }
             } else {
                 for (TelData data : telDataList){
                     if (data.getName().toLowerCase().contains(newText.toLowerCase())){
-                        filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getProfile(), data.isChoiceTel()));
+                        filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getAddress(), data.getEventDate(), data.getProfile(), data.isChoiceTel()));
                     }
                 }
             }
@@ -254,7 +326,7 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
         filterList.clear();
         for (TelData data : telDataList){
             if (data.isChoiceTel()){
-                filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getProfile(), data.isChoiceTel()));
+                filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getAddress(), data.getEventDate(), data.getProfile(), data.isChoiceTel()));
             }
         }
         adapter.notifyDataSetChanged();
@@ -267,7 +339,7 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
         binding.settingTelCheckPersonTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.textNormalColor));
         filterList.clear();
         for (TelData data : telDataList){
-            filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getProfile(), data.isChoiceTel()));
+            filterList.add(new TelData(data.getId(), data.getName(), data.getTel(), data.getAddress(), data.getEventDate(), data.getProfile(), data.isChoiceTel()));
         }
         adapter.notifyDataSetChanged();
     }
@@ -292,7 +364,7 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
     @Override
     public void onTelItemLongClick(TelData telData) {
         // 주소 상세정보
-        SettingTelListDDialog telListDDialog = new SettingTelListDDialog(telData);
+        SettingTelListHDialog telListDDialog = new SettingTelListHDialog(telData);
         telListDDialog.show(getParentFragmentManager(), "tel_d_dialog");
     }
 

@@ -1,5 +1,10 @@
 package com.example.myapplication.Activity.setting.tel;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +41,23 @@ public class SettingTelMainAdapter extends RecyclerView.Adapter<SettingTelMainAd
 
         holder.binding.itemTelNameTextView.setText(data.getName());
 
+        // 프로필 사진
         if (data.getProfile() != null){
-            holder.binding.itemTelProfileImageView.setImageBitmap(data.getProfile());
+            // 동그란 프로필 이미지 생성
+            Bitmap circleBitmap = Bitmap.createBitmap(data.getProfile().getWidth(), data.getProfile().getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(circleBitmap);
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            canvas.drawCircle(data.getProfile().getWidth() / 2f, data.getProfile().getHeight() / 2f, data.getProfile().getWidth() / 2f, paint);
+            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+            canvas.drawBitmap(data.getProfile(), 0, 0, paint);
+
+            holder.binding.itemTelProfileImageView.setImageBitmap(circleBitmap);
         } else {
             holder.binding.itemTelProfileImageView.setImageResource(R.drawable.ic_person_image);
         }
 
+        // 선택 디자인
         if (data.isChoiceTel()){
             holder.binding.itemTelCheckLayout.setVisibility(View.VISIBLE);
         } else {

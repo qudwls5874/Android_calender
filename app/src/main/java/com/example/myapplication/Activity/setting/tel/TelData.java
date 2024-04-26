@@ -9,13 +9,17 @@ public class TelData {
     private int id;
     private String name;
     private List<String> tel;
+    private List<String> address;
+    private List<String> eventDate;
     private Bitmap profile;
     private boolean choiceTel;
 
-    public TelData(int id, String name, List<String> tel, Bitmap profile, boolean choiceTel){
+    public TelData(int id, String name, List<String> tel, List<String> address, List<String> eventDate, Bitmap profile, boolean choiceTel){
         this.id = id;
         this.name = name;
         this.tel = tel;
+        this.address = address;
+        this.eventDate = eventDate;
         this.profile = profile;
         this.choiceTel = choiceTel;
     }
@@ -50,6 +54,22 @@ public class TelData {
 
     public void setTel(List<String> tel) {
         this.tel = tel;
+    }
+
+    public List<String> getAddress() {
+        return address;
+    }
+
+    public void setAddress(List<String> address) {
+        this.address = address;
+    }
+
+    public List<String> getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(List<String> eventDate) {
+        this.eventDate = eventDate;
     }
 
     public Bitmap getProfile() {

@@ -27,8 +27,8 @@
 
                 <ImageView
                     android:id="@+id/item_tel_profile_imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="center"
                     android:background="@drawable/ic_person_image"
                     android:src="@drawable/ic_person_image"/>

@@ -79,12 +79,6 @@ public class UserFragment extends Fragment implements View.OnClickListener, Watc
         if (v.getId() == binding.userAddBtn.getId()) {
             UserAddFragmentDialog fragmentDialog = new UserAddFragmentDialog();
             fragmentDialog.show(getParentFragmentManager(), "user_add_dialog");
-            /*
-            fragmentDialog.show(getSupportFragmentManager());
-            UserAddDialog dialog = new UserAddDialog(getContext(), userViewModel);
-            // UserAddDialog dialog = new UserAddDialog(getContext(), R.layout.dialog_user_add);
-            dialog.show();
-            */
         }
     }
 

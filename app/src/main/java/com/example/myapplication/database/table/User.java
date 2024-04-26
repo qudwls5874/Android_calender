@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class User {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int userId;
     private String name;
     private String tel;
     private String money;
@@ -20,12 +20,14 @@ public class User {
         this.address = address;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
-    public void setId(int id) {
-        this.id = id;
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
+
     public String getName() {
         return name;
     }

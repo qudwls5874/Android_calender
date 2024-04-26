@@ -1,4 +1,4 @@
-package com.example.myapplication.Activity.setting.service;
+package com.example.myapplication.Activity.setting.service.details;
 
 import android.view.LayoutInflater;
 import android.view.View;

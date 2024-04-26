@@ -22,11 +22,10 @@
 
             <TextView
                 android:id="@+id/setting_tel_close_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="3dp"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:gravity="bottom|right"
+                android:paddingBottom="3dp"
                 android:textColor="@color/textPlusColor"
                 android:textSize="14dp"
                 android:text="닫기"/>
@@ -36,16 +35,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
 
+
             <TextView
                 android:id="@+id/setting_tel_add_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="3dp"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:gravity="bottom|left"
+                android:paddingBottom="3dp"
                 android:textColor="@color/textBeNormalColor"
                 android:textSize="14dp"
                 android:text="추가"/>
+
 
         </LinearLayout>
 

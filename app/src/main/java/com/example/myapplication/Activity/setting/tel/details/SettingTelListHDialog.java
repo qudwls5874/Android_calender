@@ -1,7 +1,6 @@
-package com.example.myapplication.Activity.setting.tel;
+package com.example.myapplication.Activity.setting.tel.details;
 
 import android.app.Dialog;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,19 +13,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.myapplication.Activity.setting.tel.TelData;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.DialogSettingTelDBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SettingTelListDDialog extends DialogFragment {
+public class SettingTelListHDialog extends DialogFragment {
 
     private DialogSettingTelDBinding binding;
 
-    private SettingTelListDAdapter adapter;
+    private SettingTelListHAdapter adapter;
     private TelData telData;
+    private List<TelDataDList> detailsList;
 
-    public SettingTelListDDialog(TelData telData){
+    public SettingTelListHDialog(TelData telData){
         this.telData = telData;
     }
 
@@ -43,7 +45,12 @@ public class SettingTelListDDialog extends DialogFragment {
 
     private void initUI() {
 
-        adapter = new SettingTelListDAdapter(telData.getTel());
+        detailsList = new ArrayList<>();
+        detailsList.add(new TelDataDList("전화번호", telData.getTel()));
+        detailsList.add(new TelDataDList("주소", telData.getAddress()));
+        detailsList.add(new TelDataDList("일정", telData.getEventDate()));
+
+        adapter = new SettingTelListHAdapter(detailsList);
         binding.settingTelDRecyclerView.setAdapter(adapter);
         binding.settingTelDRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -55,6 +62,9 @@ public class SettingTelListDDialog extends DialogFragment {
             binding.settingTelDImageView.setImageResource(R.drawable.ic_person);
         }
 
+        binding.settingTelCloseDBtn.setOnClickListener(v -> {
+            dismiss();
+        });
 
     }
 
