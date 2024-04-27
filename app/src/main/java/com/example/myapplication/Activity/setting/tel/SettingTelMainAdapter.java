@@ -1,10 +1,12 @@
 package com.example.myapplication.Activity.setting.tel;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +15,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.database.table.User;
+import com.example.myapplication.database.view.UserJoin;
 import com.example.myapplication.databinding.ViewSettingTelItemBinding;
+import com.example.myapplication.dataclass.UserProfile;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class SettingTelMainAdapter extends RecyclerView.Adapter<SettingTelMainAdapter.ViewHolder> {
 
     private ViewSettingTelItemBinding binding;
-    private List<TelData> telDataList;
+
+    private List<UserJoin> userDataList;    // 검색된 리스트
+    private List<UserProfile> profileList;  // 전체 사진
+    private List<UserJoin> insertList;      // 저장 리스트
+
     private OnTelItemClickListener onTelItemClickListener;
 
-    public SettingTelMainAdapter(List<TelData> telDataList, OnTelItemClickListener onTelItemClickListener){
-        this.telDataList = telDataList;
+    public SettingTelMainAdapter(List<UserJoin> userDataList, List<UserJoin> insertList, List<UserProfile> profileList, OnTelItemClickListener onTelItemClickListener){
+        this.userDataList = userDataList;
+        this.insertList = insertList;
+        this.profileList = profileList;
         this.onTelItemClickListener = onTelItemClickListener;
     }
 
@@ -37,20 +51,26 @@ public class SettingTelMainAdapter extends RecyclerView.Adapter<SettingTelMainAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TelData data = telDataList.get(position);
+        User data = userDataList.get(position).user;
 
         holder.binding.itemTelNameTextView.setText(data.getName());
 
         // 프로필 사진
-        if (data.getProfile() != null){
+        UserProfile profile = profileList.stream()
+                .filter(result -> result.getProfileId().equals(data.getUserUrl()))
+                .findFirst()
+                .orElse(new UserProfile("", null));
+
+
+        if (profile.getProifle() != null){
             // 동그란 프로필 이미지 생성
-            Bitmap circleBitmap = Bitmap.createBitmap(data.getProfile().getWidth(), data.getProfile().getHeight(), Bitmap.Config.ARGB_8888);
+            Bitmap circleBitmap = Bitmap.createBitmap(profile.getProifle().getWidth(), profile.getProifle().getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(circleBitmap);
             Paint paint = new Paint();
             paint.setAntiAlias(true);
-            canvas.drawCircle(data.getProfile().getWidth() / 2f, data.getProfile().getHeight() / 2f, data.getProfile().getWidth() / 2f, paint);
+            canvas.drawCircle(profile.getProifle().getWidth() / 2f, profile.getProifle().getHeight() / 2f, profile.getProifle().getWidth() / 2f, paint);
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-            canvas.drawBitmap(data.getProfile(), 0, 0, paint);
+            canvas.drawBitmap(profile.getProifle(), 0, 0, paint);
 
             holder.binding.itemTelProfileImageView.setImageBitmap(circleBitmap);
         } else {
@@ -58,18 +78,23 @@ public class SettingTelMainAdapter extends RecyclerView.Adapter<SettingTelMainAd
         }
 
         // 선택 디자인
-        if (data.isChoiceTel()){
-            holder.binding.itemTelCheckLayout.setVisibility(View.VISIBLE);
-        } else {
+        if (insertList.stream().filter(result -> result.user.getUserUrl().equals(userDataList.get(position).user.getUserUrl())).findFirst().orElse(null) == null){
             holder.binding.itemTelCheckLayout.setVisibility(View.GONE);
+        } else {
+            holder.binding.itemTelCheckLayout.setVisibility(View.VISIBLE);
         }
 
+    }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setItemCheckList(List<UserJoin> insertList){
+        this.insertList = insertList;
+        notifyDataSetChanged(); // 데이터가 변경되었음을 RecyclerView에 알립니다.
     }
 
     @Override
     public int getItemCount() {
-        return telDataList.size();
+        return userDataList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -88,22 +113,14 @@ public class SettingTelMainAdapter extends RecyclerView.Adapter<SettingTelMainAd
         public void onClick(View v) {
 
             if (v.getId() == binding.itemTelCardView.getId()){
-                int posision = getBindingAdapterPosition();
-
-                TelData telData = telDataList.get(posision);
-                telData.setChoiceTel(!telData.isChoiceTel());
-
-                onTelItemClickListener.onTelItemClick(telData.getId());
-
-                notifyItemChanged(posision);
-
+                onTelItemClickListener.onTelItemClick(getBindingAdapterPosition());
             }
         }
 
         @Override
         public boolean onLongClick(View v) {
             if (v.getId() == binding.itemTelCardView.getId()){
-                onTelItemClickListener.onTelItemLongClick(telDataList.get(getBindingAdapterPosition()));
+                onTelItemClickListener.onTelItemLongClick(userDataList.get(getBindingAdapterPosition()));
             }
             return false;
         }
@@ -111,8 +128,8 @@ public class SettingTelMainAdapter extends RecyclerView.Adapter<SettingTelMainAd
     }
 
     public interface OnTelItemClickListener{
-        void onTelItemClick(int telId);
-        void onTelItemLongClick(TelData telData);
+        void onTelItemClick(int position);
+        void onTelItemLongClick(UserJoin userData);
     }
 
 

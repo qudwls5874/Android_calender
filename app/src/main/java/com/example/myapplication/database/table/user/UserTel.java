@@ -12,8 +12,7 @@ public class UserTel {
     private String telType;
     private String telNumber;
 
-    public UserTel(int telId, String telType, String telNumber) {
-        this.telId = telId;
+    public UserTel(String telType, String telNumber) {
         this.telType = telType;
         this.telNumber = telNumber;
     }

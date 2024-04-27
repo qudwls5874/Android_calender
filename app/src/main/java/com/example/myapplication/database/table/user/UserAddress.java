@@ -12,8 +12,7 @@ public class UserAddress {
     private String addressType;
     private String addressName;
 
-    public UserAddress(int addressId, String addressType, String addressName) {
-        this.addressId = addressId;
+    public UserAddress(String addressType, String addressName) {
         this.addressType = addressType;
         this.addressName = addressName;
     }

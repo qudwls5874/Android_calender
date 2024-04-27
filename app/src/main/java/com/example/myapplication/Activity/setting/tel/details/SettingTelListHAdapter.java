@@ -7,17 +7,26 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.database.table.user.UserAddress;
+import com.example.myapplication.database.table.user.UserEvent;
+import com.example.myapplication.database.table.user.UserTel;
+import com.example.myapplication.database.view.UserJoin;
 import com.example.myapplication.databinding.ViewTelItemListHRowBinding;
+import com.example.myapplication.dataclass.DefaultListData;
+import com.example.myapplication.dataclass.DefaultListDataD;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SettingTelListHAdapter extends RecyclerView.Adapter<SettingTelListHAdapter.ViewHolder> {
 
     private ViewTelItemListHRowBinding binding;
-    private List<TelDataDList> detailsList;
+    private List<String> userDList;
+    private UserJoin detailsList;
 
 
-    public SettingTelListHAdapter(List<TelDataDList> detailsList){
+    public SettingTelListHAdapter(List<String> userDList, UserJoin detailsList){
+        this.userDList = userDList;
         this.detailsList = detailsList;
     }
 
@@ -31,17 +40,37 @@ public class SettingTelListHAdapter extends RecyclerView.Adapter<SettingTelListH
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        String data = detailsList.get(position).getName();
-
+        String data = userDList.get(position);
         holder.binding.itemTelTitleTextView.setText(data);
 
-        holder.setMenuListAdapter(detailsList.get(position));
-
+        switch (userDList.get(position)){
+            case "전화번호":
+                List<DefaultListDataD> telListBox = new ArrayList<>();
+                for (UserTel telList : detailsList.userTelList){
+                    telListBox.add(new DefaultListDataD(telList.getTelType(), telList.getTelNumber()));
+                }
+                holder.setMenuListAdapter(new DefaultListData(data, telListBox));
+                break;
+            case "주소":
+                List<DefaultListDataD> addressListBox = new ArrayList<>();
+                for (UserAddress telList : detailsList.userAddressList){
+                    addressListBox.add(new DefaultListDataD(telList.getAddressType(), telList.getAddressName()));
+                }
+                holder.setMenuListAdapter(new DefaultListData(data, addressListBox));
+                break;
+            case "일정":
+                List<DefaultListDataD> eventListBox = new ArrayList<>();
+                for (UserEvent eventList : detailsList.userEventsList){
+                    eventListBox.add(new DefaultListDataD(eventList.getEventType(), eventList.getEventName()));
+                }
+                holder.setMenuListAdapter(new DefaultListData(data, eventListBox));
+                break;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return detailsList.size();
+        return userDList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -56,7 +85,7 @@ public class SettingTelListHAdapter extends RecyclerView.Adapter<SettingTelListH
         }
 
         // 상세 어댑터 설정
-        public void setMenuListAdapter(TelDataDList dataList){
+        public void setMenuListAdapter(DefaultListData dataList){
             SettingTelListDAdapter adapter = new SettingTelListDAdapter(dataList);
             binding.itemTelRecyclerView.setAdapter(adapter);
             binding.itemTelRecyclerView.setLayoutManager(new LinearLayoutManager(binding.itemTelRecyclerView.getContext()));

@@ -28,7 +28,7 @@ public interface UserDao {
     void insertEvent(List<UserEvent> eventList);
 
     @Insert
-    void insertUser(User user);
+    Long insertUser(User user);
     @Update
     void updateUser(User user);
     @Delete
@@ -39,7 +39,8 @@ public interface UserDao {
 
     @Transaction
     @Insert
-    void insertAllUser(User user, List<UserTel> telList, List<UserAddress> addressList, List<UserEvent> eventList);
+    void insertAllUser(List<UserTel> telList, List<UserAddress> addressList, List<UserEvent> eventList);
+
 /*
     @Transaction
     default void insertUserWithDetails(User user, List<UserTel> userTels, List<UserAddress> userAddresses, List<UserEvent> userEvents) {

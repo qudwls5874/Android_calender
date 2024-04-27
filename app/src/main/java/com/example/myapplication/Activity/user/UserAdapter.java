@@ -75,7 +75,7 @@ public class UserAdapter extends ArrayAdapter<User> implements Filterable {
 
       /* 화면에 데이터 표출 */
       holder.row_name_textView1.setText(rowItem.getName());
-      holder.row_tel_textView2.setText(rowItem.getTel());
+//      holder.row_tel_textView2.setText(rowItem.getTel());
       holder.row_money_textView3.setText(rowItem.getMoney());
 
       return view;

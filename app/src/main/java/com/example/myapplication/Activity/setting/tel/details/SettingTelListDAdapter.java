@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.databinding.ViewTelItemListDRowBinding;
+import com.example.myapplication.dataclass.DefaultListData;
+import com.example.myapplication.dataclass.DefaultListDataD;
 import com.example.myapplication.event.WatcherPhoneNumberText;
 
 import java.util.List;
@@ -16,9 +18,9 @@ public class SettingTelListDAdapter extends RecyclerView.Adapter<SettingTelListD
     private ViewTelItemListDRowBinding binding;
 
     private String haedName;
-    private List<String> list;
+    private List<DefaultListDataD> list;
 
-    public SettingTelListDAdapter(TelDataDList list) {
+    public SettingTelListDAdapter(DefaultListData list) {
         this.haedName = list.getName();
         this.list = list.getList();
     }
@@ -33,13 +35,13 @@ public class SettingTelListDAdapter extends RecyclerView.Adapter<SettingTelListD
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        String[] data = list.get(position).split(":");
+        DefaultListDataD data = list.get(position);
 
         if (haedName.equals("전화번호"))
-            data[1] = new WatcherPhoneNumberText().formatPhoneNumber(data[1]);
+            data.setDataName(new WatcherPhoneNumberText().formatPhoneNumber(list.get(position).getDataName()));
 
-        holder.binding.itemTelDTextView.setText(data[0]);
-        holder.binding.itemTelDTextView2.setText(data[1]);
+        holder.binding.itemTelDTextView.setText(data.getDataType());
+        holder.binding.itemTelDTextView2.setText(data.getDataName());
 
     }
 

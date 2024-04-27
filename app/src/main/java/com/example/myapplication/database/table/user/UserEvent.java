@@ -12,8 +12,7 @@ public class UserEvent {
     private String eventType;
     private String eventName;
 
-    public UserEvent(int eventId, String eventType, String eventName) {
-        this.eventId = eventId;
+    public UserEvent(String eventType, String eventName) {
         this.eventType = eventType;
         this.eventName = eventName;
     }

@@ -1,6 +1,7 @@
 package com.example.myapplication.Activity.setting.tel.details;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,23 +14,26 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.myapplication.Activity.setting.tel.TelData;
 import com.example.myapplication.R;
+import com.example.myapplication.database.view.UserJoin;
 import com.example.myapplication.databinding.DialogSettingTelDBinding;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SettingTelListHDialog extends DialogFragment {
 
     private DialogSettingTelDBinding binding;
 
+    private List<String> userDList = new ArrayList<>(Arrays.asList("전화번호","주소","일정"));
     private SettingTelListHAdapter adapter;
-    private TelData telData;
-    private List<TelDataDList> detailsList;
+    private UserJoin userJoin;
+    private Bitmap profile;
 
-    public SettingTelListHDialog(TelData telData){
-        this.telData = telData;
+    public SettingTelListHDialog(UserJoin userJoin, Bitmap profile){
+        this.userJoin = userJoin;
+        this.profile = profile;
     }
 
 
@@ -45,19 +49,15 @@ public class SettingTelListHDialog extends DialogFragment {
 
     private void initUI() {
 
-        detailsList = new ArrayList<>();
-        detailsList.add(new TelDataDList("전화번호", telData.getTel()));
-        detailsList.add(new TelDataDList("주소", telData.getAddress()));
-        detailsList.add(new TelDataDList("일정", telData.getEventDate()));
-
-        adapter = new SettingTelListHAdapter(detailsList);
+        adapter = new SettingTelListHAdapter(userDList, userJoin);
         binding.settingTelDRecyclerView.setAdapter(adapter);
         binding.settingTelDRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        binding.settingTelDNameTextView.setText(telData.getName());
+        binding.settingTelDNameTextView.setText(userJoin.user.getName());
 
-        if (telData.getProfile() != null){
-            binding.settingTelDImageView.setImageBitmap(telData.getProfile());
+
+        if (profile != null){
+            binding.settingTelDImageView.setImageBitmap(profile);
         } else {
             binding.settingTelDImageView.setImageResource(R.drawable.ic_person);
         }
