@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey;
 public class MenuList {
 
     @PrimaryKey(autoGenerate = true)
-    int menuListId;
-    int menuCategoryId;
-    String menuName;
-    int menuMoney;
+    private int menuListId;         // 메뉴 상세 인덱스
+    private int menuCategoryId;     // 메뉴 헤더 인덱스
+    private String menuName;        // 메뉴명
+    private int menuMoney;          // 금액
 
     public MenuList(){}
 

@@ -7,19 +7,22 @@ import androidx.room.PrimaryKey;
 public class MenuCategory {
 
     @PrimaryKey(autoGenerate = true)
-    int menuCategoryId;
-    String menuCategoryName;
-    String menuCategoryYn;
+    private int menuCategoryId;         // 메뉴 카테고리 헤더
+    private String menuCategoryName;    // 메뉴 카테고리 명
+    private String menuCategoryYn;      // 메뉴 카테고리 사용여부
+    private int menuCategoryFg;         // 메뉴 카테고리 구분값 0:서비스, 1:정액권, 2:할인권
 
-    public MenuCategory(String menuCategoryName, String menuCategoryYn){
+    public MenuCategory(String menuCategoryName, String menuCategoryYn, int menuCategoryFg){
         this.menuCategoryName = menuCategoryName;
         this.menuCategoryYn = menuCategoryYn;
+        this.menuCategoryFg = menuCategoryFg;
     }
 
     public MenuCategory(MenuCategory menuCategory){
         this.menuCategoryId = menuCategory.getMenuCategoryId();
         this.menuCategoryName = menuCategory.getMenuCategoryName();
         this.menuCategoryYn = menuCategory.getMenuCategoryYn();
+        this.menuCategoryFg = menuCategory.getMenuCategoryFg();
     }
 
     public int getMenuCategoryId() {
@@ -44,5 +47,13 @@ public class MenuCategory {
 
     public void setMenuCategoryYn(String menuCategoryYn) {
         this.menuCategoryYn = menuCategoryYn;
+    }
+
+    public int getMenuCategoryFg() {
+        return menuCategoryFg;
+    }
+
+    public void setMenuCategoryFg(int menuCategoryFg) {
+        this.menuCategoryFg = menuCategoryFg;
     }
 }

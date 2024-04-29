@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -16,11 +17,14 @@ import com.example.myapplication.dataclass.UserProfile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class UserRepository {
 
     private MutableLiveData<List<User>> modelUserList = new MutableLiveData<>();
+    public MutableLiveData<List<UserJoin>> userJoinList = new MutableLiveData<>();
     private Application application;
     private UserDatabase db;
     private UserDao userDao;
@@ -37,31 +41,32 @@ public class UserRepository {
 
 
 
-    public void setAllUser(List<UserJoin> userList, List<UserProfile> userProfile, Context context){
+    public Boolean setAllUser(List<UserJoin> userList, List<UserProfile> userProfile){
         this.userProfile = userProfile;
-        new InsertUserAsyncTask().execute(userList);
+        try {
+            return new InsertUserAsyncTask().execute(userList).get();
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
-    private class InsertUserAsyncTask extends AsyncTask<List<UserJoin>, Void, Void>{
+    private class InsertUserAsyncTask extends AsyncTask<List<UserJoin>, Void, Boolean>{
         @Override
-        protected Void doInBackground(List<UserJoin>... lists) {
+        protected Boolean doInBackground(List<UserJoin>... lists) {
             for (List<UserJoin> userJoins : lists) {
                 for (UserJoin forData : userJoins) {
-                    // @Transaction 어노테이션을 사용하여 트랜잭션 시작
+                    // 사용자 삽입
                     Long index = userDao.insertUser(forData.user);
                     userDao.insertAllUser(forData.userTelList, forData.userAddressList, forData.userEventsList);
-
-                    // 이미지 파일 저장
                     try {
                         UserProfile profile = userProfile.stream().filter(strData -> strData.getProfileId().equals(forData.user.getUserUrl())).findFirst().orElse(null);
                         if (profile != null){
-
                             String fileName = index+".jpg"; // 파일 이름 설정
                             File file = new File(application.getFilesDir(), fileName); // 내부 저장소에 파일 생성
                             FileOutputStream fos = new FileOutputStream(file);
                             profile.getProifle().compress(Bitmap.CompressFormat.JPEG, 100, fos); // 비트맵을 JPEG 형식으로 압축하여 파일에 저장
                             fos.close();
-
-                            String profileImagePath = file.getAbsolutePath(); // 파일의 절대 경로를 변수에 저장
                         }
 
                     } catch (IOException e) {
@@ -69,7 +74,26 @@ public class UserRepository {
                     }
                 }
             }
+            return true;
+        }
+    }
+
+
+    // getAllUserJoin
+    public List<UserJoin> selectUserJoin(){
+        try {
+            List<UserJoin> result = new SelectJoinUserAsyncTask().execute().get();
+            userJoinList.setValue(result);
+            return result; // AsyncTask의 결과를 가져옴
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
+        }
+    }
+    public class SelectJoinUserAsyncTask extends AsyncTask<Void, Void, List<UserJoin>>{
+        @Override
+        protected List<UserJoin> doInBackground(Void... voids) {
+            return userDao.getAllUserJoin();
         }
     }
 
@@ -84,7 +108,6 @@ public class UserRepository {
         protected void onPostExecute(List<User> userList) {
             super.onPostExecute(userList);
             modelUserList.setValue(userList);
-
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.myapplication.dialog;
+package com.example.myapplication.dialog.moneyfg;
 
 
 import android.content.res.Resources;
@@ -15,29 +15,23 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Activity.user.money.UserMoney;
-import com.example.myapplication.Activity.user.money.UserMoneyAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.database.table.MoneyName;
 import com.example.myapplication.database.viewmodel.MoneyNameViewModel;
 import com.example.myapplication.databinding.DialogMoneyNameBinding;
-import com.example.myapplication.databinding.DialogUserAddBinding;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.SwipeDismissTouchListener;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MoneyNameFragmentDialog extends DialogFragment implements View.OnClickListener, MoneyNameAdapter.CanselMoneyLisner {
 
-    private MoneyNameViewModel moneyNameViewModel;
     private DialogMoneyNameBinding binding;
+    private MoneyNameViewModel moneyNameViewModel;
     public ArrayList<MoneyName> moneyList = new ArrayList<>();
     private MoneyNameAdapter moneyNameAdapter;
 
@@ -63,8 +57,8 @@ public class MoneyNameFragmentDialog extends DialogFragment implements View.OnCl
 
         // 어댑터
         moneyNameAdapter = new MoneyNameAdapter(moneyList, this);
-        binding.dialogMoneyNameRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.dialogMoneyNameRecyclerView.setAdapter(moneyNameAdapter);
+        binding.dialogMoneyNameHRecyclerView.setAdapter(moneyNameAdapter);
+        binding.dialogMoneyNameHRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // 뷰모델
         moneyNameViewModel = new ViewModelProvider(this).get(MoneyNameViewModel.class);

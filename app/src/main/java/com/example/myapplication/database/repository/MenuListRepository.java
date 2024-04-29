@@ -24,15 +24,19 @@ public class MenuListRepository {
     public MenuListRepository(Application application){
         database = UserDatabase.getInstance(application);
         dao = database.getMenuListDao();
-        selectList();
+        selectList(0);
     }
 
 
-    public void selectList(){new SelectAllAsyncTask().execute();}
+    public void selectList(int categoryFg){new SelectAllAsyncTask(categoryFg).execute();}
     public class SelectAllAsyncTask extends AsyncTask<Void, Void, List<MenuJoin>>{
+        private int categoryFg;
+        public SelectAllAsyncTask(int categoryFg) {
+            this.categoryFg = categoryFg;
+        }
         @Override
         protected List<MenuJoin> doInBackground(Void... voids) {
-            return dao.getMenuJoinList();
+            return dao.getMenuJoinList(categoryFg);
         }
         @Override
         protected void onPostExecute(List<MenuJoin> menuJoins) {
@@ -43,12 +47,16 @@ public class MenuListRepository {
         }
     }
 
-    public void insertList(MenuList menuList){new InsertAsyncTask().execute(menuList);}
+    public void insertList(MenuList menuList, int categoryFg){new InsertAsyncTask(categoryFg).execute(menuList);}
     public class InsertAsyncTask extends AsyncTask<MenuList, Void, List<MenuJoin>>{
+        private int categoryFg;
+        public InsertAsyncTask(int categoryFg) {
+            this.categoryFg = categoryFg;
+        }
         @Override
         protected List<MenuJoin> doInBackground(MenuList... menuLists) {
             dao.insert(menuLists[0]);
-            return dao.getMenuJoinList();
+            return dao.getMenuJoinList(categoryFg);
         }
         @Override
         protected void onPostExecute(List<MenuJoin> menuJoins) {
@@ -57,12 +65,16 @@ public class MenuListRepository {
         }
     }
 
-    public void update(MenuList menuList){new UpdateAsyncTask().execute(menuList);}
+    public void update(MenuList menuList, int categoryFg){new UpdateAsyncTask(categoryFg).execute(menuList);}
     private class UpdateAsyncTask extends AsyncTask<MenuList, Void, List<MenuJoin>>{
+        private int categoryFg;
+        public UpdateAsyncTask(int categoryFg) {
+            this.categoryFg = categoryFg;
+        }
         @Override
         protected List<MenuJoin> doInBackground(MenuList... menuLists) {
             dao.update(menuLists[0]);
-            return dao.getMenuJoinList();
+            return dao.getMenuJoinList(categoryFg);
         }
         @Override
         protected void onPostExecute(List<MenuJoin> menuJoins) {
@@ -71,30 +83,16 @@ public class MenuListRepository {
         }
     }
 
-    public void delete(List<MenuList> menuList){
-        for (MenuList data : menuList){
-            Log.i("List 데이터2", "listID : "  + data.getMenuListId() +
-                                            ", categoryID : " + data.getMenuCategoryId() +
-                                            ", menuName : " + data.getMenuName() +
-                                            ", menuMoney : " + data.getMenuMoney()
-            );
-        }
-        new DeleteAsyncTask().execute(menuList);
-    }
+    public void delete(List<MenuList> menuList, int categoryFg){ new DeleteAsyncTask(categoryFg).execute(menuList); }
     public class DeleteAsyncTask extends AsyncTask<List<MenuList>, Void, List<MenuJoin>>{
+        private int categoryFg;
+        public DeleteAsyncTask(int categoryFg) {
+            this.categoryFg = categoryFg;
+        }
         @Override
         protected List<MenuJoin> doInBackground(List<MenuList>... lists) {
-            List<MenuList> menuList = lists[0];
-
-            for (MenuList data : menuList) {
-                Log.i("MenuListData", "listID : "  + data.getMenuListId() +
-                        ", categoryID : " + data.getMenuCategoryId() +
-                        ", menuName : " + data.getMenuName() +
-                        ", menuMoney : " + data.getMenuMoney());
-            }
-            Log.i("??",""+lists[0].size());
             dao.deleteChoice(lists[0]);
-            return dao.getMenuJoinList();
+            return dao.getMenuJoinList(categoryFg);
         }
         @Override
         protected void onPostExecute(List<MenuJoin> menuJoins) {

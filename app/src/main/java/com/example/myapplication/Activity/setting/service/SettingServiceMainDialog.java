@@ -28,7 +28,7 @@ public class SettingServiceMainDialog extends DialogFragment implements View.OnC
     private DialogSettingServiceBinding binding;
     private SettingServiceMainChangeAdapter settingServiceChangeAdapter;
     private MenuCategoryViewModel viewModel;
-    private List<MenuCategory> list = new ArrayList<>();
+    private List<MenuCategory> menuList = new ArrayList<>();
 
 
     @Nullable
@@ -57,10 +57,11 @@ public class SettingServiceMainDialog extends DialogFragment implements View.OnC
     }
 
     private void setDataList(List<MenuCategory> result){
-        list = result;
-        binding.settingServiceChangeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        settingServiceChangeAdapter = new SettingServiceMainChangeAdapter(list, this);
+        menuList = result;
+        settingServiceChangeAdapter = new SettingServiceMainChangeAdapter(menuList, this);
         binding.settingServiceChangeRecyclerView.setAdapter(settingServiceChangeAdapter);
+        binding.settingServiceChangeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
     }
 
 
@@ -93,7 +94,7 @@ public class SettingServiceMainDialog extends DialogFragment implements View.OnC
             }
         } else if (v.getId() == binding.settingServiceMainAddBtn.getId()) {
             // 저장
-            viewModel.setList(list);
+            viewModel.setList(menuList);
             Toast.makeText(getContext(), "저장 되었습니다.", Toast.LENGTH_SHORT).show();
         } else if (v.getId() == binding.settingServiceMainAddTextView.getId()){
             // 항목 추가
@@ -110,6 +111,6 @@ public class SettingServiceMainDialog extends DialogFragment implements View.OnC
 
     @Override
     public void OnitemCheckedChangeLisner(int index, boolean checked) {
-        list.get(index).setMenuCategoryYn(checked?"Y":"N");
+        menuList.get(index).setMenuCategoryYn(checked?"Y":"N");
     }
 }

@@ -15,14 +15,13 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.Activity.user.money.UserMoney;
 import com.example.myapplication.Activity.user.money.UserMoneyAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.DialogUserAddBinding;
-import com.example.myapplication.dialog.MoneyNameFragmentDialog;
+import com.example.myapplication.dialog.moneyfg.MoneyNameFragmentDialog;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.SwipeDismissTouchListener;
 
@@ -56,11 +55,10 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
         binding.userAddMoneyAddBtn.setOnClickListener(this);
         binding.userAddCloseBtn.setOnClickListener(this);
 
-
-        binding.userAddMoneyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //
         moneyAdapter = new UserMoneyAdapter(moneyList, this);
         binding.userAddMoneyRecyclerView.setAdapter(moneyAdapter);
-
+        binding.userAddMoneyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 
@@ -91,8 +89,6 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
     public void onClick(View v) {
         if (v.getId() == binding.userAddMoneyAddBtn.getId()){
             moneyList.add(moneyList.size(), new UserMoney(0,"정액제", LocalDate.now()));
-            moneyAdapter = new UserMoneyAdapter(moneyList, this);
-            binding.userAddMoneyRecyclerView.setAdapter(moneyAdapter);
             moneyAdapter.notifyDataSetChanged();
         } else if (v.getId() == binding.userAddCloseBtn.getId()) {
             dismiss();
@@ -109,10 +105,9 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
 
     @Override
     public void showMoneyDialog() {
-        // FragmentManager 가져오기
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        // 결제 타입 (종류)
         MoneyNameFragmentDialog dialog = new MoneyNameFragmentDialog();
-        dialog.show(fragmentManager, "MoneyNameFragmentDialog");
+        dialog.show(getParentFragmentManager(), "MoneyNameFragmentDialog");
     }
 
 

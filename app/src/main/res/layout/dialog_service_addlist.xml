@@ -66,50 +66,12 @@
 
     </LinearLayout>
 
-    <View
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
-
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="50dp"
-            android:layout_height="match_parent"/>
-
-        <CheckBox
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="서비스"/>
-
-        <CheckBox
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="정액제"/>
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="할인권"/>
-
-        <View
-            android:layout_width="50dp"
-            android:layout_height="match_parent"/>
-
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="38dp"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:background="@drawable/rounded_border_search_text">
 
@@ -134,6 +96,52 @@
             android:layout_height="20dp"
             android:layout_marginEnd="12dp"
             android:src="@drawable/ic_cansel_btn"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"/>
+
+        <android.widget.Button
+            android:id="@+id/setting_service_list_btn1"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/rounded_button_gray"
+            android:textSize="12dp"
+            android:textColor="@color/black"
+            android:text="서비스"/>
+
+        <android.widget.Button
+            android:id="@+id/setting_service_list_btn2"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/rounded_button"
+            android:textSize="12dp"
+            android:textColor="@color/black"
+            android:text="정액제"/>
+
+        <android.widget.Button
+            android:id="@+id/setting_service_list_btn3"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/rounded_button"
+            android:textSize="12dp"
+            android:textColor="@color/black"
+            android:text="할인권"/>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"/>
+
 
     </LinearLayout>
 

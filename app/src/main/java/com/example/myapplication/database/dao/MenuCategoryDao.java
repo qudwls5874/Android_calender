@@ -22,7 +22,7 @@ public interface MenuCategoryDao {
     @Delete
     void delete(MenuCategory menuCategory);
 
-    @Query("SELECT * FROM menucategorys")
+    @Query("SELECT * FROM menucategorys WHERE menuCategoryFg = '0' ")
     List<MenuCategory> getAllSelect();
 
 }

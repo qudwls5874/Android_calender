@@ -55,9 +55,10 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
     private UserViewModel viewModel;
 
     private SettingTelMainAdapter adapter;
-    private List<UserJoin> userJoins;   // 전체 리스트
-    private List<UserJoin> filterList;  // 검색 리스트
-    private List<UserJoin> insertList;  // 저장 리스트
+    private List<UserJoin> dbUsertJoins;    // 데이터베이스 전체 리스트
+    private List<UserJoin> calUserJoins;   // 캘린더 전체 리스트
+    private List<UserJoin> filterList;     // 검색 리스트
+    private List<UserJoin> insertList;     // 저장 리스트
     private List<UserProfile> profileList;   // 사진 리스트
 
     public SettingTelMainDialog(LoadingDialog2 loadingDialog) {
@@ -78,7 +79,7 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
         // 키보드 숨기기
         HideKeyboardHelperDialog.setupUI(binding.getRoot(), super.getDialog());
 
-        userJoins = new ArrayList<>();
+        calUserJoins = new ArrayList<>();
         profileList = new ArrayList<>();
         filterList = new ArrayList<>();
         insertList = new ArrayList<>();
@@ -98,14 +99,18 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
         // 뷰모델 초기화
         viewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
+
     }
 
 
     private void initData() {
 
-        viewModel.getUserList().observe(getViewLifecycleOwner(), list ->{
-
+        viewModel.getObUserJoinList().observe(this, list ->{
+            dbUsertJoins = list;
+            Log.i("옵서버1", ""+ list.size());
         });
+
+        dbUsertJoins = viewModel.getUserJoinList();
 
         // 데이터 조회
         getContacts();
@@ -113,6 +118,7 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
         // 로딩 끄기
         loadingDialog.dismiss();
     }
+
 
 
     private void getContacts() {
@@ -224,22 +230,26 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
 
 
                 UserJoin result = new UserJoin();
-                result.user = new User(displayName, id, "");
+                result.user = new User(displayName, id, "0");
                 result.userTelList = tel;
                 result.userAddressList = addressList;
                 result.userEventsList = eventList;
 
+                // dbUsertJoins
+                UserJoin checkData = dbUsertJoins.stream()
+                        .filter(strData -> strData.user.getName().equals(result.user.getName()))
+                        .findFirst()
+                        .orElse(null);
 
-                userJoins.add(result);
-                filterList.add(result);
-
+                if (checkData == null){
+                    calUserJoins.add(result);
+                    filterList.add(result);
+                }
             }
             cursor.close();
         }
-
-        binding.settingTelAllPersonTextView.setText("총: " + userJoins.size());
+        binding.settingTelAllPersonTextView.setText("총: " + calUserJoins.size());
         adapter.setItemCheckList(insertList);
-
     }
 
     private String getTypeLabel(int type) {
@@ -266,7 +276,28 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
             dismiss();
         } else if (v.getId() == binding.settingTelAddBtn.getId()) {
             // 저장버튼
-            viewModel.setUserList(insertList, profileList, getContext());
+            Boolean result = viewModel.setUserList(insertList, profileList);
+
+            if (result){
+                for (UserJoin forData : insertList){
+                    for (int i = 0; i < calUserJoins.size(); i ++){
+                        if (calUserJoins.get(i).user.getUserUrl().equals(forData.user.getUserUrl())){
+                            calUserJoins.remove(i);
+                        }
+                    }
+                    for (int i = 0; i < filterList.size(); i ++){
+                        if (filterList.get(i).user.getUserUrl().equals(forData.user.getUserUrl())){
+                            filterList.remove(i);
+                        }
+                    }
+                }
+                insertList.clear();
+
+                binding.settingTelAllPersonTextView.setText("총: " + calUserJoins.size());
+                binding.settingTelCheckPersonTextView.setText("선택: " + insertList.size());
+                adapter.setItemCheckList(insertList);
+            }
+
         } else if (v.getId() == binding.settingTelCheckPersonTextView.getId()) {
             // 선택 텍스트
             onChoiceTextChanged();
@@ -306,7 +337,7 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
                 filterList.addAll(insertList);
             } else {
                 // 전체 조회
-                filterList.addAll(userJoins);
+                filterList.addAll(calUserJoins);
             }
         } else {
             // 리스트를 순회하면서 검색어를 포함하는 항목을 찾습니다.
@@ -324,7 +355,7 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
                 }
             } else {
                 // 전체 조회
-                for (UserJoin userJoin : userJoins){
+                for (UserJoin userJoin : calUserJoins){
                     UserJoin filteredUserJoin = new UserJoin();
                     if (userJoin.user.getName().toLowerCase().contains(newText.toLowerCase())){
                         filteredUserJoin.user = userJoin.user;
@@ -355,14 +386,18 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
         binding.settingTelAllPersonTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.textPlusColor));
         binding.settingTelCheckPersonTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.textNormalColor));
         filterList.clear();
-        filterList.addAll(userJoins);
+        filterList.addAll(calUserJoins);
         adapter.setItemCheckList(insertList);
     }
 
     @Override
     public void onTelItemClick(int position) {
         // 저장 리스트값
-        UserJoin result = insertList.stream().filter(streamData -> streamData.user.getUserUrl().equals(filterList.get(position).user.getUserUrl())).findFirst().orElse(null);
+        UserJoin result = insertList.stream()
+                .filter(streamData -> streamData.user.getUserUrl().equals(filterList.get(position).user.getUserUrl()))
+                .findFirst()
+                .orElse(null);
+
         if (result == null){
             insertList.add(filterList.get(position));
         } else {

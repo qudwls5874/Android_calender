@@ -3,6 +3,7 @@ package com.example.myapplication.database.viewmodel;
 import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,22 +22,35 @@ import java.util.List;
 
 public class UserViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<User>> modelUserList = new MutableLiveData<>();
+    private MutableLiveData<List<UserJoin>> userJoinList;
     private UserRepository repository;
 
     public UserViewModel(@NonNull Application application) {
         super(application);
         repository = new UserRepository(application);
-        repository.select();
+        repository.selectUserJoin();
+        userJoinList = repository.userJoinList;
     }
 
 
-    // 옵져버
-    public LiveData<List<User>> getUserList(){
-        return modelUserList;
+    // 옵져버 select
+    public LiveData<List<UserJoin>> getObUserJoinList(){
+        return userJoinList;
     }
 
-    public void setUserList(List<UserJoin> userJoin, List<UserProfile> userProfile, Context context){ repository.setAllUser(userJoin, userProfile, context);};
+    // 동적 select
+    public List<UserJoin> getUserJoinList(){
+        List<UserJoin> result = repository.selectUserJoin();
+        userJoinList.setValue(result);
+        return result;
+    }
+
+    // 동적 데이터 저장
+    public Boolean setUserList(List<UserJoin> userJoin, List<UserProfile> userProfile){
+        return repository.setAllUser(userJoin, userProfile);
+    }
+
+
 
 
 

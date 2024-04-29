@@ -1,7 +1,5 @@
 package com.example.myapplication.database.table;
 
-import android.graphics.Bitmap;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 

@@ -1,24 +1,23 @@
-package com.example.myapplication.dialog;
+package com.example.myapplication.dialog.moneyfg;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Activity.user.money.UserMoney;
 import com.example.myapplication.R;
 import com.example.myapplication.database.table.MoneyName;
+import com.example.myapplication.databinding.ViewMoneyNameRowBinding;
 import com.example.myapplication.event.WatcherMoneyText;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MoneyNameAdapter extends RecyclerView.Adapter<MoneyNameAdapter.MoneyNameHolder> implements WatcherMoneyText.OnSearchChangeListener {
+
+    private ViewMoneyNameRowBinding binding;
 
     private ArrayList<MoneyName> moneyList;
     private CanselMoneyLisner moneyLisner;
@@ -31,8 +30,8 @@ public class MoneyNameAdapter extends RecyclerView.Adapter<MoneyNameAdapter.Mone
     @NonNull
     @Override
     public MoneyNameHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_money_name_row, parent, false);
-        return new MoneyNameHolder(view);
+        binding = ViewMoneyNameRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new MoneyNameHolder(binding);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class MoneyNameAdapter extends RecyclerView.Adapter<MoneyNameAdapter.Mone
 
         MoneyName rowItem = this.moneyList.get(position);
 
-        holder.view_money_name_textView.setText(rowItem.getMoneyName());
+        holder.binding.viewMoneyNameTextView.setText(rowItem.getMoneyName());
 
     }
 
@@ -56,11 +55,11 @@ public class MoneyNameAdapter extends RecyclerView.Adapter<MoneyNameAdapter.Mone
 
     public class MoneyNameHolder extends RecyclerView.ViewHolder {
 
-        TextView view_money_name_textView;
+        private ViewMoneyNameRowBinding binding;
 
-        public MoneyNameHolder(@NonNull View itemView) {
-            super(itemView);
-            view_money_name_textView = itemView.findViewById(R.id.view_money_name_textView);
+        public MoneyNameHolder(@NonNull ViewMoneyNameRowBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
     }

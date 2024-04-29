@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey;
 public class MoneyName {
 
     @PrimaryKey(autoGenerate = true)
-    int moneyId;
-    String moneyName;
+    private int moneyId;
+    private String moneyName;
 
     public MoneyName(String moneyName){
         this.moneyName = moneyName;

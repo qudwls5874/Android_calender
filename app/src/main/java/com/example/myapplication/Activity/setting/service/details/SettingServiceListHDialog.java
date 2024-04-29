@@ -53,6 +53,8 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
     private ArrayList<MenuJoin> filterList = new ArrayList<>();
     private ArrayList<MenuList> delList = new ArrayList<>();
 
+    private int category = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -85,6 +87,9 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
         binding.settingServiceListaddChangeBtn.setOnClickListener(this::onClick);    // 편집 버튼
         binding.settingServiceListaddDeleteBtn.setOnClickListener(this::onClick);    // 삭제 버튼
         binding.settingServiceListEraseBtn.setOnClickListener(this::onClick);        // 지우기 버튼
+        binding.settingServiceListBtn1.setOnClickListener(this);
+        binding.settingServiceListBtn2.setOnClickListener(this);
+        binding.settingServiceListBtn3.setOnClickListener(this);
 
         // 어댑터
         adapter = new SettingServiceListHAdapter(filterList, this, this, this);
@@ -141,13 +146,28 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
                 return;
 
             loading.show();
-            viewModel.setDeleteList(delList);
+            viewModel.setDeleteList(delList, category);
 
             setLayoutChanged();
 
         } else if (v.getId() == binding.settingServiceListEraseBtn.getId()) {
             // 검색 지우기 버튼
             binding.settingServiceListSearchEditText.setText("");
+        } else if (v.getId() == binding.settingServiceListBtn1.getId()){
+            binding.settingServiceListBtn1.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button_gray));
+            binding.settingServiceListBtn2.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
+            binding.settingServiceListBtn3.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
+            this.category = 1;
+        } else if (v.getId() == binding.settingServiceListBtn2.getId()){
+            binding.settingServiceListBtn1.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
+            binding.settingServiceListBtn2.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button_gray));
+            binding.settingServiceListBtn3.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
+            this.category = 2;
+        } else if (v.getId() == binding.settingServiceListBtn3.getId()){
+            binding.settingServiceListBtn1.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
+            binding.settingServiceListBtn2.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
+            binding.settingServiceListBtn3.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button_gray));
+            this.category = 2;
         }
     }
 
@@ -205,22 +225,6 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
                     filterList.add(filteredMenuJoin);
                 }
             }
-
-            /*
-            for (int i = 0; i < list.size(); i++){
-                MenuCategory category = new MenuCategory(list.get(i).menuCategory);
-                List<MenuList> menuLists = new ArrayList<>();
-                for (MenuList data : list.get(i).menuLists){
-                    if (data.getMenuName().toLowerCase().contains(newText.toLowerCase())) {
-                        menuLists.add(data);
-                    }
-                }
-                MenuJoin menuJoin = new MenuJoin();
-                menuJoin.menuCategory = category;
-                menuJoin.menuLists = menuLists;
-                filterList.add(menuJoin);
-            }
-            */
         }
         // 변경된 목록을 RecyclerView에 반영합니다.
         adapter.notifyDataSetChanged();
@@ -229,13 +233,13 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
     // 저장값 리스너
     @Override
     public void setMenuListLisner(MenuList menuList) {
-        viewModel.setList(menuList);
+        viewModel.setList(menuList, category);
     }
 
     // 수정값 리스너
     @Override
     public void setUdateLisner(MenuList menuList, Dialog dialog) {
-        viewModel.setUpdate(menuList);
+        viewModel.setUpdate(menuList, category);
         Toast.makeText(getContext(), "저장 되었습니다.", Toast.LENGTH_SHORT).show();
         dialog.dismiss();
     }

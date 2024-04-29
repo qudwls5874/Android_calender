@@ -19,6 +19,8 @@
     <!-- 버튼 컬러 -->
     <color name="btnOrangeColor">#FF5733</color>
     <color name="customRedColor">#FF0064</color>
+    <color name="custemgreenColor">#1EDA69</color>
+    <color name="custemBlueColor">#ADD8E6</color>
 
     <!-- 텍스트 컬러 -->
     <color name="textPlusColor">#5E8BAE</color>

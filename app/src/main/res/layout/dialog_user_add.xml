@@ -73,14 +73,14 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"/>
+                        android:layout_height="5dp"/>
 
                     <android.widget.Button
                         android:layout_width="58dp"
                         android:layout_height="28dp"
                         android:background="@drawable/rounded_button"
                         android:textSize="12dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:text="사진 추가"/>
 
                 </LinearLayout>
@@ -116,13 +116,19 @@
                                 android:hint="이름"
                                 android:singleLine="true"
                                 android:nextFocusDown="@id/user_add_tel_edit"/>
-
-                            <ImageButton
+                            <ImageView
                                 android:id="@+id/user_add_name_delete"
-                                android:layout_width="30dp"
-                                android:layout_height="match_parent"
-                                android:background="@android:color/transparent"
-                                android:src="@drawable/ic_text_delete"/>
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="8dp"
+                                android:src="@drawable/ic_cansel_btn"/>
+<!--                            <ImageButton-->
+<!--                                android:id="@+id/user_add_name_delete"-->
+<!--                                android:layout_width="30dp"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:background="@android:color/transparent"-->
+<!--                                android:src="@drawable/ic_cansel_btn"/>-->
 
                         </LinearLayout>
 
@@ -164,12 +170,20 @@
                                     android:hint="010-1234-1234"
                                     android:singleLine="true"/>
 
-                                <ImageButton
+                                <ImageView
                                     android:id="@+id/user_add_tel_delete"
-                                    android:layout_width="30dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent"
-                                    android:src="@drawable/ic_text_delete"/>
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:src="@drawable/ic_cansel_btn"/>
+
+<!--                                <ImageButton-->
+<!--                                    android:id="@+id/user_add_tel_delete"-->
+<!--                                    android:layout_width="30dp"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:background="@android:color/transparent"-->
+<!--                                    android:src="@drawable/ic_text_delete"/>-->
 
                             </LinearLayout>
 
@@ -215,12 +229,20 @@
                                     android:hint="주소"
                                     android:singleLine="true"/>
 
-                                <ImageButton
+                                <ImageView
                                     android:id="@+id/user_add_address_delete"
-                                    android:layout_width="30dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent"
-                                    android:src="@drawable/ic_text_delete"/>
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:src="@drawable/ic_cansel_btn"/>
+
+<!--                                <ImageButton-->
+<!--                                    android:id="@+id/user_add_address_delete"-->
+<!--                                    android:layout_width="30dp"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:background="@android:color/transparent"-->
+<!--                                    android:src="@drawable/ic_text_delete"/>-->
 
                             </LinearLayout>
 
@@ -243,7 +265,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"/>
+                    android:layout_height="36dp"/>
 
                 <!-- 구분 선 start -->
                 <View
@@ -258,7 +280,7 @@
                     tools:listitem="@layout/view_money_name_row"
                     tools:itemCount="0"/>
 
-                <!-- 번호 추가 -->
+                <!-- 금액 추가 -->
                 <LinearLayout
                     android:id="@+id/user_add_money_addBtn"
                     android:layout_width="match_parent"
@@ -266,14 +288,23 @@
                     android:background="@color/white"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="20dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:textColor="@color/textNormalColor"
-                        android:src="@drawable/ic_user_add"
-                        />
+                        android:layout_marginRight="5dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/textNormalColor"
+                            android:src="@drawable/ic_list_add"
+                            />
+
+                    </LinearLayout>
+
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -294,7 +325,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"/>
+                    android:layout_height="36dp"/>
 
                 <!-- 구분 선 start -->
                 <View
@@ -309,14 +340,21 @@
                     android:background="@color/white"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="20dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:textColor="@color/textNormalColor"
-                        android:src="@drawable/ic_user_add"
-                        />
+                        android:layout_marginRight="5dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/textNormalColor"
+                            android:src="@drawable/ic_list_add"
+                            />
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -338,7 +376,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"/>
+                    android:layout_height="36dp"/>
 
                 <!-- 구분 선 start -->
                 <View

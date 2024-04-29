@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey;
 public class SettingDate {
 
     @PrimaryKey(autoGenerate = true)
-    int settingId;      // 0: 오픈, 1: 마감, 2: 시간간격, 3: 휴무
-    String settingTime;    //        0~2:시간.              3: 1월,2화,3수,4목,5금,6토,7일
+    private int settingId;      // 0: 오픈, 1: 마감, 2: 시간간격, 3: 휴무
+    private String settingTime; // 0~2:시간.                    3: 1월,2화,3수,4목,5금,6토,7일
 
     public SettingDate(String settingTime){
         this.settingTime = settingTime;

@@ -25,11 +25,11 @@ public class MenuListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<MenuJoin>> getList(){return list;}
-    public void setList(MenuList menuList){
-        repository.insertList(menuList);
+    public void setList(MenuList menuList, int categoryFg){
+        repository.insertList(menuList, categoryFg);
     }
-    public void setDeleteList(List<MenuList> menuLists){repository.delete(menuLists);}
-    public void setUpdate(MenuList menuList) { repository.update(menuList);}
+    public void setDeleteList(List<MenuList> menuLists, int categoryFg){repository.delete(menuLists, categoryFg);}
+    public void setUpdate(MenuList menuList, int categoryFg) { repository.update(menuList, categoryFg);}
 
 
 

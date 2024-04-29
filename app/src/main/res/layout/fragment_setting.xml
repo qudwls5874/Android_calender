@@ -7,19 +7,40 @@
     tools:context=".Activity.home.HomeFragment"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/BackBaseInputBoxColor"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_margin="8dp">
+        android:layout_height="40dp"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
+            android:gravity="center|start"
+            android:layout_marginStart="15dp"
             android:text="설정"/>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/BackBaseInputBoxColor"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/BackBaseInputBoxColor"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/setting_recyclerView"

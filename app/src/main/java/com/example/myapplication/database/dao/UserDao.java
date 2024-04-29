@@ -11,6 +11,7 @@ import com.example.myapplication.database.table.User;
 import com.example.myapplication.database.table.user.UserAddress;
 import com.example.myapplication.database.table.user.UserEvent;
 import com.example.myapplication.database.table.user.UserTel;
+import com.example.myapplication.database.view.UserJoin;
 
 import java.util.List;
 
@@ -36,6 +37,10 @@ public interface UserDao {
 
     @Query("SELECT * FROM users")
     List<User> getAllUsers();
+
+    /* 조인테이블 */
+    @Query("SELECT * FROM users")
+    List<UserJoin> getAllUserJoin();
 
     @Transaction
     @Insert

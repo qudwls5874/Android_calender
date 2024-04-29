@@ -35,7 +35,7 @@ public interface MenuListDao {
     List<MenuJoin> getMenuJoinList();
 */
 
-    @Query("SELECT * FROM menucategorys WHERE menuCategoryYn = 'Y'")
-    List<MenuJoin> getMenuJoinList();
+    @Query("SELECT * FROM menucategorys WHERE menuCategoryYn = 'Y' AND menuCategoryFg = :fg")
+    List<MenuJoin> getMenuJoinList(int fg);
 
 }

@@ -69,14 +69,16 @@ public abstract class UserDatabase extends RoomDatabase {
         moneyNameDao.insert(new MoneyName("결제"));
 
         MenuCategoryDao menuCategoryDao = userDatabase.getMenuCategoryDao();
-        menuCategoryDao.insert(new MenuCategory("네일", "N"));
-        menuCategoryDao.insert(new MenuCategory("헤어", "N"));
-        menuCategoryDao.insert(new MenuCategory("애견미용", "N"));
-        menuCategoryDao.insert(new MenuCategory("속눈썹", "N"));
-        menuCategoryDao.insert(new MenuCategory("피부", "N"));
-        menuCategoryDao.insert(new MenuCategory("메이크업", "N"));
-        menuCategoryDao.insert(new MenuCategory("왁싱", "N"));
-        menuCategoryDao.insert(new MenuCategory("타투/문신", "N"));
+        menuCategoryDao.insert(new MenuCategory("네일", "N", 0));
+        menuCategoryDao.insert(new MenuCategory("헤어", "N", 0));
+        menuCategoryDao.insert(new MenuCategory("애견미용", "N", 0));
+        menuCategoryDao.insert(new MenuCategory("속눈썹", "N", 0));
+        menuCategoryDao.insert(new MenuCategory("피부", "N", 0));
+        menuCategoryDao.insert(new MenuCategory("메이크업", "N", 0));
+        menuCategoryDao.insert(new MenuCategory("왁싱", "N", 0));
+        menuCategoryDao.insert(new MenuCategory("타투/문신", "N", 0));
+        menuCategoryDao.insert(new MenuCategory("정액권", "Y", 1));
+        menuCategoryDao.insert(new MenuCategory("할인권", "Y", 2));
 
         MenuListDao menuListDao = userDatabase.getMenuListDao();
         menuListDao.insert(new MenuList(1, "기본케어", 10000));
