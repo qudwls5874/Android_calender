@@ -24,7 +24,13 @@ public class MenuListViewModel extends AndroidViewModel {
         list = repository.joinList;
     }
 
-    public LiveData<List<MenuJoin>> getList(){return list;}
+    public LiveData<List<MenuJoin>> getList(){
+        return list;
+    }
+    public void getSelectList(int categoryFg){
+        repository.selectList(categoryFg);
+    }
+
     public void setList(MenuList menuList, int categoryFg){
         repository.insertList(menuList, categoryFg);
     }

@@ -157,18 +157,33 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
             binding.settingServiceListBtn1.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button_gray));
             binding.settingServiceListBtn2.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
             binding.settingServiceListBtn3.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
-            this.category = 1;
+            setCategoryChanged(0);
         } else if (v.getId() == binding.settingServiceListBtn2.getId()){
             binding.settingServiceListBtn1.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
             binding.settingServiceListBtn2.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button_gray));
             binding.settingServiceListBtn3.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
-            this.category = 2;
+            setCategoryChanged(1);
         } else if (v.getId() == binding.settingServiceListBtn3.getId()){
             binding.settingServiceListBtn1.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
             binding.settingServiceListBtn2.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button));
             binding.settingServiceListBtn3.setBackground(binding.getRoot().getContext().getDrawable(R.drawable.rounded_button_gray));
-            this.category = 2;
+            setCategoryChanged(2);
         }
+
+    }
+
+    private void setCategoryChanged(int category){
+        loading.show();
+
+        // 기본상태로
+        binding.settingServiceListaddCancelBtn.setVisibility(View.GONE);
+        binding.settingServiceListaddDeleteBtn.setVisibility(View.GONE);
+        binding.settingServiceListaddCloseBtn.setVisibility(View.VISIBLE);
+        binding.settingServiceListaddChangeBtn.setVisibility(View.VISIBLE);
+        layoutCheck = false;
+
+        this.category = category;
+        viewModel.getSelectList(this.category);
     }
 
     private void setLayoutChanged(){

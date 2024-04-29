@@ -1,7 +1,6 @@
 package com.example.myapplication.Activity.user;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.myapplication.R;
-import com.example.myapplication.database.table.User;
 import com.example.myapplication.database.view.UserJoin;
 import com.example.myapplication.database.viewmodel.UserViewModel;
 import com.example.myapplication.event.HideKeyboardHelper;
@@ -32,7 +29,7 @@ public class UserFragment extends Fragment implements View.OnClickListener, Watc
     private UserViewModel userViewModel;
 
     // 어댑터
-    private UserAdapter userAdapter;
+    private UserFragmentAdapter userAdapter;
     private ArrayList<UserJoin> userList = new ArrayList<>();
     private ArrayList<UserJoin> filterList = new ArrayList<>();
 
@@ -59,7 +56,7 @@ public class UserFragment extends Fragment implements View.OnClickListener, Watc
         binding.userSearchEraseBtn.setOnClickListener(this);
 
         // 어댑터
-        userAdapter = new UserAdapter(filterList);
+        userAdapter = new UserFragmentAdapter(filterList);
         binding.recyclerView.setAdapter(userAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

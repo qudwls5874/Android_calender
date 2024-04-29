@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@android:color/transparent">
+    android:background="@color/white">
 
     <View
         android:layout_width="match_parent"
@@ -14,9 +14,9 @@
     <LinearLayout
         android:id="@+id/user_add_money_addBtn"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="35dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/white"
+
         android:orientation="horizontal">
 
         <LinearLayout
@@ -51,9 +51,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
-        <ImageButton
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+        <ImageView
+            android:id="@+id/view_money_check_imageView"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
             android:background="@android:color/transparent"

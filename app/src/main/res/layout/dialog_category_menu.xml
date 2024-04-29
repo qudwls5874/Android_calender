@@ -37,7 +37,7 @@
             android:layout_marginTop="3dp"
             android:textColor="@color/textPlusColor"
             android:textSize="18dp"
-            android:text="편집"/>
+            android:text="선택"/>
 
     </LinearLayout>
 

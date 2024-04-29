@@ -1,4 +1,4 @@
-package com.example.myapplication.Activity.user.money;
+package com.example.myapplication.Activity.user.itemmoney;
 
 import android.view.LayoutInflater;
 import android.view.View;

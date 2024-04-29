@@ -1,7 +1,6 @@
-package com.example.myapplication.Activity.user.money;
+package com.example.myapplication.Activity.user.itemmoney;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class UserMoney {
 

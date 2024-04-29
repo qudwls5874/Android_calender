@@ -8,13 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.database.table.MenuCategory;
-import com.example.myapplication.databinding.ViewServiceItemRowBinding;
+import com.example.myapplication.databinding.ViewSettingServiceFgRowBinding;
 
 import java.util.List;
 
 class SettingServiceMainChangeAdapter extends RecyclerView.Adapter<SettingServiceMainChangeAdapter.ViewHolder> {
 
-    private ViewServiceItemRowBinding binding;
+    //view_setting_service_fg_row
+    private ViewSettingServiceFgRowBinding binding;
     private List<MenuCategory> list;
     private OnItemCheckedChangeLisner lisner;
 
@@ -26,7 +27,7 @@ class SettingServiceMainChangeAdapter extends RecyclerView.Adapter<SettingServic
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = ViewServiceItemRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        binding = ViewSettingServiceFgRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
 
@@ -45,9 +46,9 @@ class SettingServiceMainChangeAdapter extends RecyclerView.Adapter<SettingServic
 
     public class ViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
 
-        ViewServiceItemRowBinding binding;
+        ViewSettingServiceFgRowBinding binding;
 
-        public ViewHolder(@NonNull ViewServiceItemRowBinding binding) {
+        public ViewHolder(@NonNull ViewSettingServiceFgRowBinding binding) {
             super(binding.getRoot());
 
             binding.settingCheckBox1.setOnCheckedChangeListener(this);

@@ -17,11 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.myapplication.Activity.user.money.UserMoney;
-import com.example.myapplication.Activity.user.money.UserMoneyAdapter;
+import com.example.myapplication.Activity.user.itemmoney.UserMoney;
+import com.example.myapplication.Activity.user.itemmoney.UserMoneyAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.DialogUserAddBinding;
-import com.example.myapplication.dialog.moneyfg.MoneyNameFragmentDialog;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.SwipeDismissTouchListener;
 
@@ -52,13 +51,16 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
         SwipeDismissTouchListener swipeDismissTouchListener = new SwipeDismissTouchListener(getDialog().getWindow().getDecorView(), () -> dismiss());
         binding.userAddTopLayout.setOnTouchListener(swipeDismissTouchListener);
 
-        binding.userAddMoneyAddBtn.setOnClickListener(this);
+        // 클릭 이벤트
+        binding.userAddServiceAddBtn.setOnClickListener(this);
+        binding.userAddCashAddBtn.setOnClickListener(this);
+        binding.userAddCouponAddBtn.setOnClickListener(this);
         binding.userAddCloseBtn.setOnClickListener(this);
 
-        //
+        // 서비스
         moneyAdapter = new UserMoneyAdapter(moneyList, this);
-        binding.userAddMoneyRecyclerView.setAdapter(moneyAdapter);
-        binding.userAddMoneyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.userAddServiceRecyclerView.setAdapter(moneyAdapter);
+        binding.userAddServiceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 
@@ -87,9 +89,13 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == binding.userAddMoneyAddBtn.getId()){
+        if (v.getId() == binding.userAddServiceAddBtn.getId()){
             moneyList.add(moneyList.size(), new UserMoney(0,"정액제", LocalDate.now()));
             moneyAdapter.notifyDataSetChanged();
+        } else if (v.getId() == binding.userAddCashAddBtn.getId()) {
+
+        } else if (v.getId() == binding.userAddCouponAddBtn.getId()) {
+
         } else if (v.getId() == binding.userAddCloseBtn.getId()) {
             dismiss();
         }
@@ -99,15 +105,15 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
     public void setCanselMoney(int index) {
         moneyList.remove(index);
         moneyAdapter = new UserMoneyAdapter(moneyList, this);
-        binding.userAddMoneyRecyclerView.setAdapter(moneyAdapter);
+        binding.userAddServiceRecyclerView.setAdapter(moneyAdapter);
         moneyAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showMoneyDialog() {
         // 결제 타입 (종류)
-        MoneyNameFragmentDialog dialog = new MoneyNameFragmentDialog();
-        dialog.show(getParentFragmentManager(), "MoneyNameFragmentDialog");
+//        MoneyNameFragmentDialog dialog = new MoneyNameFragmentDialog();
+//        dialog.show(getParentFragmentManager(), "MoneyNameFragmentDialog");
     }
 
 

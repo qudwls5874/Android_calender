@@ -76,7 +76,7 @@
                     android:id="@+id/setting_service_change_recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:listitem="@layout/view_service_item_row"
+                    tools:listitem="@layout/view_setting_service_fg_row"
                     tools:itemCount="3"/>
 
             </LinearLayout>

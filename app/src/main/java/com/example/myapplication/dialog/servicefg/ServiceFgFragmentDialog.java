@@ -1,6 +1,7 @@
-package com.example.myapplication.dialog.moneyfg;
+package com.example.myapplication.dialog.servicefg;
 
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,33 +20,35 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
-import com.example.myapplication.database.table.MoneyName;
-import com.example.myapplication.database.viewmodel.MoneyNameViewModel;
-import com.example.myapplication.databinding.DialogMoneyNameBinding;
+import com.example.myapplication.database.view.MenuJoin;
+import com.example.myapplication.database.viewmodel.MenuListViewModel;
+import com.example.myapplication.databinding.DialogCategoryMenuBinding;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.SwipeDismissTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoneyNameFragmentDialog extends DialogFragment implements View.OnClickListener, MoneyNameAdapter.CanselMoneyLisner {
+public class ServiceFgFragmentDialog extends DialogFragment implements View.OnClickListener {
 
-    private DialogMoneyNameBinding binding;
-    private MoneyNameViewModel moneyNameViewModel;
-    public ArrayList<MoneyName> moneyList = new ArrayList<>();
-    private MoneyNameAdapter moneyNameAdapter;
+    private DialogCategoryMenuBinding binding;
+    private MenuListViewModel menuViewModel;
+    public ArrayList<MenuJoin> menuJoins = new ArrayList<>();
+    private ServiceFgAdapter categoryMenuAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DialogMoneyNameBinding.inflate(inflater, container, false);
+        binding = DialogCategoryMenuBinding.inflate(inflater, container, false);
 
+        initUI();
         initData();
 
         return binding.getRoot();
     }
 
-    private void initData() {
+    @SuppressLint("ClickableViewAccessibility")
+    private void initUI() {
 
         // 키보드 숨기기
         HideKeyboardHelperDialog.setupUI(binding.getRoot(), super.getDialog());
@@ -56,24 +59,26 @@ public class MoneyNameFragmentDialog extends DialogFragment implements View.OnCl
         binding.dialogMoneyCloseBtn.setOnClickListener(this);
 
         // 어댑터
-        moneyNameAdapter = new MoneyNameAdapter(moneyList, this);
-        binding.dialogMoneyNameHRecyclerView.setAdapter(moneyNameAdapter);
+        categoryMenuAdapter = new ServiceFgAdapter(menuJoins);
+        binding.dialogMoneyNameHRecyclerView.setAdapter(categoryMenuAdapter);
         binding.dialogMoneyNameHRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // 뷰모델
-        moneyNameViewModel = new ViewModelProvider(this).get(MoneyNameViewModel.class);
-
-        // LiveData를 관찰하여 업데이트가 발생할 때마다 RecyclerView에 데이터를 설정
-        moneyNameViewModel.getAllMoneyNames().observe(getViewLifecycleOwner(),moneyNames -> {
-            updateMoneyNameList(moneyNames);
-        });
+        menuViewModel = new ViewModelProvider(this).get(MenuListViewModel.class);
 
     }
 
-    private void updateMoneyNameList(List<MoneyName> moneyNames) {
-        moneyList.clear();
-        moneyList.addAll(moneyNames);
-        moneyNameAdapter.notifyDataSetChanged();
+    private void initData() {
+
+        menuViewModel.getList().observe(this, this::updateMenuList);
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void updateMenuList(List<MenuJoin> menuJoins){
+        this.menuJoins.clear();
+        this.menuJoins.addAll(menuJoins);
+        categoryMenuAdapter.notifyDataSetChanged();
     }
 
 
@@ -107,13 +112,4 @@ public class MoneyNameFragmentDialog extends DialogFragment implements View.OnCl
     }
 
 
-    @Override
-    public void setCanselMoney(int index) {
-
-    }
-
-    @Override
-    public void showMoneyDialog() {
-
-    }
 }
