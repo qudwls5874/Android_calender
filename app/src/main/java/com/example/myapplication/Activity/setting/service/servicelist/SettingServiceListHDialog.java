@@ -1,4 +1,4 @@
-package com.example.myapplication.Activity.setting.service.details;
+package com.example.myapplication.Activity.setting.service.servicelist;
 
 import android.app.Dialog;
 import android.content.res.Resources;
@@ -24,7 +24,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.database.viewmodel.MenuListViewModel;
-import com.example.myapplication.databinding.DialogServiceAddlistBinding;
 import com.example.myapplication.dialog.LoadingDialog2;
 import com.example.myapplication.dialog.ServiceAddDialog;
 import com.example.myapplication.dialog.ServiceUpdateDialog;
@@ -44,7 +43,7 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
 
     public static boolean layoutCheck = false;
 
-    private DialogServiceAddlistBinding binding;
+    private com.example.myapplication.databinding.DialogServiceAddlistBinding binding;
     private MenuListViewModel viewModel;
     private LoadingDialog2 loading;
 
@@ -58,7 +57,7 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DialogServiceAddlistBinding.inflate(inflater, container, false);
+        binding = com.example.myapplication.databinding.DialogServiceAddlistBinding.inflate(inflater, container, false);
 
         initUI();
         initData();

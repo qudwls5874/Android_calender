@@ -12,6 +12,9 @@ public class MenuCategory {
     private String menuCategoryYn;      // 메뉴 카테고리 사용여부
     private int menuCategoryFg;         // 메뉴 카테고리 구분값 0:서비스, 1:정액권, 2:할인권
 
+    public MenuCategory() {
+    }
+
     public MenuCategory(String menuCategoryName, String menuCategoryYn, int menuCategoryFg){
         this.menuCategoryName = menuCategoryName;
         this.menuCategoryYn = menuCategoryYn;

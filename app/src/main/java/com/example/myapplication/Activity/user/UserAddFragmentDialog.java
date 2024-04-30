@@ -17,21 +17,30 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.myapplication.Activity.user.itemmoney.UserMoney;
-import com.example.myapplication.Activity.user.itemmoney.UserMoneyAdapter;
 import com.example.myapplication.R;
+import com.example.myapplication.database.table.MenuCategory;
+import com.example.myapplication.database.table.MenuList;
+import com.example.myapplication.database.table.ServiceCalender;
+import com.example.myapplication.database.table.UserCash;
+import com.example.myapplication.database.table.UserCoupon;
+import com.example.myapplication.database.view.CalenderJoin;
 import com.example.myapplication.databinding.DialogUserAddBinding;
+import com.example.myapplication.dialog.servicefg.ServiceFgAdapter;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.SwipeDismissTouchListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class UserAddFragmentDialog extends DialogFragment implements View.OnClickListener, UserMoneyAdapter.CanselMoneyLisner {
+public class UserAddFragmentDialog extends DialogFragment implements View.OnClickListener {
 
     private DialogUserAddBinding binding;
-    public ArrayList<UserMoney> moneyList = new ArrayList<>();
-    private UserMoneyAdapter moneyAdapter;
+
+    private ArrayList<CalenderJoin> scList = new ArrayList<>();
+    private ServiceFgAdapter scAdapter;
+    private ArrayList<UserCash> cashList = new ArrayList<>();
+    private ArrayList<UserCoupon> couponList = new ArrayList<>();
+
 
     @Nullable
     @Override
@@ -58,9 +67,11 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
         binding.userAddCloseBtn.setOnClickListener(this);
 
         // 서비스
-        moneyAdapter = new UserMoneyAdapter(moneyList, this);
-        binding.userAddServiceRecyclerView.setAdapter(moneyAdapter);
+        scAdapter = new ServiceFgAdapter(scList, getParentFragmentManager());
+        binding.userAddServiceRecyclerView.setAdapter(scAdapter);
         binding.userAddServiceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
 
     }
 
@@ -90,30 +101,25 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v.getId() == binding.userAddServiceAddBtn.getId()){
-            moneyList.add(moneyList.size(), new UserMoney(0,"정액제", LocalDate.now()));
-            moneyAdapter.notifyDataSetChanged();
+
+            // 서비스 클릭
+            CalenderJoin cal = new CalenderJoin();
+            cal.serviceCalender = new ServiceCalender(String.valueOf(LocalDate.now()), 0, 0);
+            cal.menuCategory = new MenuCategory();
+            cal.menuList = new MenuList();
+
+            scList.add(scList.size(), cal);
+            scAdapter.notifyDataSetChanged();
         } else if (v.getId() == binding.userAddCashAddBtn.getId()) {
+            // 금액충전 클릭
+            cashList.add(cashList.size(), new UserCash(String.valueOf(LocalDate.now()),0,0));
 
         } else if (v.getId() == binding.userAddCouponAddBtn.getId()) {
+            // 쿠폰 클릭
 
         } else if (v.getId() == binding.userAddCloseBtn.getId()) {
             dismiss();
         }
-    }
-
-    @Override
-    public void setCanselMoney(int index) {
-        moneyList.remove(index);
-        moneyAdapter = new UserMoneyAdapter(moneyList, this);
-        binding.userAddServiceRecyclerView.setAdapter(moneyAdapter);
-        moneyAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showMoneyDialog() {
-        // 결제 타입 (종류)
-//        MoneyNameFragmentDialog dialog = new MoneyNameFragmentDialog();
-//        dialog.show(getParentFragmentManager(), "MoneyNameFragmentDialog");
     }
 
 

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- money 추가 Row -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@android:color/transparent">
-
 
     <LinearLayout
         android:id="@+id/item_service_d_linearLayout"
@@ -39,6 +38,7 @@
             android:gravity="center">
 
             <ImageButton
+                android:visibility="gone"
                 android:id="@+id/item_service_d_update_btn"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -84,6 +84,7 @@
                     android:text="0"/>
 
                 <ImageButton
+                    android:visibility="gone"
                     android:id="@+id/item_service_d_del_btn"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -105,4 +106,12 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/item_service_d_all_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:orientation="horizontal"/>
+
+</RelativeLayout>

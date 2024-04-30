@@ -64,6 +64,18 @@
             android:textSize="18dp"
             android:text="삭제"/>
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/setting_service_listadd_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/textPlusColor"
+            android:textSize="18dp"
+            android:text="선택"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -99,7 +111,14 @@
 
     </LinearLayout>
 
+    <View
+        android:visibility="gone"
+        android:id="@+id/setting_service_list_btn_view"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+
     <LinearLayout
+        android:id="@+id/setting_service_list_btn_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
