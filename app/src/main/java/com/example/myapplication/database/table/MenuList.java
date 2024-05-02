@@ -7,41 +7,41 @@ import androidx.room.PrimaryKey;
 public class MenuList {
 
     @PrimaryKey(autoGenerate = true)
-    private int menuListId;         // 메뉴 상세 인덱스
-    private int menuCategoryId;     // 메뉴 헤더 인덱스
+    private long menuListId;         // 메뉴 상세 인덱스
+    private long menuCategoryId;     // 메뉴 헤더 인덱스
     private String menuName;        // 메뉴명
     private int menuMoney;          // 금액
 
     public MenuList(){}
 
     // 기본.
-    public MenuList(int menuCategoryId, String menuName, int menuMoney){
+    public MenuList(long menuCategoryId, String menuName, int menuMoney){
         this.menuCategoryId = menuCategoryId;
         this.menuName = menuName;
         this.menuMoney = menuMoney;
     }
 
     // 업데이트시 menuListId 값 필요
-    public MenuList(int menuListId, int menuCategoryId, String menuName, int menuMoney){
+    public MenuList(long menuListId, long menuCategoryId, String menuName, int menuMoney){
         this.menuListId = menuListId;
         this.menuCategoryId = menuCategoryId;
         this.menuName = menuName;
         this.menuMoney = menuMoney;
     }
 
-    public int getMenuListId() {
+    public long getMenuListId() {
         return menuListId;
     }
 
-    public void setMenuListId(int menuListId) {
+    public void setMenuListId(long menuListId) {
         this.menuListId = menuListId;
     }
 
-    public int getMenuCategoryId() {
+    public long getMenuCategoryId() {
         return menuCategoryId;
     }
 
-    public void setMenuCategoryId(int menuCategoryId) {
+    public void setMenuCategoryId(long menuCategoryId) {
         this.menuCategoryId = menuCategoryId;
     }
 

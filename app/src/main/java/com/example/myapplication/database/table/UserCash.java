@@ -6,14 +6,15 @@ import androidx.room.Entity;
 public class UserCash {
 
     private String ucDt;
-    private int userId;
-    private int ucPayment;
-    private int ucFg; // 0:금액추가, 1:외상값음.
+    private long userId;
+    private long cashId;
+    private int cashPayment;
+    private int cashFg; // 0:금액추가, 1:외상값음.
 
-    public UserCash(String ucDt, int ucPayment, int ucFg) {
+    public UserCash(String ucDt, int cashPayment, int cashFg) {
         this.ucDt = ucDt;
-        this.ucPayment = ucPayment;
-        this.ucFg = ucFg;
+        this.cashPayment = cashPayment;
+        this.cashFg = cashFg;
     }
 
     public String getUcDt() {
@@ -24,27 +25,35 @@ public class UserCash {
         this.ucDt = ucDt;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public int getUcPayment() {
-        return ucPayment;
+    public long getCashId() {
+        return cashId;
     }
 
-    public void setUcPayment(int ucPayment) {
-        this.ucPayment = ucPayment;
+    public void setCashId(long cashId) {
+        this.cashId = cashId;
     }
 
-    public int getUcFg() {
-        return ucFg;
+    public int getCashPayment() {
+        return cashPayment;
     }
 
-    public void setUcFg(int ucFg) {
-        this.ucFg = ucFg;
+    public void setCashPayment(int cashPayment) {
+        this.cashPayment = cashPayment;
+    }
+
+    public int getCashFg() {
+        return cashFg;
+    }
+
+    public void setCashFg(int cashFg) {
+        this.cashFg = cashFg;
     }
 }

@@ -20,10 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.myapplication.R;
 import com.example.myapplication.database.table.MenuCategory;
 import com.example.myapplication.database.table.MenuList;
-import com.example.myapplication.database.table.ServiceCalender;
+import com.example.myapplication.database.table.ScheduleCalendar;
 import com.example.myapplication.database.table.UserCash;
 import com.example.myapplication.database.table.UserCoupon;
-import com.example.myapplication.database.view.CalenderJoin;
+import com.example.myapplication.database.view.CalendarJoin;
 import com.example.myapplication.databinding.DialogUserAddBinding;
 import com.example.myapplication.dialog.servicefg.ServiceFgAdapter;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
@@ -36,7 +36,7 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
 
     private DialogUserAddBinding binding;
 
-    private ArrayList<CalenderJoin> scList = new ArrayList<>();
+    private ArrayList<CalendarJoin> scList = new ArrayList<>();
     private ServiceFgAdapter scAdapter;
     private ArrayList<UserCash> cashList = new ArrayList<>();
     private ArrayList<UserCoupon> couponList = new ArrayList<>();
@@ -103,8 +103,8 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
         if (v.getId() == binding.userAddServiceAddBtn.getId()){
 
             // 서비스 클릭
-            CalenderJoin cal = new CalenderJoin();
-            cal.serviceCalender = new ServiceCalender(String.valueOf(LocalDate.now()), 0, 0);
+            CalendarJoin cal = new CalendarJoin();
+            cal.scheduleCalendar = new ScheduleCalendar(String.valueOf(LocalDate.now()), 0, 0);
             cal.menuCategory = new MenuCategory();
             cal.menuList = new MenuList();
 

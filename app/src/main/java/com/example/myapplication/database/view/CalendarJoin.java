@@ -6,13 +6,13 @@ import androidx.room.Relation;
 
 import com.example.myapplication.database.table.MenuCategory;
 import com.example.myapplication.database.table.MenuList;
-import com.example.myapplication.database.table.ServiceCalender;
+import com.example.myapplication.database.table.ScheduleCalendar;
 import com.example.myapplication.database.table.User;
 
-public class CalenderJoin {
-
+public class CalendarJoin {
+    // serviceCalendar
     @Embedded
-    public ServiceCalender serviceCalender;
+    public ScheduleCalendar scheduleCalendar;
 
     @Relation(parentColumn = "userId", entityColumn = "userId")
     public User user;

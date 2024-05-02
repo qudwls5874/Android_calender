@@ -1,35 +1,42 @@
 package com.example.myapplication.database.table.user;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "usertels")
+import com.example.myapplication.database.table.User;
+
+@Entity(tableName = "usertels",
+        foreignKeys = @ForeignKey(  entity = User.class,
+                                    parentColumns = "userId",
+                                    childColumns = "userId",
+                                    onDelete = ForeignKey.CASCADE),
+        primaryKeys = {"telId", "userId"})
 public class UserTel {
 
-    @PrimaryKey(autoGenerate = true)
-    private int telId;
-    private int userId;
-    private String telType;
-    private String telNumber;
+    private long telId;          // 번호 인덱스
+    private long userId;         // 유저 인덱스
+    private String telType;     // 번호 타입
+    private String telNumber;   // 번호
 
     public UserTel(String telType, String telNumber) {
         this.telType = telType;
         this.telNumber = telNumber;
     }
 
-    public int getTelId() {
+    public long getTelId() {
         return telId;
     }
 
-    public void setTelId(int telId) {
+    public void setTelId(long telId) {
         this.telId = telId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

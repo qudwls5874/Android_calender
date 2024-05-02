@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -23,9 +24,11 @@ public class UserFragmentAdapter extends RecyclerView.Adapter<UserFragmentAdapte
 
    private ViewUserItemRowBinding binding;
    private ArrayList<UserJoin> userJoins;
+   private OnItemClickListener listener;
 
-   public UserFragmentAdapter(ArrayList<UserJoin> userJoins){
+   public UserFragmentAdapter(ArrayList<UserJoin> userJoins, OnItemClickListener listener){
       this.userJoins = userJoins;
+      this.listener = listener;
    }
 
    @NonNull
@@ -59,8 +62,8 @@ public class UserFragmentAdapter extends RecyclerView.Adapter<UserFragmentAdapte
       }
 
       // 화면에 데이터 표출
-      holder.binding.rowNameTextView.setText(rowItem.user.getName());
-      holder.binding.rowMoneyTextView.setText(rowItem.user.getMoney());
+      holder.binding.rowProfileNameTextView.setText(rowItem.user.getName());
+      holder.binding.rowProfileMoneyTextView.setText(rowItem.user.getMoney());
 
    }
 
@@ -69,14 +72,28 @@ public class UserFragmentAdapter extends RecyclerView.Adapter<UserFragmentAdapte
       return userJoins.size();
    }
 
-   public class ViewHolder extends RecyclerView.ViewHolder {
+   public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
       ViewUserItemRowBinding binding;
 
       public ViewHolder(@NonNull ViewUserItemRowBinding binding) {
          super(binding.getRoot());
          this.binding = binding;
+
+         binding.rowProfileCardView.setOnClickListener(this);
       }
+
+      @Override
+      public void onClick(View v) {
+         if (v.getId() == binding.rowProfileCardView.getId()){
+            listener.OnItemClickListener(getLayoutPosition());
+         }
+      }
+
+   }
+
+   public interface OnItemClickListener {
+      void OnItemClickListener(int position);
    }
 
 

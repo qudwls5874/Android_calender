@@ -11,6 +11,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.myapplication.database.UserDatabase;
 import com.example.myapplication.database.dao.UserDao;
 import com.example.myapplication.database.table.User;
+import com.example.myapplication.database.table.user.UserAddress;
+import com.example.myapplication.database.table.user.UserEvent;
+import com.example.myapplication.database.table.user.UserTel;
 import com.example.myapplication.database.view.UserJoin;
 import com.example.myapplication.dataclass.UserProfile;
 
@@ -31,15 +34,11 @@ public class UserRepository {
 
     private List<UserProfile> userProfile;
 
-
     public UserRepository(Application application){
         db = UserDatabase.getInstance(application);
         userDao = db.getUserDao();
         this.application = application;
     }
-
-
-
 
     public Boolean setAllUser(List<UserJoin> userList, List<UserProfile> userProfile){
         this.userProfile = userProfile;
@@ -58,7 +57,29 @@ public class UserRepository {
                 for (UserJoin forData : userJoins) {
                     // 사용자 삽입
                     Long index = userDao.insertUser(forData.user);
-                    userDao.insertAllUser(forData.userTelList, forData.userAddressList, forData.userEventsList);
+                    // 각각 테이블마다 사용자 id로 카운트 값 가져와서 테이블ID 생성
+                    Long telCount = userDao.getTelCount(index);
+                    for (UserTel tel : forData.userTelList){
+                        tel.setTelId(telCount++);
+                        tel.setUserId(index);
+                    }
+                    Long addressCount = userDao.getAddressCount(index);
+                    for (UserAddress address : forData.userAddressList){
+                        address.setAddressId(addressCount++);
+                        address.setUserId(index);
+                    }
+                    Long eventCount = userDao.getEventCount(index);
+                    for (UserEvent event : forData.userEventsList){
+                        event.setEventId(eventCount++);
+                        event.setUserId(index);
+                    }
+                    // 번호, 주소, 일정 저장
+                    userDao.insertAllUser(
+                            forData.userTelList,
+                            forData.userAddressList,
+                            forData.userEventsList
+                    );
+
                     try {
                         UserProfile profile = userProfile.stream().filter(strData -> strData.getProfileId().equals(forData.user.getUserUrl())).findFirst().orElse(null);
                         if (profile != null){

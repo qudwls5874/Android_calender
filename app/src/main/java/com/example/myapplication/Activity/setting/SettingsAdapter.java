@@ -42,7 +42,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
                 holder.binding.rowProfileImageView.setImageDrawable(holder.binding.getRoot().getContext().getDrawable(R.drawable.ic_add_white));
                 break;
             case "연락처 가져오기":
-                holder.binding.rowProfileImageView.setImageDrawable(holder.binding.getRoot().getContext().getDrawable(R.drawable.ic_call_white));
+                holder.binding.rowProfileImageView.setImageDrawable(holder.binding.getRoot().getContext().getDrawable(R.drawable.ic_call_add_white));
                 break;
         }
 

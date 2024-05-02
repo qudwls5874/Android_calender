@@ -1,5 +1,7 @@
 package com.example.myapplication.database.dao;
 
+import android.util.Log;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -42,26 +44,17 @@ public interface UserDao {
     @Query("SELECT * FROM users")
     List<UserJoin> getAllUserJoin();
 
+    /* 카운트 */
+    @Query("SELECT COUNT(*) FROM usertels WHERE userId = :userId")
+    Long getTelCount(Long userId);
+    @Query("SELECT COUNT(*) FROM useraddresss WHERE userId = :userId")
+    Long getAddressCount(Long userId);
+    @Query("SELECT COUNT(*) FROM userevents WHERE userId = :userId")
+    Long getEventCount(Long userId);
+
+    /* 리스트 전체 저장 */
     @Transaction
     @Insert
     void insertAllUser(List<UserTel> telList, List<UserAddress> addressList, List<UserEvent> eventList);
 
-/*
-    @Transaction
-    default void insertUserWithDetails(User user, List<UserTel> userTels, List<UserAddress> userAddresses, List<UserEvent> userEvents) {
-        insertUser(user);
-        for (UserTel userTel : userTels) {
-//            userTel.setUserId(user.getUserId());
-//            insertUserTel(userTel);
-        }
-        for (UserAddress userAddress : userAddresses) {
-//            userAddress.setUserId(user.getUserId());
-//            insertUserAddress(userAddress);
-        }
-        for (UserEvent userEvent : userEvents) {
-//            userEvent.setUserId(user.getUserId());
-//            insertUserEvent(userEvent);
-        }
-    }
-*/
 }

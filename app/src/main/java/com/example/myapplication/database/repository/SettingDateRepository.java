@@ -3,12 +3,10 @@ package com.example.myapplication.database.repository;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.database.UserDatabase;
 import com.example.myapplication.database.dao.SettingDateDao;
-import com.example.myapplication.database.table.MoneyName;
 import com.example.myapplication.database.table.SettingDate;
 
 import java.util.List;

@@ -8,6 +8,7 @@
     android:background="@android:color/transparent">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/row_profile_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -39,7 +40,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/row_name_textView"
+                    android:id="@+id/row_profile_name_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textNormalColor"
@@ -72,7 +73,7 @@
                         android:text="잔액 : "/>
 
                     <TextView
-                        android:id="@+id/row_money_textView"
+                        android:id="@+id/row_profile_money_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textPlusColor"

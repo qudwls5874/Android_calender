@@ -1,14 +1,21 @@
 package com.example.myapplication.database.table.user;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "useraddresss")
+import com.example.myapplication.database.table.User;
+
+@Entity(tableName = "useraddresss",
+        foreignKeys = @ForeignKey(  entity = User.class,
+                                    parentColumns = "userId",
+                                    childColumns = "userId",
+                                    onDelete = ForeignKey.CASCADE),
+        primaryKeys = {"addressId", "userId"})
 public class UserAddress {
 
-    @PrimaryKey(autoGenerate = true)
-    private int addressId;
-    private int userId;
+    private long addressId;
+    private long userId;
     private String addressType;
     private String addressName;
 
@@ -17,19 +24,19 @@ public class UserAddress {
         this.addressName = addressName;
     }
 
-    public int getAddressId() {
+    public long getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(int addressId) {
+    public void setAddressId(long addressId) {
         this.addressId = addressId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.database.table.MenuList;
-import com.example.myapplication.database.view.CalenderJoin;
+import com.example.myapplication.database.view.CalendarJoin;
 import com.example.myapplication.databinding.ViewItemServiceRowBinding;
 import com.example.myapplication.dialog.customcalender.CustomDatePickerDialog;
 import com.example.myapplication.dialog.ServiceAddMoneyDialog;
@@ -22,11 +22,11 @@ import java.util.List;
 public class ServiceFgAdapter extends RecyclerView.Adapter<ServiceFgAdapter.ViewModel> {
 
     private ViewItemServiceRowBinding binding;
-    private List<CalenderJoin> scList;
+    private List<CalendarJoin> scList;
     private FragmentManager fragmentManager;
 
 
-    public ServiceFgAdapter(List<CalenderJoin> scList, FragmentManager fragmentManager) {
+    public ServiceFgAdapter(List<CalendarJoin> scList, FragmentManager fragmentManager) {
         this.scList = scList;
         this.fragmentManager = fragmentManager;
     }
@@ -41,11 +41,11 @@ public class ServiceFgAdapter extends RecyclerView.Adapter<ServiceFgAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewModel holder, int position) {
 
-        CalenderJoin data = scList.get(position);
+        CalendarJoin data = scList.get(position);
 
 
-        holder.binding.viewAddServiceListDtTextView.setText(data.serviceCalender.getScDt());
-        holder.binding.viewAddServiceListMoneyTextView.setText(new WatcherMoneyText().beforeMoneyTextChanged(""+data.serviceCalender.getScPayment()));
+        holder.binding.viewAddServiceListDtTextView.setText(data.scheduleCalendar.getCalDt());
+        holder.binding.viewAddServiceListMoneyTextView.setText(new WatcherMoneyText().beforeMoneyTextChanged(""+data.scheduleCalendar.getCalPayment()));
         holder.binding.viewAddServiceListNameTextView.setText(data.menuList.getMenuName());
 
 
@@ -105,14 +105,14 @@ public class ServiceFgAdapter extends RecyclerView.Adapter<ServiceFgAdapter.View
 
         @Override
         public void setOnItemClickLisner(MenuList menuList) {
-            scList.get(getBindingAdapterPosition()).serviceCalender.setScPayment(menuList.getMenuMoney());
+            scList.get(getBindingAdapterPosition()).scheduleCalendar.setCalPayment(menuList.getMenuMoney());
             scList.get(getBindingAdapterPosition()).menuList = menuList;
             notifyDataSetChanged();
         }
 
         @Override
         public void getMoney(String money) {
-            scList.get(getBindingAdapterPosition()).serviceCalender.setScPayment(Integer.valueOf(money.replaceAll(",", "")));
+            scList.get(getBindingAdapterPosition()).scheduleCalendar.setCalPayment(Integer.valueOf(money.replaceAll(",", "")));
             notifyDataSetChanged();
         }
     }

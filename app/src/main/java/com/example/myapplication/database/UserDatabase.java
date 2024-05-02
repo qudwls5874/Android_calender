@@ -11,12 +11,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.myapplication.database.dao.MenuCategoryDao;
 import com.example.myapplication.database.dao.MenuListDao;
-import com.example.myapplication.database.dao.MoneyNameDao;
+import com.example.myapplication.database.dao.ScheduleCalendarDao;
 import com.example.myapplication.database.dao.SettingDateDao;
 import com.example.myapplication.database.dao.UserDao;
 import com.example.myapplication.database.table.MenuCategory;
 import com.example.myapplication.database.table.MenuList;
-import com.example.myapplication.database.table.MoneyName;
+import com.example.myapplication.database.table.ScheduleCalendar;
 import com.example.myapplication.database.table.SettingDate;
 import com.example.myapplication.database.table.User;
 import com.example.myapplication.database.table.user.UserAddress;
@@ -28,17 +28,18 @@ import java.util.concurrent.Executors;
 
 @Database(entities =
         {
-                User.class, UserTel.class, UserAddress.class, UserEvent.class, MoneyName.class, MenuCategory.class, MenuList.class,
+                User.class, UserTel.class, UserAddress.class, UserEvent.class,
+                MenuCategory.class, MenuList.class,
+                ScheduleCalendar.class,
                 SettingDate.class
         }, version = 1, exportSchema = false )
 
 public abstract class UserDatabase extends RoomDatabase {
 
     public abstract UserDao getUserDao();
-
-    public abstract MoneyNameDao getMoneyNameDao();
     public abstract MenuCategoryDao getMenuCategoryDao();
     public abstract MenuListDao getMenuListDao();
+    public abstract ScheduleCalendarDao getScheduleCalendarDao();
     public abstract SettingDateDao getSettingDao();
 
 
@@ -63,10 +64,6 @@ public abstract class UserDatabase extends RoomDatabase {
 
     // 초기 데이터 설정
     private static void insertInitialData(UserDatabase  userDatabase) {
-        MoneyNameDao moneyNameDao = userDatabase.getMoneyNameDao();
-        moneyNameDao.insert(new MoneyName("정액제"));
-        moneyNameDao.insert(new MoneyName("차감"));
-        moneyNameDao.insert(new MoneyName("결제"));
 
         MenuCategoryDao menuCategoryDao = userDatabase.getMenuCategoryDao();
         menuCategoryDao.insert(new MenuCategory("네일", "N", 0));
