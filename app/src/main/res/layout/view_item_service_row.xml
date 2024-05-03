@@ -80,8 +80,9 @@
 
                 <TextView
                     android:id="@+id/view_add_service_list_money_textView"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center|start"
                     android:layout_marginLeft="10dp"
                     android:textSize="13dp"
@@ -89,6 +90,15 @@
                     android:background="@android:color/transparent"
                     android:inputType="number"
                     android:hint="0"/>
+
+                <TextView
+                    android:id="@+id/view_add_service_list_moneyFg_textView"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="12dp"
+                    android:textColor="@color/textPlusColor"
+                    android:text="결제"/>
 
             </LinearLayout>
 

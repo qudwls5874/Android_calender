@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,17 +24,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.myapplication.Activity.setting.tel.details.SettingTelListHDialog;
 import com.example.myapplication.R;
-import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.table.User;
 import com.example.myapplication.database.table.user.UserAddress;
 import com.example.myapplication.database.table.user.UserEvent;
 import com.example.myapplication.database.table.user.UserTel;
-import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.database.view.UserJoin;
 import com.example.myapplication.database.viewmodel.UserViewModel;
 import com.example.myapplication.databinding.DialogSettingTelBinding;
 import com.example.myapplication.dataclass.UserProfile;
-import com.example.myapplication.dialog.LoadingDialog2;
+import com.example.myapplication.dialog.LoadingDialog;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.WatcherSearchText;
 
@@ -43,14 +40,13 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SettingTelMainDialog extends DialogFragment implements View.OnClickListener, WatcherSearchText.OnSearchChangeListener, SettingTelMainAdapter.OnTelItemClickListener {
 
     private static final String TAG = "SettingTelMainDialog";
 
     private DialogSettingTelBinding binding;
-    private LoadingDialog2 loadingDialog;
+    private LoadingDialog loadingDialog;
 
     private UserViewModel viewModel;
 
@@ -61,7 +57,7 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
     private List<UserJoin> insertList;     // 저장 리스트
     private List<UserProfile> profileList;   // 사진 리스트
 
-    public SettingTelMainDialog(LoadingDialog2 loadingDialog) {
+    public SettingTelMainDialog(LoadingDialog loadingDialog) {
         this.loadingDialog = loadingDialog;
     }
 
@@ -230,7 +226,7 @@ public class SettingTelMainDialog extends DialogFragment implements View.OnClick
 
 
                 UserJoin result = new UserJoin();
-                result.user = new User(displayName, id, "0");
+                result.user = new User(id, displayName, "0", "", "", "", 0);
                 result.userTelList = tel;
                 result.userAddressList = addressList;
                 result.userEventsList = eventList;

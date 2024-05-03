@@ -16,12 +16,12 @@ public class UserEvent {
 
     private long eventId;
     private long userId;
-    private String eventType;
     private String eventName;
+    private String eventContent;
 
-    public UserEvent(String eventType, String eventName) {
-        this.eventType = eventType;
+    public UserEvent(String eventName, String eventContent) {
         this.eventName = eventName;
+        this.eventContent = eventContent;
     }
 
     public long getEventId() {
@@ -40,19 +40,19 @@ public class UserEvent {
         this.userId = userId;
     }
 
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
     public String getEventName() {
         return eventName;
     }
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
+    }
+
+    public String getEventContent() {
+        return eventContent;
+    }
+
+    public void setEventContent(String eventContent) {
+        this.eventContent = eventContent;
     }
 }

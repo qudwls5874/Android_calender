@@ -24,7 +24,7 @@
 
     <!-- 텍스트 컬러 -->
     <color name="textPlusColor">#5E8BAE</color>
-    <color name="textMinusColor">#AE5E36</color>
+    <color name="textMinusColor">#C94F4F</color>
     <color name="textNormalColor">#333333</color>
     <color name="textBeNormalColor">#A9A9A9</color>
 

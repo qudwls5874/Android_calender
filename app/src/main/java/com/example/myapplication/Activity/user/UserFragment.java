@@ -1,7 +1,6 @@
 package com.example.myapplication.Activity.user;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.myapplication.Activity.user.add.UserAddFragmentDialog;
 import com.example.myapplication.Activity.user.ditails.UserDeitailsDialog;
 import com.example.myapplication.database.view.UserJoin;
 import com.example.myapplication.database.viewmodel.UserViewModel;
@@ -114,11 +114,7 @@ public class UserFragment extends Fragment implements View.OnClickListener, Watc
 
     @Override
     public void OnItemClickListener(int position) {
-        UserJoin result = userList.stream().filter(strData -> strData.user.getUserId() == filterList.get(position).user.getUserId()).findFirst().orElse(null);
-        if (result != null){
-            Log.i("클릭 리스너", result.user.getName() + result.userTelList.size());
-            UserDeitailsDialog userDitailsDialog = new UserDeitailsDialog(result);
-            userDitailsDialog.show(getParentFragmentManager(), "userDitailsDialog");
-        }
+        UserDeitailsDialog deitailsDialog = new UserDeitailsDialog(filterList.get(position));
+        deitailsDialog.show(getParentFragmentManager(), "deitailsDialog");
     }
 }

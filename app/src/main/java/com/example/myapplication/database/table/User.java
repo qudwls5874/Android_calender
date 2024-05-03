@@ -8,15 +8,23 @@ public class User {
 
     @PrimaryKey(autoGenerate = true)
     private long userId;         // 테이블 인덱스
-    private String name;        // 이름
     private String userUrl;     // 프로필 경로, 주소록 id
+    private String name;        // 이름
+    private String userTel;     // 대표 번호
+    private String userAddress; // 대표 주소
+    private String userEvent;   // 대표 일정
     private String money;       // 금액
     private int userFg;         // 0 : 회원, 1 : 비회원
 
-    public User(String name, String userUrl, String money){
-        this.name = name;
+
+    public User(String userUrl, String name, String userTel, String userAddress, String userEvent, String money, int userFg) {
         this.userUrl = userUrl;
+        this.name = name;
+        this.userTel = userTel;
+        this.userAddress = userAddress;
+        this.userEvent = userEvent;
         this.money = money;
+        this.userFg = userFg;
     }
 
     public long getUserId() {
@@ -37,6 +45,30 @@ public class User {
 
     public String getUserUrl() {
         return userUrl;
+    }
+
+    public String getUserTel() {
+        return userTel;
+    }
+
+    public void setUserTel(String userTel) {
+        this.userTel = userTel;
+    }
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public String getUserEvent() {
+        return userEvent;
+    }
+
+    public void setUserEvent(String userEvent) {
+        this.userEvent = userEvent;
     }
 
     public void setUserUrl(String userUrl) {

@@ -99,7 +99,7 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
     public void onClick(View v) {
 
         if (v.getId() == binding.dialogMoneyTextView1.getId()){
-            if (Integer.valueOf(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 1000 > 9999999)
+            if (Integer.parseInt(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 1000 > 9999999)
                 return;
             binding.dialogMoneyPicker2.setValue(binding.dialogMoneyPicker2.getValue() + 1);
             if (binding.dialogMoneyPicker2.getValue() < 1){
@@ -107,7 +107,7 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
             }
             setAllMoney();
         } else if (v.getId() == binding.dialogMoneyTextView2.getId()) {
-            if (Integer.valueOf(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 5000 > 9999999)
+            if (Integer.parseInt(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 5000 > 9999999)
                 return;
             binding.dialogMoneyPicker2.setValue(binding.dialogMoneyPicker2.getValue() + 5);
             if (binding.dialogMoneyPicker2.getValue() < 5){
@@ -115,17 +115,17 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
             }
             setAllMoney();
         } else if (v.getId() == binding.dialogMoneyTextView3.getId()) {
-            if (Integer.valueOf(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 10000 > 9999999)
+            if (Integer.parseInt(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 10000 > 9999999)
                 return;
             binding.dialogMoneyPicker1.setValue(binding.dialogMoneyPicker1.getValue() + 1);
             setAllMoney();
         } else if (v.getId() == binding.dialogMoneyTextView4.getId()) {
-            if (Integer.valueOf(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 50000 > 9999999)
+            if (Integer.parseInt(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 50000 > 9999999)
                 return;
             binding.dialogMoneyPicker1.setValue(binding.dialogMoneyPicker1.getValue() + 5);
             setAllMoney();
         } else if (v.getId() == binding.dialogMoneyTextView5.getId()) {
-            if (Integer.valueOf(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 100000 > 9999999)
+            if (Integer.parseInt(binding.dialogMoneyAllMoneyTextView.getText().toString().replaceAll(",", "")) + 100000 > 9999999)
                 return;
             binding.dialogMoneyPicker1.setValue(binding.dialogMoneyPicker1.getValue() + 10);
             setAllMoney();
@@ -188,10 +188,10 @@ public class ServiceAddMoneyDialog extends Dialog implements View.OnClickListene
             return;
 
         binding.dialogMoneyPicker1.setValue(
-                (allMoneyText.length() < 5) ? 0 : Integer.valueOf(allMoneyText.substring(0, allMoneyText.length() -4))
+                (allMoneyText.length() < 5) ? 0 : Integer.parseInt(allMoneyText.substring(0, allMoneyText.length() -4))
         );
         binding.dialogMoneyPicker2.setValue(
-                (allMoneyText.length() < 4) ? 0 : Integer.valueOf(allMoneyText.substring(allMoneyText.length() - 4, allMoneyText.length() - 3))
+                (allMoneyText.length() < 4) ? 0 : Integer.parseInt(allMoneyText.substring(allMoneyText.length() - 4, allMoneyText.length() - 3))
         );
         binding.dialogMoneyPicker3.setDisplayedValues(
                 new String[]{

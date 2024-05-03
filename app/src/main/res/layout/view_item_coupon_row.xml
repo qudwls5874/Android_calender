@@ -7,7 +7,6 @@
     android:background="@android:color/transparent">
 
     <LinearLayout
-        android:id="@+id/user_add_coupon_addBtn"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/white"
@@ -21,7 +20,7 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/view_coupon_imageView"
+                android:id="@+id/view_coupon_delete_imageView"
                 android:layout_width="15dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_user_delete"
@@ -78,7 +77,7 @@
                     android:background="@color/BackBaseInputBoxColor"/>
 
                 <TextView
-                    android:id="@+id/view_coupon_textView"
+                    android:id="@+id/view_coupon_money_textView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center|start"

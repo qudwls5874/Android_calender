@@ -2,7 +2,6 @@ package com.example.myapplication.Activity.setting;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -24,7 +23,7 @@ import com.example.myapplication.Activity.setting.date.SettingDateDialog;
 import com.example.myapplication.Activity.setting.service.SettingServiceMainDialog;
 import com.example.myapplication.Activity.setting.tel.SettingTelMainDialog;
 import com.example.myapplication.databinding.FragmentSettingBinding;
-import com.example.myapplication.dialog.LoadingDialog2;
+import com.example.myapplication.dialog.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +34,7 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.OnItem
     private SettingsAdapter settingsAdapter;
     private ArrayList<String> list = new ArrayList<>(Arrays.asList("시간 설정", "서비스분야 설정", "연락처 가져오기"));
 
-    private LoadingDialog2 loadingDialog;
+    private LoadingDialog loadingDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,7 +93,7 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.OnItem
 
     // 연락처 가져오기
     private void showLoadingAndFetchContacts() {
-        loadingDialog = new LoadingDialog2(getContext());
+        loadingDialog = new LoadingDialog(getContext());
         loadingDialog.show();
         SettingTelMainDialog telDialog = new SettingTelMainDialog(loadingDialog);
         telDialog.show(getParentFragmentManager(), "setting_tel_dialog");

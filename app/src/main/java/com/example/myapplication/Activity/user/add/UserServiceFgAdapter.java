@@ -1,4 +1,4 @@
-package com.example.myapplication.dialog.servicefg;
+package com.example.myapplication.Activity.user.add;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +17,20 @@ import com.example.myapplication.dialog.list.ServiceListDAdapter;
 import com.example.myapplication.dialog.list.ServiceListHDialog;
 import com.example.myapplication.event.WatcherMoneyText;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-public class ServiceFgAdapter extends RecyclerView.Adapter<ServiceFgAdapter.ViewModel> {
+public class UserServiceFgAdapter extends RecyclerView.Adapter<UserServiceFgAdapter.ViewModel> {
 
     private ViewItemServiceRowBinding binding;
     private List<CalendarJoin> scList;
     private FragmentManager fragmentManager;
 
 
-    public ServiceFgAdapter(List<CalendarJoin> scList, FragmentManager fragmentManager) {
+    public UserServiceFgAdapter(List<CalendarJoin> scList, FragmentManager fragmentManager) {
         this.scList = scList;
         this.fragmentManager = fragmentManager;
     }
@@ -58,7 +62,11 @@ public class ServiceFgAdapter extends RecyclerView.Adapter<ServiceFgAdapter.View
 
 
 
-    public class ViewModel extends RecyclerView.ViewHolder implements View.OnClickListener, ServiceListDAdapter.ItemClickLisner, ServiceAddMoneyDialog.OnGetMoney {
+
+    public class ViewModel extends RecyclerView.ViewHolder implements   View.OnClickListener,
+                                                                        ServiceListDAdapter.ItemClickLisner,
+                                                                        ServiceAddMoneyDialog.OnGetMoney,
+                                                                        CustomDatePickerDialog.ReturnValue{
 
         private ViewItemServiceRowBinding binding;
 
@@ -88,31 +96,43 @@ public class ServiceFgAdapter extends RecyclerView.Adapter<ServiceFgAdapter.View
                         binding.getRoot().getContext(),
                         binding.viewAddServiceListMoneyTextView.getText().toString(),
                         this
-                        );
+                );
                 moneyDialog.show();
             } else if (v.getId() == binding.viewAddServiceListDtTextView.getId()) {
                 // 달력 다이얼로그
-                CustomDatePickerDialog dateDialog = new CustomDatePickerDialog();
-                dateDialog.show(fragmentManager, "customDatePickerDialog");
-//                CustomDatePickerDialog dateDialog = new CustomDatePickerDialog(binding.getRoot().getContext());
-//                dateDialog.showDialog();
+                try {
+                    // 문자열을 Date 로 변환
+                    Date defaultDdate = new SimpleDateFormat("yyyy-MM-dd").parse(scList.get(getBindingAdapterPosition()).scheduleCalendar.getCalDt());
+                    Calendar defaultCal = Calendar.getInstance();
+                    defaultCal.setTime(defaultDdate);
 
+                    CustomDatePickerDialog dateDialog = new CustomDatePickerDialog(defaultCal, this);
+                    dateDialog.show(fragmentManager, "customDatePickerDialog");
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
 
-//                CalenderDialog calDialog = new CalenderDialog(binding.getRoot().getContext());
-//                calDialog.showDialog();
             }
         }
 
         @Override
         public void setOnItemClickLisner(MenuList menuList) {
             scList.get(getBindingAdapterPosition()).scheduleCalendar.setCalPayment(menuList.getMenuMoney());
+            scList.get(getBindingAdapterPosition()).scheduleCalendar.setMenuCategoryId(menuList.getMenuCategoryId());
+            scList.get(getBindingAdapterPosition()).scheduleCalendar.setMenuListId(menuList.getMenuListId());
             scList.get(getBindingAdapterPosition()).menuList = menuList;
             notifyDataSetChanged();
         }
 
         @Override
         public void getMoney(String money) {
-            scList.get(getBindingAdapterPosition()).scheduleCalendar.setCalPayment(Integer.valueOf(money.replaceAll(",", "")));
+            scList.get(getBindingAdapterPosition()).scheduleCalendar.setCalPayment(Integer.parseInt(money.replaceAll(",", "")));
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public void getReturnValue(Date date) {
+            scList.get(getBindingAdapterPosition()).scheduleCalendar.setCalDt(new SimpleDateFormat("yyyy-MM-dd").format(date));
             notifyDataSetChanged();
         }
     }

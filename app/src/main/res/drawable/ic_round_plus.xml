@@ -1,0 +1,9 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 동그라미 모양의 배경 -->
+    <item>
+        <shape
+            android:shape="oval">
+            <solid android:color="@color/textPlusColor" />
+        </shape>
+    </item>
+</layer-list>

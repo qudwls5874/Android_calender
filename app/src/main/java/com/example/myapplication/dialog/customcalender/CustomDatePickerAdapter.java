@@ -1,12 +1,17 @@
 package com.example.myapplication.dialog.customcalender;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.R;
 import com.example.myapplication.databinding.DialogCustomDatePickerCellBinding;
 
 import java.util.ArrayList;
@@ -40,50 +45,53 @@ public class CustomDatePickerAdapter extends RecyclerView.Adapter<CustomDatePick
 
         dateCalendar.setTime(monthDate);
 
-        //현재 년 월
-        int currentDay = CustomDatePickerUtil.selectedDate.get(Calendar.DAY_OF_MONTH);
-        int currentMonth = CustomDatePickerUtil.selectedDate.get(Calendar.MONTH)+1;
-        int currentYear = CustomDatePickerUtil.selectedDate.get(Calendar.YEAR);
+        // 선택된 년 월
+        int defaultDay = CustomDatePickerUtil.defaultDate.get(Calendar.DAY_OF_MONTH);
+        int defaultMonth = CustomDatePickerUtil.defaultDate.get(Calendar.MONTH)+1;
+        int defaultYear = CustomDatePickerUtil.defaultDate.get(Calendar.YEAR);
 
-        //넘어온 데이터
+        // 보여지는달 년 월
+        int currentDay = CustomDatePickerUtil.viewDate.get(Calendar.DAY_OF_MONTH);
+        int currentMonth = CustomDatePickerUtil.viewDate.get(Calendar.MONTH)+1;
+        int currentYear = CustomDatePickerUtil.viewDate.get(Calendar.YEAR);
+
+        // 넘어온 전체 데이터
         int displayDay = dateCalendar.get(Calendar.DAY_OF_MONTH);
         int displayMonth = dateCalendar.get(Calendar.MONTH)+1;
         int displayYear = dateCalendar.get(Calendar.YEAR);
 
-        //날짜 변수에 담기
+        // 날짜 변수에 담기
         int dayNo = dateCalendar.get(Calendar.DAY_OF_MONTH);
         holder.binding.dayText.setText(String.valueOf(dayNo));
 
-        //텍스트 색상 지정
+        // 텍스트 색상 지정
         if( (position + 1) % 7 == 0){ //토요일 파랑
-            holder.binding.dayText.setTextColor(Color.BLUE);
+            holder.binding.dayText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.textPlusColor));
         }else if( position == 0 || position % 7 == 0){ //일요일 빨강
-            holder.binding.dayText.setTextColor(Color.RED);
+            holder.binding.dayText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.textMinusColor));
         } else {
-            holder.binding.dayText.setTextColor(Color.BLACK);   // 나머지 검정
+            holder.binding.dayText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.textNormalColor));   // 나머지 검정
         }
 
-        //비교해서 년, 월 같으면 진한색 아니면 연한색으로 변경
-        if(displayMonth == currentMonth && displayYear == currentYear){
-            holder.binding.parentView.setBackgroundColor(Color.parseColor("#D5D5D5"));
-            //날짜까지 맞으면 색상 표시
-            if (currentDay == displayDay){
-                holder.itemView.setBackgroundColor(Color.parseColor("#CEFBC9"));
+        // 현재 달에 존재 하는 날짜가 아니면 회색 텍스트 로 변경
+        if (displayMonth != currentMonth){
+            holder.binding.dayText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.textBeNormalColor));
+        }
+
+        // 초기 선택 일자랑 보이는 일자랑 같을시
+        if (displayYear == defaultYear && displayMonth == defaultMonth && displayDay == defaultDay){
+            holder.binding.dayDefaultImage.setVisibility(View.VISIBLE);
+            holder.binding.dayText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.white));
+        }
+
+        // 선택한 데이터
+        if (CustomDatePickerUtil.choiceDate != null){
+            if (displayYear == CustomDatePickerUtil.choiceDate.get(Calendar.YEAR)
+                && displayMonth == CustomDatePickerUtil.choiceDate.get(Calendar.MONTH) + 1
+                && displayDay == CustomDatePickerUtil.choiceDate.get(Calendar.DAY_OF_MONTH)){
+                holder.binding.dayCheckImage.setVisibility(View.VISIBLE);
             }
-        }else{
-            holder.binding.parentView.setBackgroundColor(Color.parseColor("#F6F6F6"));
         }
-
-
-        //날짜 클릭 이벤트
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                //클릭 시 기능 구현
-//            }
-//        });
-
     }
 
     @Override
@@ -92,13 +100,32 @@ public class CustomDatePickerAdapter extends RecyclerView.Adapter<CustomDatePick
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private DialogCustomDatePickerCellBinding binding;
+        private final DialogCustomDatePickerCellBinding binding;
 
         public ViewHolder(@NonNull DialogCustomDatePickerCellBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+
+            binding.dayLayout.setOnClickListener(this);
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == binding.dayLayout.getId()){
+                //달력 초기화
+                Calendar dateCalendar = Calendar.getInstance();
+                dateCalendar.setTime(dayList.get(getBindingAdapterPosition()));
+
+                if (CustomDatePickerUtil.choiceDate != null && CustomDatePickerUtil.choiceDate.equals(dateCalendar)){
+                    CustomDatePickerUtil.choiceDate = null;
+                } else {
+                    CustomDatePickerUtil.choiceDate = dateCalendar;
+                }
+                notifyDataSetChanged();
+            }
         }
     }
 

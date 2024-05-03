@@ -155,9 +155,9 @@ public class CommonDialog {
          month = c.get(Calendar.MONTH);
          day   = c.get(Calendar.DAY_OF_MONTH);
       } else {
-         year  = Integer.valueOf(dateValue.substring(0, 4));
-         month = Integer.valueOf(dateValue.substring(4, 6));
-         day   = Integer.valueOf(dateValue.substring(6, 8));
+         year  = Integer.parseInt(dateValue.substring(0, 4));
+         month = Integer.parseInt(dateValue.substring(4, 6));
+         day   = Integer.parseInt(dateValue.substring(6, 8));
       }
 
       DatePickerDialog datePickerDialog = new DatePickerDialog(context, R.style.DatePickerDialogStyle, onDateSetListener, year, month - 1, day);

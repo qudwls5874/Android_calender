@@ -1,18 +1,15 @@
 package com.example.myapplication.dialog.list;
 
-import android.app.Dialog;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,9 +23,7 @@ import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.database.viewmodel.MenuListViewModel;
 import com.example.myapplication.databinding.DialogServiceAddlistBinding;
-import com.example.myapplication.dialog.LoadingDialog2;
-import com.example.myapplication.dialog.ServiceAddDialog;
-import com.example.myapplication.dialog.ServiceUpdateDialog;
+import com.example.myapplication.dialog.LoadingDialog;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.SwipeDismissTouchListener;
 import com.example.myapplication.event.WatcherSearchText;
@@ -41,7 +36,7 @@ public class ServiceListHDialog extends DialogFragment implements View.OnClickLi
 
     private DialogServiceAddlistBinding binding;
     private MenuListViewModel viewModel;
-    private LoadingDialog2 loading;
+    private LoadingDialog loading;
 
     private ServiceListHAdapter adapter;
     private ArrayList<MenuJoin> list = new ArrayList<>();
@@ -70,7 +65,7 @@ public class ServiceListHDialog extends DialogFragment implements View.OnClickLi
     private void initUI() {
 
         // 로딩
-        loading = new LoadingDialog2(getContext());
+        loading = new LoadingDialog(getContext());
 
         // 키보드
         HideKeyboardHelperDialog.setupUI(binding.getRoot(), super.getDialog());

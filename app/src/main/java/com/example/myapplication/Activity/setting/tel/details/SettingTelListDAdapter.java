@@ -40,8 +40,8 @@ public class SettingTelListDAdapter extends RecyclerView.Adapter<SettingTelListD
         if (haedName.equals("전화번호"))
             data.setDataName(new WatcherPhoneNumberText().formatPhoneNumber(list.get(position).getDataName()));
 
-        holder.binding.itemTelDTextView.setText(data.getDataType());
-        holder.binding.itemTelDTextView2.setText(data.getDataName());
+        holder.binding.itemTelDTextView.setText(data.getDataName());
+        holder.binding.itemTelDTextView2.setText(data.getDataContent());
 
     }
 

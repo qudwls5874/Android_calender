@@ -7,6 +7,9 @@ public class UserProfile {
     private String profileId;
     private Bitmap proifle;
 
+    public UserProfile() {
+    }
+
     public UserProfile(String profileId, Bitmap proifle) {
         this.profileId = profileId;
         this.proifle = proifle;

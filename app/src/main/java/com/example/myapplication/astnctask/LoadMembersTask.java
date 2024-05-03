@@ -2,17 +2,13 @@ package com.example.myapplication.astnctask;
 
 import android.content.Context;
 
-import com.example.myapplication.dialog.LoadingDialog;
-
 public class LoadMembersTask {
 
     private Context mContext;
     private OnTaskCompletedListener onOnTaskCompletedListener;
-    private LoadingDialog mLoadingDialog;
 
     public LoadMembersTask(Context _conContext){
         mContext = _conContext;
-        mLoadingDialog = new LoadingDialog(mContext);
     }
 
     /* 결과값 반환 */

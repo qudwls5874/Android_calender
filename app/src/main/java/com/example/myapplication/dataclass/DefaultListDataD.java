@@ -2,20 +2,13 @@ package com.example.myapplication.dataclass;
 
 public class DefaultListDataD {
 
-    private String dataType;
+
     private String dataName;
+    private String dataContent;
 
-    public DefaultListDataD(String dataType, String dataName) {
-        this.dataType = dataType;
+    public DefaultListDataD(String dataName, String dataContent) {
         this.dataName = dataName;
-    }
-
-    public String getDataType() {
-        return dataType;
-    }
-
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
+        this.dataContent = dataContent;
     }
 
     public String getDataName() {
@@ -24,5 +17,13 @@ public class DefaultListDataD {
 
     public void setDataName(String dataName) {
         this.dataName = dataName;
+    }
+
+    public String getDataContent() {
+        return dataContent;
+    }
+
+    public void setDataContent(String dataContent) {
+        this.dataContent = dataContent;
     }
 }

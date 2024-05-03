@@ -47,21 +47,21 @@ public class SettingTelListHAdapter extends RecyclerView.Adapter<SettingTelListH
             case "전화번호":
                 List<DefaultListDataD> telListBox = new ArrayList<>();
                 for (UserTel telList : detailsList.userTelList){
-                    telListBox.add(new DefaultListDataD(telList.getTelType(), telList.getTelNumber()));
+                    telListBox.add(new DefaultListDataD(telList.getTelName(), telList.getTelNumber()));
                 }
                 holder.setMenuListAdapter(new DefaultListData(data, telListBox));
                 break;
             case "주소":
                 List<DefaultListDataD> addressListBox = new ArrayList<>();
                 for (UserAddress telList : detailsList.userAddressList){
-                    addressListBox.add(new DefaultListDataD(telList.getAddressType(), telList.getAddressName()));
+                    addressListBox.add(new DefaultListDataD(telList.getAddressName(), telList.getAddressContent()));
                 }
                 holder.setMenuListAdapter(new DefaultListData(data, addressListBox));
                 break;
             case "일정":
                 List<DefaultListDataD> eventListBox = new ArrayList<>();
                 for (UserEvent eventList : detailsList.userEventsList){
-                    eventListBox.add(new DefaultListDataD(eventList.getEventType(), eventList.getEventName()));
+                    eventListBox.add(new DefaultListDataD(eventList.getEventName(), eventList.getEventContent()));
                 }
                 holder.setMenuListAdapter(new DefaultListData(data, eventListBox));
                 break;

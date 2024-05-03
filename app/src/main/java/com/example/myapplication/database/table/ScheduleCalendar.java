@@ -1,22 +1,36 @@
 package com.example.myapplication.database.table;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "schedulecalendar")
+@Entity(tableName = "schedulecalendar",
+        foreignKeys = { @ForeignKey(    entity = User.class,
+                                        parentColumns = "userId",
+                                        childColumns = "userId",
+                                        onDelete = ForeignKey.CASCADE),
+                        @ForeignKey(    entity = MenuCategory.class,
+                                        parentColumns = "menuCategoryId",
+                                        childColumns = "menuCategoryId"),
+                        @ForeignKey(    entity = MenuList.class,
+                                        parentColumns = "menuListId",
+                                        childColumns = "menuListId")})
 public class ScheduleCalendar {
 
     @PrimaryKey(autoGenerate = true)
+    private long calId;          // 캘린더 인덱스
     private long userId;         // 유저 인덱스
     private long menuCategoryId; // 메뉴 헤더 인덱스
     private long menuListId;     // 메뉴 상세 인덱스
-    private long calId;          // 캘린더 인덱스
     private String calDt;        // 날짜
+    private String calTime;      // 시간
     private int calPayment;      // 결제금.
     private int calFg;           // 0 : 결제, 1 : 차감
 
-    public ScheduleCalendar(String calDt, int calPayment, int calFg) {
+
+    public ScheduleCalendar(String calDt, String calTime, int calPayment, int calFg) {
         this.calDt = calDt;
+        this.calTime = calTime;
         this.calPayment = calPayment;
         this.calFg = calFg;
     }
@@ -59,6 +73,14 @@ public class ScheduleCalendar {
 
     public void setCalDt(String calDt) {
         this.calDt = calDt;
+    }
+
+    public String getCalTime() {
+        return calTime;
+    }
+
+    public void setCalTime(String calTime) {
+        this.calTime = calTime;
     }
 
     public int getCalPayment() {

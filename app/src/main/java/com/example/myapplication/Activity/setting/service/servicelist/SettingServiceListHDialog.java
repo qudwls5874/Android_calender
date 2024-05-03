@@ -24,7 +24,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.database.viewmodel.MenuListViewModel;
-import com.example.myapplication.dialog.LoadingDialog2;
+import com.example.myapplication.dialog.LoadingDialog;
 import com.example.myapplication.dialog.ServiceAddDialog;
 import com.example.myapplication.dialog.ServiceUpdateDialog;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
@@ -45,7 +45,7 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
 
     private com.example.myapplication.databinding.DialogServiceAddlistBinding binding;
     private MenuListViewModel viewModel;
-    private LoadingDialog2 loading;
+    private LoadingDialog loading;
 
     private SettingServiceListHAdapter adapter;
     private ArrayList<MenuJoin> list = new ArrayList<>();
@@ -68,7 +68,7 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
     private void initUI() {
 
         // 로딩
-        loading = new LoadingDialog2(getContext());
+        loading = new LoadingDialog(getContext());
 
         // 키보드
         HideKeyboardHelperDialog.setupUI(binding.getRoot(), super.getDialog());

@@ -19,6 +19,8 @@ import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.table.ScheduleCalendar;
 import com.example.myapplication.database.table.SettingDate;
 import com.example.myapplication.database.table.User;
+import com.example.myapplication.database.table.UserCash;
+import com.example.myapplication.database.table.UserCoupon;
 import com.example.myapplication.database.table.user.UserAddress;
 import com.example.myapplication.database.table.user.UserEvent;
 import com.example.myapplication.database.table.user.UserTel;
@@ -30,7 +32,7 @@ import java.util.concurrent.Executors;
         {
                 User.class, UserTel.class, UserAddress.class, UserEvent.class,
                 MenuCategory.class, MenuList.class,
-                ScheduleCalendar.class,
+                ScheduleCalendar.class, UserCash.class, UserCoupon.class,
                 SettingDate.class
         }, version = 1, exportSchema = false )
 
@@ -76,6 +78,9 @@ public abstract class UserDatabase extends RoomDatabase {
         menuCategoryDao.insert(new MenuCategory("타투/문신", "N", 0));
         menuCategoryDao.insert(new MenuCategory("정액권", "Y", 1));
         menuCategoryDao.insert(new MenuCategory("할인권", "Y", 2));
+        menuCategoryDao.insert(new MenuCategory("번호타입", "Y", 3));
+        menuCategoryDao.insert(new MenuCategory("주소타입", "Y", 4));
+        menuCategoryDao.insert(new MenuCategory("일정타입", "Y", 5));
 
         MenuListDao menuListDao = userDatabase.getMenuListDao();
         menuListDao.insert(new MenuList(1, "기본케어", 10000));
@@ -183,6 +188,23 @@ public abstract class UserDatabase extends RoomDatabase {
         menuListDao.insert(new MenuList(8, "타투 컨설팅", 20000));
         menuListDao.insert(new MenuList(8, "타투 커버업", 100000));
         menuListDao.insert(new MenuList(8, "타투 제거", 200000));
+
+        menuListDao.insert(new MenuList(9, "10만원권", 100000));
+        menuListDao.insert(new MenuList(10, "첫방문", 3000));
+
+        menuListDao.insert(new MenuList(11, "기본", 0));
+        menuListDao.insert(new MenuList(11, "휴대전화", 0));
+        menuListDao.insert(new MenuList(11, "직장", 0));
+        menuListDao.insert(new MenuList(11, "집", 0));
+        menuListDao.insert(new MenuList(11, "기타", 0));
+
+        menuListDao.insert(new MenuList(12, "집", 0));
+        menuListDao.insert(new MenuList(12, "직장", 0));
+        menuListDao.insert(new MenuList(12, "기타", 0));
+
+        menuListDao.insert(new MenuList(13, "생일", 0));
+        menuListDao.insert(new MenuList(13, "기념일", 0));
+        menuListDao.insert(new MenuList(13, "기타", 0));
 
 
         SettingDateDao settingDateDao = userDatabase.getSettingDao();

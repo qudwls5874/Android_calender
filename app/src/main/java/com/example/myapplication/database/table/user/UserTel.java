@@ -16,11 +16,11 @@ public class UserTel {
 
     private long telId;          // 번호 인덱스
     private long userId;         // 유저 인덱스
-    private String telType;     // 번호 타입
+    private String telName;     // 번호 타입
     private String telNumber;   // 번호
 
-    public UserTel(String telType, String telNumber) {
-        this.telType = telType;
+    public UserTel(String telName, String telNumber) {
+        this.telName = telName;
         this.telNumber = telNumber;
     }
 
@@ -40,12 +40,12 @@ public class UserTel {
         this.userId = userId;
     }
 
-    public String getTelType() {
-        return telType;
+    public String getTelName() {
+        return telName;
     }
 
-    public void setTelType(String telType) {
-        this.telType = telType;
+    public void setTelName(String telName) {
+        this.telName = telName;
     }
 
     public String getTelNumber() {

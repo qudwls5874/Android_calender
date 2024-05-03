@@ -45,10 +45,17 @@ public class UserViewModel extends AndroidViewModel {
         return result;
     }
 
-    // 동적 데이터 저장
+    // 동적 데이터 저장 (리스트)
     public Boolean setUserList(List<UserJoin> userJoin, List<UserProfile> userProfile){
         return repository.setAllUser(userJoin, userProfile);
     }
+
+    // 동적 데이터 저장(단독)
+    public Boolean setUser(UserJoin userJoin, UserProfile userProfile){
+
+        return false;
+    }
+
 
 
 

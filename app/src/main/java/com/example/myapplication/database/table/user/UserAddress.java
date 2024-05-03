@@ -16,12 +16,12 @@ public class UserAddress {
 
     private long addressId;
     private long userId;
-    private String addressType;
     private String addressName;
+    private String addressContent;
 
-    public UserAddress(String addressType, String addressName) {
-        this.addressType = addressType;
+    public UserAddress(String addressName, String addressContent) {
         this.addressName = addressName;
+        this.addressContent =addressContent;
     }
 
     public long getAddressId() {
@@ -40,19 +40,19 @@ public class UserAddress {
         this.userId = userId;
     }
 
-    public String getAddressType() {
-        return addressType;
-    }
-
-    public void setAddressType(String addressType) {
-        this.addressType = addressType;
-    }
-
     public String getAddressName() {
         return addressName;
     }
 
     public void setAddressName(String addressName) {
         this.addressName = addressName;
+    }
+
+    public String getAddressContent() {
+        return addressContent;
+    }
+
+    public void setAddressContent(String addressContent) {
+        this.addressContent = addressContent;
     }
 }
