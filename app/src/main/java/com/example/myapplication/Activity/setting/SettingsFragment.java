@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -24,6 +25,7 @@ import com.example.myapplication.Activity.setting.service.SettingServiceMainDial
 import com.example.myapplication.Activity.setting.tel.SettingTelMainDialog;
 import com.example.myapplication.databinding.FragmentSettingBinding;
 import com.example.myapplication.dialog.LoadingDialog;
+import com.example.myapplication.settingpermissions.PermissionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +38,9 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.OnItem
 
     private LoadingDialog loadingDialog;
 
+    // 권한설정
+    private PermissionManager permissionManager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,13 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.OnItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSettingBinding.inflate(inflater, container, false);
+
+        permissionManager = new PermissionManager(
+                requireContext(),
+                registerForActivityResult(
+                        new ActivityResultContracts.RequestPermission(),
+                        this::onPermissionResult)
+        );
 
         initData();
 
@@ -73,7 +85,10 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.OnItem
                 break;
             case 2:
                 // 연락처 설정
-                requestContactsPermission();
+//                requestContactsPermission();
+                if (permissionManager.requestPermission(Manifest.permission.READ_CONTACTS)){
+                    showLoadingAndFetchContacts();
+                };
                 break;
         }
 
@@ -100,6 +115,7 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.OnItem
 
     }
 
+    /*
     // 연락처 권한 설정
     private void requestContactsPermission() {
         // 권한이 없는 경우 권한 요청
@@ -144,5 +160,15 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.OnItem
                 }
             }
     );
+    */
+    private void onPermissionResult(boolean result){
+        if (result){
+            // 권한이 허용됐을 때 처리할 작업
+            Toast.makeText(getContext(), "권한이 허용되었습니다.", Toast.LENGTH_SHORT).show();
+        } else {
+            // 권한이 거부됐을 때 처리할 작업
+            Toast.makeText(getContext(), "권한이 거부되었습니다.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }

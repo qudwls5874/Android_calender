@@ -4,12 +4,19 @@ package com.example.myapplication.Activity.user.add;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -20,6 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -53,7 +62,12 @@ import com.example.myapplication.dataclass.UserProfile;
 import com.example.myapplication.dialog.LoadingDialog;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.SwipeDismissTouchListener;
+import com.example.myapplication.photoediting.ImageUtils;
+import com.example.myapplication.settingpermissions.PermissionManager;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,11 +94,50 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
     // 사진
     private UserProfile userProfile;
 
+    // 권한설정
+    private PermissionManager permissionManager;
+    private ActivityResultLauncher<String> galleryLauncher;
+    private ImageView imageView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DialogUserAddBinding.inflate(inflater, container, false);
+
+        permissionManager = new PermissionManager(
+                requireContext(),
+                registerForActivityResult(
+                        new ActivityResultContracts.RequestPermission(),
+                        this::onPermissionResult)
+        );
+
+        // 갤러리 런처 초기화
+        galleryLauncher = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                result -> {
+                    if (result != null) {
+                        userProfile.setProifle(
+                                ImageUtils.decodeSampledBitmap(getContext(), result, 200, 200)
+                        );
+                        if (userProfile.getProifle() != null){
+                            // 동그란 프로필 이미지 생성
+                            Bitmap circleBitmap = Bitmap.createBitmap(userProfile.getProifle().getWidth(), userProfile.getProifle().getHeight(), Bitmap.Config.ARGB_8888);
+                            Canvas canvas = new Canvas(circleBitmap);
+                            Paint paint = new Paint();
+                            // 안티앨리어싱을 사용하여 부드럽고 곡선적인 효과를 부여함
+                            paint.setAntiAlias(true);
+                            // 원 모양의 경계를 그리기 위해 Canvas에 원을 그림
+                            canvas.drawCircle(userProfile.getProifle().getWidth() / 2f, userProfile.getProifle().getHeight() / 2f, userProfile.getProifle().getWidth() / 2f, paint);
+                            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                            // 원 모양으로 자른 이미지를 Canvas에 그림
+                            canvas.drawBitmap(userProfile.getProifle(), 0, 0, paint);
+
+                            binding.userAddProfileImageView.setImageBitmap(circleBitmap);
+                        } else {
+                            binding.userAddProfileImageView.setImageResource(R.drawable.ic_person_image);
+                        }
+                    }
+                });
 
         initData();
 
@@ -239,88 +292,68 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
             userJoin.userCoupons = couponList;
 
             UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-//            userViewModel.setUser(userJoin);
+
 
         } else if (v.getId() == binding.userAddProfileBtn.getId()) {
+            boolean imageCheck;
             // 사진
-            requestContactsPermission();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                // 안드로이드 13 이하
+                imageCheck = permissionManager.requestPermission(Manifest.permission.READ_MEDIA_IMAGES);
+            } else {
+                // 안드로이드 13 이상
+                imageCheck = permissionManager.requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+
+            if (imageCheck){
+                openGallery();
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(intent, 100);
+            }
 
         } else if (v.getId() == binding.userAddCloseBtn.getId()) {
             dismiss();
         }
     }
 
+    // 갤러리 열기
+    private void openGallery() {
+        galleryLauncher.launch("image/*");
+    }
 
+    // 비트맵을 파일로 저장
+    private void saveBitmap(Uri imageUri) {
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), imageUri);
+            // 내부 저장소에 저장할 파일의 Uri 생성
+            String fileName = "my_image.jpg";
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+            Uri outputFileUri = requireContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
+            // 비트맵을 OutputStream을 사용하여 파일로 저장
+            OutputStream outputStream = requireContext().getContentResolver().openOutputStream(outputFileUri);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.close();
 
-    // 사진첩 권한 설정
-    private void requestContactsPermission() {
-        // 권한이 없는 경우 권한 요청
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                // 최초실행
-                requestPStringActivityResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-            } else {
-                // 이전에 승인거절
-                showPermissionDeniedDialog();
-            }
-        } else {
-            showLoadingAndFetchContacts();
+            Toast.makeText(requireContext(), "이미지가 저장되었습니다.", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(requireContext(), "이미지를 저장하는 데 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // 이전에 승인거절
-    private void showPermissionDeniedDialog() {
-        AlertDialog.Builder perBuilder = new AlertDialog.Builder(getContext());
-        perBuilder.setTitle("권한 설정")
-                .setMessage("권한 거절로 인해 일부기능이 제한됩니다.")
-                .setPositiveButton("권한 설정하러 가기", (dialog1, which) -> {
-                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri = Uri.fromParts("package", getContext().getPackageName(), null);
-                    intent.setData(uri);
-                    startActivity(intent);
-                })
-                .setNegativeButton("취소", (dialog1, which) -> {
-                    dialog1.dismiss();
-                })
-                .show();
+
+    private void onPermissionResult(boolean result){
+        if (result){
+            // 권한이 허용됐을 때 처리할 작업
+            Toast.makeText(getContext(), "권한이 허용되었습니다.", Toast.LENGTH_SHORT).show();
+        } else {
+            // 권한이 거부됐을 때 처리할 작업
+            Toast.makeText(getContext(), "권한이 거부되었습니다.", Toast.LENGTH_SHORT).show();
+        }
     }
-
-    // 최초 권한설정에서 버튼 눌렀을시
-    private ActivityResultLauncher<String> requestPStringActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.RequestPermission(),
-            result -> {
-                if (result) {
-                    showLoadingAndFetchContacts();
-                } else {
-                    Log.i("result2", result.toString());
-                }
-            }
-    );
-
-
-    // 사진첩 가져오기
-    private void showLoadingAndFetchContacts() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, 2);
-    }
-
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

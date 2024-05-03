@@ -1,15 +1,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--    <item>-->
-<!--        <shape android:shape="rectangle">-->
-<!--            <solid android:color="@color/btnOrangeColor"/>-->
-<!--        </shape>-->
-<!--    </item>-->
-
     <!-- 동그라미 모양의 배경 -->
     <item>
         <shape android:shape="oval">
-            <solid android:color="#59000000" />
+            <solid android:color="@color/white" />
         </shape>
     </item>
 
