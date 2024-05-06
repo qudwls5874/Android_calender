@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.myapplication.database.repository.SettingDateRepository;
-import com.example.myapplication.database.table.SettingDate;
+import com.example.myapplication.database.table.setting.SettingDate;
 
 import java.util.List;
 

@@ -8,9 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.database.table.MenuList;
+import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.database.table.user.UserTel;
-import com.example.myapplication.database.view.TelJoin;
 import com.example.myapplication.databinding.ViewItemTelRowBinding;
 import com.example.myapplication.dialog.list.ServiceListDAdapter;
 import com.example.myapplication.dialog.list.ServiceListHDialog;

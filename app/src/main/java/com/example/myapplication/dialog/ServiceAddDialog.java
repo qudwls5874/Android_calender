@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.myapplication.database.table.MenuCategory;
-import com.example.myapplication.database.table.MenuList;
+import com.example.myapplication.database.table.menu.MenuCategory;
+import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.databinding.DialogServiceAddBinding;
 import com.example.myapplication.event.WatcherMoneyText;
 

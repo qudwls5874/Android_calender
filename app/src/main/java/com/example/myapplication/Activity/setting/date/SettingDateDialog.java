@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.myapplication.database.table.SettingDate;
+import com.example.myapplication.database.table.setting.SettingDate;
 import com.example.myapplication.database.viewmodel.SettingDateViewModel;
 import com.example.myapplication.databinding.DialogSettingSettingdateBinding;
 import com.example.myapplication.dialog.LoadingDialog;

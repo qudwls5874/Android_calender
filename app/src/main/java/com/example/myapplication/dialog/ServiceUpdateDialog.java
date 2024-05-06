@@ -6,13 +6,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.myapplication.database.table.MenuCategory;
-import com.example.myapplication.database.table.MenuList;
-import com.example.myapplication.databinding.DialogServiceAddBinding;
+import com.example.myapplication.database.table.menu.MenuCategory;
+import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.databinding.DialogServiceUpdateBinding;
 import com.example.myapplication.event.WatcherMoneyText;
 

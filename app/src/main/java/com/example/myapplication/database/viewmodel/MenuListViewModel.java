@@ -5,10 +5,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.database.repository.MenuListRepository;
-import com.example.myapplication.database.table.MenuList;
+import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
 
 import java.util.List;

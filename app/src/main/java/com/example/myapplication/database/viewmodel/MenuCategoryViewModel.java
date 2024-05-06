@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.myapplication.database.repository.MenuCategoryRepository;
-import com.example.myapplication.database.table.MenuCategory;
+import com.example.myapplication.database.table.menu.MenuCategory;
 
 import java.util.List;
 

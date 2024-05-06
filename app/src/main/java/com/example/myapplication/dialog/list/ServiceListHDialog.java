@@ -15,11 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
-import com.example.myapplication.database.table.MenuList;
+import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.database.viewmodel.MenuListViewModel;
 import com.example.myapplication.databinding.DialogServiceAddlistBinding;
@@ -34,13 +35,16 @@ import java.util.stream.Collectors;
 
 public class ServiceListHDialog extends DialogFragment implements View.OnClickListener, WatcherSearchText.OnSearchChangeListener{
 
+    private String tag ;
+
     private DialogServiceAddlistBinding binding;
     private MenuListViewModel viewModel;
     private LoadingDialog loading;
 
     private ServiceListHAdapter adapter;
-    private ArrayList<MenuJoin> list = new ArrayList<>();
-    private ArrayList<MenuJoin> filterList = new ArrayList<>();
+    private ArrayList<MenuJoin> list;
+    private ArrayList<MenuJoin> filterList;
+    private ArrayList<MenuJoin> checkList;
     private ServiceListDAdapter.ItemClickLisner itemClickLisner;
 
     /* data */
@@ -87,6 +91,9 @@ public class ServiceListHDialog extends DialogFragment implements View.OnClickLi
         binding.settingServiceListaddChangeBtn.setVisibility(View.GONE);
 
         // 어댑터
+        list = new ArrayList<>();
+        filterList = new ArrayList<>();
+        checkList = new ArrayList<>();
         adapter = new ServiceListHAdapter(filterList, itemClickLisner, this);
         binding.settingServiceListRecyclerView.setAdapter(adapter);
         binding.settingServiceListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -180,4 +187,9 @@ public class ServiceListHDialog extends DialogFragment implements View.OnClickLi
     }
 
 
+    @Override
+    public void show(@NonNull FragmentManager manager, @Nullable String tag) {
+        super.show(manager, tag);
+        this.tag = tag;
+    }
 }

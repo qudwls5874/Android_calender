@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.database.UserDatabase;
 import com.example.myapplication.database.dao.SettingDateDao;
-import com.example.myapplication.database.table.SettingDate;
+import com.example.myapplication.database.table.setting.SettingDate;
 
 import java.util.List;
 

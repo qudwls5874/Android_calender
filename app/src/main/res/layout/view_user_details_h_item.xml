@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
@@ -12,36 +12,55 @@
         android:background="@color/white"
         android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/view_add_service_list_imageView"
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_user_delete"
+                />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/user_details_h_date_textView"
-            android:layout_width="90dp"
+            android:layout_width="75dp"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="12dp"
             android:text="2024-05-02"/>
 
         <TextView
             android:id="@+id/user_details_h_title_textView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:text="네일 (1)"/>
+            android:textSize="12dp"
+            android:text="네일 (2)"/>
 
         <TextView
             android:id="@+id/user_details_h_payment_textView"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:gravity="center"
+            android:textSize="12dp"
             android:text="10,000"/>
 
 
         <TextView
             android:id="@+id/user_details_h_fg_textView"
-            android:layout_width="70dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/textPlusColor"
+            android:textSize="12dp"
             android:text="차감"/>
 
     </LinearLayout>
@@ -59,6 +78,7 @@
         android:background="@color/BackBaseInputBoxColor"/>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="5dp"/>
 

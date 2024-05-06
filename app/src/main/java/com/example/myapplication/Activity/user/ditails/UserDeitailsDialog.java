@@ -82,9 +82,9 @@ public class UserDeitailsDialog extends DialogFragment implements View.OnClickLi
         }
 
         binding.userAddDNameTextView.setText(userJoin.user.getName());
-        binding.userAddDTelTextView.setText(userJoin.userTelList.size() > 0 ? userJoin.userTelList.get(0).getTelNumber() : "");
-        binding.userAddDAddressTextView.setText(userJoin.userAddressList.size() > 0 ? userJoin.userAddressList.get(0).getAddressName() : "");
-        binding.userAddDEventTextView.setText(userJoin.userEventsList.size() > 0 ? userJoin.userEventsList.get(0).getEventName() : "");
+        binding.userAddDTelTextView.setText(userJoin.user.getUserTel());
+        binding.userAddDAddressTextView.setText(userJoin.user.getUserAddress());
+        binding.userAddDEventTextView.setText(userJoin.user.getUserEvent());
 
         // 뷰모델 객체생성
         viewModel = new ViewModelProvider(this).get(ScheduleCalendarViewModel.class);

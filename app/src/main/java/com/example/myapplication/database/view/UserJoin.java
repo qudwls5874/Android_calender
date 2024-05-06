@@ -6,11 +6,13 @@ import androidx.room.Relation;
 
 import com.example.myapplication.database.table.ScheduleCalendar;
 import com.example.myapplication.database.table.User;
-import com.example.myapplication.database.table.UserCash;
-import com.example.myapplication.database.table.UserCoupon;
+import com.example.myapplication.database.table.schedule.ScheduleCalendarH;
 import com.example.myapplication.database.table.user.UserAddress;
 import com.example.myapplication.database.table.user.UserEvent;
 import com.example.myapplication.database.table.user.UserTel;
+import com.example.myapplication.database.table.userbag.UserCash;
+import com.example.myapplication.database.table.userbag.UserCoupon;
+import com.example.myapplication.database.view.schedule.CalendarHJoin;
 
 import java.util.List;
 
@@ -28,8 +30,8 @@ public class UserJoin {
     @Relation(parentColumn = "userId", entityColumn = "userId")
     public List<UserEvent> userEventsList;
 
-    @Relation(entity = ScheduleCalendar.class, parentColumn = "userId", entityColumn = "userId")
-    public List<CalendarJoin> scheduleCalendars;
+    @Relation(entity = ScheduleCalendarH.class, parentColumn = "userId", entityColumn = "userId")
+    public List<CalendarHJoin> calendarHJoins;
 
     @Relation(entity = UserCash.class, parentColumn = "userId", entityColumn = "userId")
     public List<CashJoin> userCashes;

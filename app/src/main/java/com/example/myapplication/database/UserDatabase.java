@@ -14,16 +14,18 @@ import com.example.myapplication.database.dao.MenuListDao;
 import com.example.myapplication.database.dao.ScheduleCalendarDao;
 import com.example.myapplication.database.dao.SettingDateDao;
 import com.example.myapplication.database.dao.UserDao;
-import com.example.myapplication.database.table.MenuCategory;
-import com.example.myapplication.database.table.MenuList;
 import com.example.myapplication.database.table.ScheduleCalendar;
-import com.example.myapplication.database.table.SettingDate;
 import com.example.myapplication.database.table.User;
-import com.example.myapplication.database.table.UserCash;
-import com.example.myapplication.database.table.UserCoupon;
+import com.example.myapplication.database.table.menu.MenuCategory;
+import com.example.myapplication.database.table.menu.MenuList;
+import com.example.myapplication.database.table.schedule.ScheduleCalendarD;
+import com.example.myapplication.database.table.schedule.ScheduleCalendarH;
+import com.example.myapplication.database.table.setting.SettingDate;
 import com.example.myapplication.database.table.user.UserAddress;
 import com.example.myapplication.database.table.user.UserEvent;
 import com.example.myapplication.database.table.user.UserTel;
+import com.example.myapplication.database.table.userbag.UserCash;
+import com.example.myapplication.database.table.userbag.UserCoupon;
 
 import java.util.concurrent.Executors;
 
@@ -32,7 +34,8 @@ import java.util.concurrent.Executors;
         {
                 User.class, UserTel.class, UserAddress.class, UserEvent.class,
                 MenuCategory.class, MenuList.class,
-                ScheduleCalendar.class, UserCash.class, UserCoupon.class,
+                ScheduleCalendarH.class, ScheduleCalendarD.class,
+                UserCash.class, UserCoupon.class,
                 SettingDate.class
         }, version = 1, exportSchema = false )
 

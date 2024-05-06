@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.myapplication.Activity.setting.service.servicelist.SettingServiceListHDialog;
-import com.example.myapplication.database.table.MenuCategory;
+import com.example.myapplication.database.table.menu.MenuCategory;
 import com.example.myapplication.database.viewmodel.MenuCategoryViewModel;
 import com.example.myapplication.databinding.DialogSettingServiceBinding;
 

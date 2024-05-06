@@ -7,7 +7,7 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.database.table.MenuCategory;
+import com.example.myapplication.database.table.menu.MenuCategory;
 import com.example.myapplication.databinding.ViewSettingServiceFgRowBinding;
 
 import java.util.List;

@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.myapplication.database.table.MenuList;
+import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
 
 import java.util.List;

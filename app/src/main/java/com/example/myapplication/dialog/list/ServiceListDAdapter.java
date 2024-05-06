@@ -1,24 +1,18 @@
 package com.example.myapplication.dialog.list;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.R;
-import com.example.myapplication.database.table.MenuCategory;
-import com.example.myapplication.database.table.MenuList;
+import com.example.myapplication.database.table.menu.MenuCategory;
+import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.databinding.ViewServiceItemListDRowBinding;
-import com.example.myapplication.dialog.ServiceUpdateDialog;
 import com.example.myapplication.event.WatcherMoneyText;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ServiceListDAdapter extends RecyclerView.Adapter<ServiceListDAdapter.ViewHolder> {
 

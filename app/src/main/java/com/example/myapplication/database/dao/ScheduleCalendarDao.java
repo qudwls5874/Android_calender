@@ -12,7 +12,7 @@ import java.util.List;
 public interface ScheduleCalendarDao {
 
     @Query( "SELECT * " +
-            "FROM ScheduleCalendar " +
+            "FROM schedulecalendarhs " +
             "WHERE userId = :userId " +
             "ORDER BY calDt DESC ")
     List<CalendarJoin> getScheduleCalendarlist(Long userId);

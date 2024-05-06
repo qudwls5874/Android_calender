@@ -2,13 +2,12 @@ package com.example.myapplication.database.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.database.UserDatabase;
 import com.example.myapplication.database.dao.MenuCategoryDao;
-import com.example.myapplication.database.table.MenuCategory;
+import com.example.myapplication.database.table.menu.MenuCategory;
 
 import java.util.List;
 

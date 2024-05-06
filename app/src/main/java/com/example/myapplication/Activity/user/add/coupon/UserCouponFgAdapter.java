@@ -1,4 +1,4 @@
-package com.example.myapplication.Activity.user.add;
+package com.example.myapplication.Activity.user.add.coupon;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.database.table.MenuList;
+import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.database.view.CouponJoin;
 import com.example.myapplication.databinding.ViewItemCouponRowBinding;
 import com.example.myapplication.dialog.ServiceAddMoneyDialog;

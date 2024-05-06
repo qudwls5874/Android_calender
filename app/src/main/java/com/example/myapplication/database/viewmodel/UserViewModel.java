@@ -52,8 +52,7 @@ public class UserViewModel extends AndroidViewModel {
 
     // 동적 데이터 저장(단독)
     public Boolean setUser(UserJoin userJoin, UserProfile userProfile){
-
-        return false;
+        return repository.setUser(userJoin, userProfile);
     }
 
 

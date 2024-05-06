@@ -21,9 +21,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
-import com.example.myapplication.database.table.MenuList;
+import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.database.viewmodel.MenuListViewModel;
+import com.example.myapplication.databinding.DialogServiceAddlistBinding;
 import com.example.myapplication.dialog.LoadingDialog;
 import com.example.myapplication.dialog.ServiceAddDialog;
 import com.example.myapplication.dialog.ServiceUpdateDialog;
@@ -43,7 +44,7 @@ public class SettingServiceListHDialog extends DialogFragment implements    View
 
     public static boolean layoutCheck = false;
 
-    private com.example.myapplication.databinding.DialogServiceAddlistBinding binding;
+    private DialogServiceAddlistBinding binding;
     private MenuListViewModel viewModel;
     private LoadingDialog loading;
 

@@ -1,7 +1,5 @@
 package com.example.myapplication.database.dao;
 
-import android.util.Log;
-
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -9,10 +7,15 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.example.myapplication.database.table.ScheduleCalendar;
 import com.example.myapplication.database.table.User;
+import com.example.myapplication.database.table.schedule.ScheduleCalendarD;
+import com.example.myapplication.database.table.schedule.ScheduleCalendarH;
 import com.example.myapplication.database.table.user.UserAddress;
 import com.example.myapplication.database.table.user.UserEvent;
 import com.example.myapplication.database.table.user.UserTel;
+import com.example.myapplication.database.table.userbag.UserCash;
+import com.example.myapplication.database.table.userbag.UserCoupon;
 import com.example.myapplication.database.view.UserJoin;
 
 import java.util.List;
@@ -56,5 +59,11 @@ public interface UserDao {
     @Transaction
     @Insert
     void insertAllUser(List<UserTel> telList, List<UserAddress> addressList, List<UserEvent> eventList);
+
+    /* 회원저장 */
+    @Transaction
+    @Insert
+    void insertUserDetails(List<ScheduleCalendarH> calendarHS, List<ScheduleCalendarD> calendarDS, List<UserCash> cashes, List<UserCoupon> coupons,
+                           List<UserTel> userTels, List<UserAddress> userAddresses, List<UserEvent> userEvents);
 
 }

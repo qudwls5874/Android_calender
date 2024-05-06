@@ -1,4 +1,4 @@
-package com.example.myapplication.database.table;
+package com.example.myapplication.database.table.userbag;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

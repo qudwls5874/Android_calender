@@ -3,10 +3,7 @@ package com.example.myapplication.Activity.user.add;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -19,8 +16,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,50 +29,43 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.myapplication.Activity.setting.tel.SettingTelMainDialog;
+import com.example.myapplication.Activity.user.add.cash.UserCashFgAdapter;
+import com.example.myapplication.Activity.user.add.coupon.UserCouponFgAdapter;
+import com.example.myapplication.Activity.user.add.schedule.UserServiceFgAdapter;
 import com.example.myapplication.R;
-import com.example.myapplication.database.table.MenuCategory;
-import com.example.myapplication.database.table.MenuList;
-import com.example.myapplication.database.table.ScheduleCalendar;
 import com.example.myapplication.database.table.User;
-import com.example.myapplication.database.table.UserCash;
-import com.example.myapplication.database.table.UserCoupon;
+import com.example.myapplication.database.table.menu.MenuCategory;
+import com.example.myapplication.database.table.schedule.ScheduleCalendarH;
 import com.example.myapplication.database.table.user.UserAddress;
 import com.example.myapplication.database.table.user.UserEvent;
 import com.example.myapplication.database.table.user.UserTel;
-import com.example.myapplication.database.view.CalendarJoin;
 import com.example.myapplication.database.view.CashJoin;
 import com.example.myapplication.database.view.CouponJoin;
-import com.example.myapplication.database.view.TelJoin;
 import com.example.myapplication.database.view.UserJoin;
+import com.example.myapplication.database.view.schedule.CalendarHJoin;
 import com.example.myapplication.database.viewmodel.UserViewModel;
 import com.example.myapplication.databinding.DialogUserAddBinding;
 import com.example.myapplication.dataclass.UserProfile;
-import com.example.myapplication.dialog.LoadingDialog;
 import com.example.myapplication.event.HideKeyboardHelperDialog;
 import com.example.myapplication.event.SwipeDismissTouchListener;
 import com.example.myapplication.photoediting.ImageUtils;
 import com.example.myapplication.settingpermissions.PermissionManager;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserAddFragmentDialog extends DialogFragment implements View.OnClickListener {
 
     private DialogUserAddBinding binding;
 
-    private ArrayList<CalendarJoin> scList;
-    private UserServiceFgAdapter scAdapter;
+    private ArrayList<CalendarHJoin> calendarHJoins;
+    private UserServiceFgAdapter userServiceFgAdapter;
     private ArrayList<CashJoin> cashList;
     private UserCashFgAdapter cashFgAdapter;
     private ArrayList<CouponJoin> couponList;
@@ -165,9 +153,9 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
 
 
         // 서비스
-        scList = new ArrayList<>();
-        scAdapter = new UserServiceFgAdapter(scList, getParentFragmentManager());
-        binding.userAddServiceRecyclerView.setAdapter(scAdapter);
+        calendarHJoins = new ArrayList<>();
+        userServiceFgAdapter = new UserServiceFgAdapter(calendarHJoins, getParentFragmentManager());
+        binding.userAddServiceRecyclerView.setAdapter(userServiceFgAdapter);
         binding.userAddServiceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // 금액충전
@@ -234,31 +222,32 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
     public void onClick(View v) {
         if (v.getId() == binding.userAddServiceAddBtn.getId()){
             // 서비스 클릭
-            CalendarJoin cal = new CalendarJoin();
-            cal.scheduleCalendar = new ScheduleCalendar(String.valueOf(LocalDate.now()), "", 0,0);
-            cal.menuCategory = new MenuCategory();
-            cal.menuList = new MenuList();
+            CalendarHJoin cal = new CalendarHJoin();
+            cal.scheduleCalendarH = new ScheduleCalendarH(String.valueOf(LocalDate.now()));
+            cal.calendarDJoins = new ArrayList<>();
+            cal.menuCategory = new ArrayList<>();
 
-            scList.add(cal);
-            scAdapter.notifyDataSetChanged();
+            calendarHJoins.add(cal);
+
+            userServiceFgAdapter.notifyDataSetChanged();
         } else if (v.getId() == binding.userAddCashAddBtn.getId()) {
             // 금액충전 클릭
-            CashJoin cal = new CashJoin();
-            cal.userCash = new UserCash(String.valueOf(LocalDate.now()), 0, 0);
-            cal.menuCategory = new MenuCategory();
-            cal.menuList = new MenuList();
-
-            cashList.add(cal);
+//            CashJoin cal = new CashJoin();
+//            cal.userCash = new UserCash(String.valueOf(LocalDate.now()), 0, 0);
+//            cal.menuCategory = new MenuCategory();
+//            cal.menuList = new MenuList();
+//
+//            cashList.add(cal);
             cashFgAdapter.notifyDataSetChanged();
 
         } else if (v.getId() == binding.userAddCouponAddBtn.getId()) {
             // 쿠폰 클릭
-            CouponJoin cal = new CouponJoin();
-            cal.userCoupon = new UserCoupon(String.valueOf(LocalDate.now()), "", 0, 0);
-            cal.menuCategory = new MenuCategory();
-            cal.menuList = new MenuList();
-
-            couponList.add(cal);
+//            CouponJoin cal = new CouponJoin();
+//            cal.userCoupon = new UserCoupon(String.valueOf(LocalDate.now()), "", 0, 0);
+//            cal.menuCategory = new MenuCategory();
+//            cal.menuList = new MenuList();
+//
+//            couponList.add(cal);
             couponFgAdapter.notifyDataSetChanged();
         } else if (v.getId() == binding.userAddTelAddBtn.getId()){
             // 번호 추가
@@ -287,11 +276,13 @@ public class UserAddFragmentDialog extends DialogFragment implements View.OnClic
             userJoin.userTelList = userTels;
             userJoin.userAddressList = userAddresses;
             userJoin.userEventsList = userEvents;
-            userJoin.scheduleCalendars = scList;
+            userJoin.calendarHJoins = calendarHJoins;
             userJoin.userCashes = cashList;
             userJoin.userCoupons = couponList;
 
             UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
+            userViewModel.setUser(userJoin, userProfile);
 
 
         } else if (v.getId() == binding.userAddProfileBtn.getId()) {
