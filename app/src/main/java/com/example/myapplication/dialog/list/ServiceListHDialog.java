@@ -201,16 +201,16 @@ public class ServiceListHDialog extends DialogFragment implements View.OnClickLi
     @Override
     public void setOnItemClickLisner(int position) {
         // 저장 리스트값
-        MenuJoin result = list.stream()
-                .filter(streamData -> streamData.menuLists.equals(checkList))
-                .findFirst()
-                .orElse(null);
-
-        if (result == null){
-            checkList.add(result.menuLists.get(0));
-        } else {
-            checkList.remove(result);
-        }
+//        MenuJoin result = checkList.stream()
+//                .filter(streamData -> streamData.equals(filterList.get(position).menuLists))
+//                .findFirst()
+//                .orElse(null);
+//
+//        if (result == null){
+//            checkList.add(result.menuLists.get(position));
+//        } else {
+//            checkList.remove(result);
+//        }
 
         if (!checkList.isEmpty()){
             binding.settingServiceListAddBtn.setVisibility(View.VISIBLE);

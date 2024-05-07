@@ -2,7 +2,6 @@ package com.example.myapplication.dialog.list;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,21 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.database.table.menu.MenuCategory;
 import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
-import com.example.myapplication.database.view.UserJoin;
 import com.example.myapplication.databinding.ViewServiceItemListHRowBinding;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ServiceListHAdapter extends RecyclerView.Adapter<ServiceListHAdapter.ViewHolder> {
 
     private ArrayList<MenuJoin> list;
-    private ArrayList<MenuJoin> checkList;
+    private ArrayList<MenuList> checkList;
     private ViewServiceItemListHRowBinding binding;
     private ServiceListDAdapter.ItemClickLisner lisner;
     private ServiceListHDialog dialog;
 
-    public ServiceListHAdapter(ArrayList<MenuJoin> list, ArrayList<MenuJoin> checkList, ServiceListDAdapter.ItemClickLisner lisner, ServiceListHDialog dialog){
+    public ServiceListHAdapter(ArrayList<MenuJoin> list, ArrayList<MenuList> checkList, ServiceListDAdapter.ItemClickLisner lisner, ServiceListHDialog dialog){
         this.list = list;
         this.checkList = checkList;
         this.lisner = lisner;
@@ -45,19 +42,18 @@ public class ServiceListHAdapter extends RecyclerView.Adapter<ServiceListHAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         MenuJoin data = list.get(position);
-        ArrayList<MenuList> reqeustData = (ArrayList<MenuList>) checkList.stream().filter(strData -> strData.menuLists.equals(data.menuLists));
 
         holder.binding.itemServiceTextView.setText(data.menuCategory.getMenuCategoryName());
         holder.setMenuListAdapter(
                 (ArrayList<MenuList>) data.menuLists,
-                reqeustData,
+                checkList,
                 data.menuCategory
         );
 
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setItemCheckList(ArrayList<MenuJoin> _checkList){
+    public void setItemCheckList(ArrayList<MenuList> _checkList){
         this.checkList = _checkList;
         notifyDataSetChanged(); // 데이터가 변경되었음을 RecyclerView에 알립니다.
     }
