@@ -116,7 +116,7 @@ public class UserServiceFgAdapter extends RecyclerView.Adapter<UserServiceFgAdap
             } else if (v.getId() == binding.userDetailsHTitleTextView.getId()) {
                 // 서비스명 클릭
                 ServiceListHDialog serviceHDialog = new ServiceListHDialog(0, this);
-                serviceHDialog.show(fragmentManager, "service");    // 여기 수정중
+                serviceHDialog.show(fragmentManager, "servicecheck");    // 여기 수정중
             } else if (v.getId() == binding.userDetailsHDateTextView.getId()) {
                 // 달력 다이얼로그
                 try {
@@ -135,7 +135,7 @@ public class UserServiceFgAdapter extends RecyclerView.Adapter<UserServiceFgAdap
         }
 
         @Override
-        public void setOnItemClickLisner(MenuList menuList) {
+        public void setOnItemClickLisner(int position) {
 
         }
 

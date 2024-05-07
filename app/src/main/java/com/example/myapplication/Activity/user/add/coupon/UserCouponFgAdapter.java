@@ -102,10 +102,10 @@ public class UserCouponFgAdapter extends RecyclerView.Adapter<UserCouponFgAdapte
         }
 
         @Override
-        public void setOnItemClickLisner(MenuList menuList) {
-            list.get(getBindingAdapterPosition()).userCoupon.setCouponPayment(menuList.getMenuMoney());
-            list.get(getBindingAdapterPosition()).menuList = menuList;
-            notifyDataSetChanged();
+        public void setOnItemClickLisner(int position) {
+//            list.get(getBindingAdapterPosition()).userCoupon.setCouponPayment(menuList.getMenuMoney());
+//            list.get(getBindingAdapterPosition()).menuList = menuList;
+//            notifyDataSetChanged();
         }
 
         @Override

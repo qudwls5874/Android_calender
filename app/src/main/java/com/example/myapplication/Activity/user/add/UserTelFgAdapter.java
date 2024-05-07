@@ -69,9 +69,9 @@ public class UserTelFgAdapter extends RecyclerView.Adapter<UserTelFgAdapter.View
         }
 
         @Override
-        public void setOnItemClickLisner(MenuList menuList) {
-            telJoins.get(getBindingAdapterPosition()).setTelName(menuList.getMenuName());
-            notifyDataSetChanged();
+        public void setOnItemClickLisner(int position) {
+//            telJoins.get(getBindingAdapterPosition()).setTelName(menuList.getMenuName());
+//            notifyDataSetChanged();
         }
     }
 

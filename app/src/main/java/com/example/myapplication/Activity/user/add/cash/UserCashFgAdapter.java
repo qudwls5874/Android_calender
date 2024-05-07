@@ -117,10 +117,10 @@ public class UserCashFgAdapter extends RecyclerView.Adapter<UserCashFgAdapter.Vi
         }
 
         @Override
-        public void setOnItemClickLisner(MenuList menuList) {
-            list.get(getBindingAdapterPosition()).userCash.setCashPayment(menuList.getMenuMoney());
-            list.get(getBindingAdapterPosition()).menuList = menuList;
-            notifyDataSetChanged();
+        public void setOnItemClickLisner(int position) {
+//            list.get(getBindingAdapterPosition()).userCash.setCashPayment(menuList.getMenuMoney());
+//            list.get(getBindingAdapterPosition()).menuList = menuList;
+//            notifyDataSetChanged();
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.myapplication.dialog.list;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.database.table.menu.MenuCategory;
 import com.example.myapplication.database.table.menu.MenuList;
+import com.example.myapplication.database.view.MenuJoin;
 import com.example.myapplication.databinding.ViewServiceItemListDRowBinding;
 import com.example.myapplication.event.WatcherMoneyText;
 
@@ -18,15 +20,18 @@ public class ServiceListDAdapter extends RecyclerView.Adapter<ServiceListDAdapte
 
     private ViewServiceItemListDRowBinding binding;
     private ArrayList<MenuList> list;
+    private ArrayList<MenuList> checkList;
     private MenuCategory menuCategory;
     private ItemClickLisner itemClickLisner;
     private ServiceListHDialog dialog;
 
     public ServiceListDAdapter(ArrayList<MenuList> list,
+                               ArrayList<MenuList> checkList,
                                MenuCategory menuCategory,
                                ItemClickLisner itemClickLisner,
                                ServiceListHDialog dialog){
         this.list = list;
+        this.checkList = checkList;
         this.menuCategory = menuCategory;
         this.itemClickLisner = itemClickLisner;
         this.dialog = dialog;
@@ -47,7 +52,11 @@ public class ServiceListDAdapter extends RecyclerView.Adapter<ServiceListDAdapte
         holder.binding.itemServiceDTextView1.setText(data.getMenuName());
         WatcherMoneyText watcherMoneyText = new WatcherMoneyText();
         holder.binding.itemServiceDTextView2.setText(watcherMoneyText.beforeMoneyTextChanged(String.valueOf(data.getMenuMoney())));
-
+        if (checkList.stream().filter(strData -> strData.getMenuListId() == data.getMenuListId()).findFirst().orElse(null) != null){
+            holder.binding.itemServiceDCheckImage.setVisibility(View.VISIBLE);
+        } else {
+            holder.binding.itemServiceDCheckImage.setVisibility(View.GONE);
+        }
 
     }
 
@@ -73,8 +82,9 @@ public class ServiceListDAdapter extends RecyclerView.Adapter<ServiceListDAdapte
         @Override
         public void onClick(View v) {
             if (v.getId() == binding.itemServiceDAllLinearLayout.getId()) {
-                itemClickLisner.setOnItemClickLisner(list.get(getBindingAdapterPosition()));
-                dialog.dismiss();
+                itemClickLisner.setOnItemClickLisner(getBindingAdapterPosition());
+//                itemClickLisner.setOnItemClickLisner(list.get(getBindingAdapterPosition()));
+//                dialog.dismiss();
             }
         }
 
@@ -82,7 +92,7 @@ public class ServiceListDAdapter extends RecyclerView.Adapter<ServiceListDAdapte
     }
 
     public interface ItemClickLisner{
-        void setOnItemClickLisner(MenuList menuList);
+        void setOnItemClickLisner(int position);
     }
 
 

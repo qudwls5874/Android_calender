@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.myapplication.R;
 import com.example.myapplication.database.table.menu.MenuList;
 import com.example.myapplication.database.view.MenuJoin;
+import com.example.myapplication.database.view.UserJoin;
 import com.example.myapplication.database.viewmodel.MenuListViewModel;
 import com.example.myapplication.databinding.DialogServiceAddlistBinding;
 import com.example.myapplication.dialog.LoadingDialog;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ServiceListHDialog extends DialogFragment implements View.OnClickListener, WatcherSearchText.OnSearchChangeListener{
+public class ServiceListHDialog extends DialogFragment implements View.OnClickListener, WatcherSearchText.OnSearchChangeListener, ServiceListDAdapter.ItemClickLisner{
 
     private String tag ;
 
@@ -44,7 +45,7 @@ public class ServiceListHDialog extends DialogFragment implements View.OnClickLi
     private ServiceListHAdapter adapter;
     private ArrayList<MenuJoin> list;
     private ArrayList<MenuJoin> filterList;
-    private ArrayList<MenuJoin> checkList;
+    private ArrayList<MenuList> checkList;
     private ServiceListDAdapter.ItemClickLisner itemClickLisner;
 
     /* data */
@@ -94,7 +95,11 @@ public class ServiceListHDialog extends DialogFragment implements View.OnClickLi
         list = new ArrayList<>();
         filterList = new ArrayList<>();
         checkList = new ArrayList<>();
-        adapter = new ServiceListHAdapter(filterList, itemClickLisner, this);
+        if (tag.equals("servicecheck")){
+            adapter = new ServiceListHAdapter(filterList, checkList, this, this);
+        } else {
+            adapter = new ServiceListHAdapter(filterList, checkList, itemClickLisner, this);
+        }
         binding.settingServiceListRecyclerView.setAdapter(adapter);
         binding.settingServiceListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -183,7 +188,7 @@ public class ServiceListHDialog extends DialogFragment implements View.OnClickLi
             }
         }
         // 변경된 목록을 RecyclerView에 반영합니다.
-        adapter.notifyDataSetChanged();
+        adapter.setItemCheckList(checkList);
     }
 
 
@@ -192,4 +197,29 @@ public class ServiceListHDialog extends DialogFragment implements View.OnClickLi
         super.show(manager, tag);
         this.tag = tag;
     }
+
+    @Override
+    public void setOnItemClickLisner(int position) {
+        // 저장 리스트값
+        MenuJoin result = list.stream()
+                .filter(streamData -> streamData.menuLists.equals(checkList))
+                .findFirst()
+                .orElse(null);
+
+        if (result == null){
+            checkList.add(result.menuLists.get(0));
+        } else {
+            checkList.remove(result);
+        }
+
+        if (!checkList.isEmpty()){
+            binding.settingServiceListAddBtn.setVisibility(View.VISIBLE);
+        } else {
+            binding.settingServiceListAddBtn.setVisibility(View.GONE);
+        }
+        adapter.setItemCheckList(checkList);
+    }
+
+
+
 }
